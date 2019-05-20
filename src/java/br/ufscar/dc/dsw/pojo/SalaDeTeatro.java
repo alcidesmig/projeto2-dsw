@@ -1,7 +1,11 @@
 package br.ufscar.dc.dsw.pojo;
 
 import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -19,8 +23,13 @@ import javax.persistence.Table;
 public class SalaDeTeatro implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID")
+    private int id;
     private String email;
     private String senha;
+    @Column(unique=true) 
     private String cnpj;
     private String nome;
     private String cidade;
@@ -71,6 +80,10 @@ public class SalaDeTeatro implements Serializable {
 
     public void setCidade(String cidade) {
         this.cidade = cidade;
+    }
+
+    public int getId() {
+        return id;
     }
 
 }

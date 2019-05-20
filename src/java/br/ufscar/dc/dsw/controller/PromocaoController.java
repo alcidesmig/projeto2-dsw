@@ -3,16 +3,13 @@ package br.ufscar.dc.dsw.controller;
 import br.ufscar.dc.dsw.dao.DAOPromocao;
 import br.ufscar.dc.dsw.dao.DAOSalaDeTeatro;
 import br.ufscar.dc.dsw.dao.DAOSiteDeVenda;
-import br.ufscar.dc.dsw.dao.DAOTokenLogin;
-import br.ufscar.dc.dsw.dao.DAOUsuario;
 import br.ufscar.dc.dsw.pojo.Promocao;
 import br.ufscar.dc.dsw.pojo.SalaDeTeatro;
+import br.ufscar.dc.dsw.pojo.SiteDeVenda;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,11 +23,13 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = "/promocao/*")
 public class PromocaoController extends HttpServlet {
 
-    private DAOPromocao dao;
+    private DAOPromocao daoProm;
+    private DAOSalaDeTeatro daoSalaDeTeatro;
+    private DAOSiteDeVenda daoSiteDeVenda;
 
     @Override
     public void init() {
-        dao = new DAOPromocao();
+        daoProm = new DAOPromocao();
     }
 
     @Override
@@ -101,12 +100,12 @@ public class PromocaoController extends HttpServlet {
         if (new AuthController().hasRole(request, "admin") || new AuthController().hasRole(request, "gerenciar_promocao")
                 || new AuthController().hasRole(request, "listar_promocao")) {
             if (request.getMethod().equals("POST")) {
-                List<Promocao> lista = dao.getByCnpjTeatro(request.getParameter("busca"));
+                List<Promocao> lista = daoProm.getByTeatro(daoSalaDeTeatro.getByNome(request.getParameter("busca")));
                 request.setAttribute("listaPromocao", lista);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/views/templates_promocao/lista.jsp");
                 dispatcher.forward(request, response);
             } else {
-                List<Promocao> lista = dao.getAll();
+                List<Promocao> lista = daoProm.getAll();
                 request.setAttribute("listaPromocao", lista);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/views/templates_promocao/lista.jsp");
                 dispatcher.forward(request, response);
@@ -121,19 +120,15 @@ public class PromocaoController extends HttpServlet {
             throws ServletException, IOException, NoSuchAlgorithmException {
         if (AuthController.hasRole(request, "admin") || AuthController.hasRole(request, "gerenciar_promocao")) {
             if (request.getParameter("busca") != null) {
-                List<Promocao> lista = dao.getByNameAndUser(String.valueOf(request.getParameter("busca")), new DAOSalaDeTeatro().getByEmail(AuthController.getUser(request).getEmail()).get(0).getCnpj());
+                List<Promocao> lista = daoProm.getByNameAndUser(String.valueOf(request.getParameter("busca")), new DAOSalaDeTeatro().getByEmail(AuthController.getUser(request).getEmail()).get(0).getCnpj());
                 request.setAttribute("listaPromocao", lista);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/views/templates_promocao/gerenciar.jsp");
                 dispatcher.forward(request, response);
             } else {
                 List<Promocao> lista = null;
                 if (AuthController.hasRole(request, "admin") || AuthController.hasRole(request, "gerenciar_promocao")) {
-                    lista = dao.getAll();
-//                } else {
-//                    List<SalaDeTeatro> sala = new DAOSalaDeTeatro().getByEmail(AuthController.getUser(request).getEmail());
-//                    if (!sala.isEmpty()) {
-//                        lista = dao.getByUser(sala.get(0).getCnpj());
-//                    }
+                    lista = daoProm.getAll();
+
                 }
 
                 request.setAttribute("listaPromocao", lista);
@@ -155,8 +150,8 @@ public class PromocaoController extends HttpServlet {
 
     private void apresentaFormEdicao(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.valueOf(request.getParameter("id"));
-        Promocao prom = dao.get(id);
+        long id = Long.valueOf(request.getParameter("id"));
+        Promocao prom = daoProm.get(id);
 
         request.setAttribute("prom", prom);
         request.setAttribute("listaUrl", new DAOSiteDeVenda().getAll());
@@ -175,11 +170,12 @@ public class PromocaoController extends HttpServlet {
                 String datetime = request.getParameter("datetime");
                 double preco = Double.parseDouble(request.getParameter("preco"));
                 String cnpj = request.getParameter("cnpj_teatro");
-                String cnpj_teatro = cnpj;
-                Promocao promocao = new Promocao(preco, datetime, endereco_url, cnpj_teatro, nome_peca);
+                SalaDeTeatro sala = daoSalaDeTeatro.getByCnpj(cnpj);
+                SiteDeVenda site = daoSiteDeVenda.getByEndereco(endereco_url);
+                Promocao promocao = new Promocao(preco, datetime, site, sala, nome_peca);
                 Boolean cadastra = true;
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-                for (Promocao p : dao.getByCnpjTeatro(cnpj_teatro)) {
+                for (Promocao p : daoProm.getByTeatro(sala)) {
                     if (p.getDatetime().equals(datetime)) {
                         cadastra = false;
                     }
@@ -192,7 +188,7 @@ public class PromocaoController extends HttpServlet {
                     dispatcher.forward(request, response);
                     response.setStatus(500);
                 } else {
-                    dao.insert(promocao);
+                    daoProm.save(promocao);
                     response.sendRedirect("lista");
                 }
             } catch (IOException | NumberFormatException | ServletException e) {
@@ -211,20 +207,21 @@ public class PromocaoController extends HttpServlet {
             throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
         try {
+            int id_promocao = Integer.valueOf(request.getParameter("id_promocao"));
             String endereco_url = request.getParameter("endereco_url");
             String nome_peca = request.getParameter("nome_peca");
-            String datetime = String.valueOf(request.getParameter("datetime"));
-            int id_promocao = Integer.valueOf(request.getParameter("id_promocao"));
-            double preco = Double.valueOf(request.getParameter("preco"));
-            String cnpj_teatro = (request.getParameter("cnp_teatro"));
-
-            Promocao promocao = new Promocao(id_promocao, preco, datetime, endereco_url, cnpj_teatro, nome_peca);
+            String datetime = request.getParameter("datetime");
+            double preco = Double.parseDouble(request.getParameter("preco"));
+            String cnpj = request.getParameter("cnpj_teatro");
+            SalaDeTeatro sala = daoSalaDeTeatro.getByCnpj(cnpj);
+            SiteDeVenda site = daoSiteDeVenda.getByEndereco(endereco_url);
+            Promocao promocao = new Promocao(id_promocao, preco, datetime, site, sala, nome_peca);
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
             sdf.parse(datetime);
             Boolean cadastra = true;
 
-            for (Promocao p : dao.getByCnpjTeatro(cnpj_teatro)) {
+            for (Promocao p : daoProm.getByTeatro(sala)) {
                 if (p.getDatetime().equals(datetime)) {
                     cadastra = false;
                 }
@@ -238,7 +235,7 @@ public class PromocaoController extends HttpServlet {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/views/templates_promocao/edicao.jsp");
                 dispatcher.forward(request, response);
             } else {
-                dao.update(promocao);
+                daoProm.update(promocao);
                 response.sendRedirect("listaGerenciar");
             }
         } catch (Exception e) {
@@ -254,7 +251,7 @@ public class PromocaoController extends HttpServlet {
             throws IOException {
         int id = Integer.valueOf(request.getParameter("id"));
         Promocao p = new Promocao(id);
-        dao.delete(p);
+        daoProm.delete(p);
         response.sendRedirect("gerenciar");
     }
 

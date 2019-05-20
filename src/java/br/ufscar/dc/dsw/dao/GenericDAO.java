@@ -17,7 +17,7 @@ public abstract class GenericDAO<T> {
         return emf.createEntityManager();
     }
          
-    abstract T get(Long id);
+    abstract T get(long id);
      
     abstract List<T> getAll();
      

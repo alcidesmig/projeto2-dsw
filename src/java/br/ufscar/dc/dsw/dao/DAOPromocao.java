@@ -1,6 +1,8 @@
 package br.ufscar.dc.dsw.dao;
 
 import br.ufscar.dc.dsw.pojo.Promocao;
+import br.ufscar.dc.dsw.pojo.SalaDeTeatro;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -10,7 +12,7 @@ import javax.persistence.TypedQuery;
 public class DAOPromocao extends GenericDAO<Promocao> {
 
     @Override
-    public Promocao get(Long id) {
+    public Promocao get(long id) {
         EntityManager em = this.getEntityManager();
         Promocao palpite = em.find(Promocao.class, id);
         em.close();
@@ -55,7 +57,7 @@ public class DAOPromocao extends GenericDAO<Promocao> {
         em.remove(prom);
         tx.commit();
     }
-    
+
 //    public List<Promocao> getAllPorTime(String time) {
 //        EntityManager em = this.getEntityManager();
 //        String s = "select p from Palpite p where p.campeao = :nome or p.vice = :nome";
@@ -63,4 +65,12 @@ public class DAOPromocao extends GenericDAO<Promocao> {
 //        q.setParameter("nome", time);
 //        return q.getResultList();
 //    }
+    public List<Promocao> getByTeatro(SalaDeTeatro salaDeTeatro) {
+        EntityManager em = this.getEntityManager();
+        String s = "select p from Promocao p where p.saladeteatro_id = :idteatro";
+        TypedQuery<Promocao> q = em.createQuery(s, Promocao.class);
+        q.setParameter("idteatro", salaDeTeatro.getId());
+        return q.getResultList();
+    }
+
 }
