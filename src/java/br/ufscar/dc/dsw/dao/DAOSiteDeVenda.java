@@ -10,7 +10,7 @@ import javax.persistence.TypedQuery;
 public class DAOSiteDeVenda<T> extends GenericDAO<SiteDeVenda>{
 
     @Override
-    public SiteDeVenda get(Long id) {
+    public SiteDeVenda get(long id) {
         EntityManager em = this.getEntityManager();
         SiteDeVenda site = em.find(SiteDeVenda.class, id);
         em.close();
@@ -63,4 +63,5 @@ public class DAOSiteDeVenda<T> extends GenericDAO<SiteDeVenda>{
         em.remove(site);
         tx.commit();
     }
+
 }

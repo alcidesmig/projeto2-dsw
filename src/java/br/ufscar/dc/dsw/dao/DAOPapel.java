@@ -5,7 +5,7 @@
  */
 package br.ufscar.dc.dsw.dao;
 
-import br.ufscar.dc.dsw.pojo.Usuario;
+import br.ufscar.dc.dsw.pojo.Papel;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -15,36 +15,27 @@ import javax.persistence.TypedQuery;
  *
  * @author igor
  */
-public class DAOUsuario extends GenericDAO<Usuario> {
+public class DAOPapel extends GenericDAO<Papel> {
 
     @Override
-    public Usuario get(long id) {
+    public Papel get(long id) {
         EntityManager em = this.getEntityManager();
-        Usuario usuario = em.find(Usuario.class, id);
+        Papel papel = em.find(Papel.class, id);
         em.close();
-        return usuario;
+        return papel;
     }
 
     @Override
-    public List<Usuario> getAll() {
+    public List<Papel> getAll() {
         EntityManager em = this.getEntityManager();
-        TypedQuery<Usuario> query = em.createNamedQuery("Usuario.findAll", Usuario.class);
-        List<Usuario> result = query.getResultList();
+        TypedQuery<Papel> query = em.createNamedQuery("Papel.findAll", Papel.class);
+        List<Papel> result = query.getResultList();
         em.close();
         return result;
     }
-    
-    public Usuario get(String email) {
-        EntityManager em = this.getEntityManager();
-        TypedQuery<Usuario> query = em.createNamedQuery("Usuario.username", Usuario.class);
-        query.setParameter("email", email);
-        Usuario user = query.getSingleResult();
-        em.close();
-        return user;
-    }
 
     @Override
-    public void save(Usuario t) {
+    public void save(Papel t) {
         EntityManager em = this.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
@@ -54,7 +45,7 @@ public class DAOUsuario extends GenericDAO<Usuario> {
     }
 
     @Override
-    public void update(Usuario t) {
+    public void update(Papel t) {
         EntityManager em = this.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
@@ -64,12 +55,13 @@ public class DAOUsuario extends GenericDAO<Usuario> {
     }
 
     @Override
-    public void delete(Usuario t) {
+    public void delete(Papel t) {
         EntityManager em = this.getEntityManager();
         EntityTransaction tx = em.getTransaction();
-        t = em.getReference(Usuario.class, t.getId());
+        t = em.getReference(Papel.class, t.getId());
         tx.begin();
         em.remove(t);
         tx.commit();
     }
+    
 }
