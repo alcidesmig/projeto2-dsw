@@ -5,35 +5,58 @@
  */
 package br.ufscar.dc.dsw.pojo;
 
-import br.ufscar.dc.dsw.dao.DAOUsuario;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  *
  * @author igor
  */
+@Entity
+@Table(name = "token_login")
+@NamedQueries({
+    @NamedQuery(name = "TokenLogin.findAll", query = "SELECT t FROM token_login t"),
+    @NamedQuery(name = "TokenLogin.token", query = "SELECT t FROM token_login t WHERE t.token = :token")
+})
 public class TokenLogin implements Serializable  {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    private long id;
     private String token;
-    private String usuario;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+    
     private Date data_login;
     
-    public TokenLogin(String token, String usuario, Date data_login) {
+    public TokenLogin(String token, Usuario usuario, Date data_login) {
         this.token = token;
         this.usuario = usuario;
         this.data_login = data_login;
     }
     
-    public TokenLogin(String token, String usuario) {
+    public TokenLogin(String token, Usuario usuario) {
         this.token = token;
         this.usuario = usuario;
         this.data_login = new Date();
     }
     
-    public TokenLogin(String usuario) {
+    public TokenLogin(Usuario usuario) {
         SecureRandom random = new SecureRandom();
         byte bytes[] = new byte[256];
         random.nextBytes(bytes);
@@ -42,7 +65,7 @@ public class TokenLogin implements Serializable  {
         this.data_login = new Date();
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -58,9 +81,8 @@ public class TokenLogin implements Serializable  {
         this.token = token;
     }
 
-    public Usuario getUsuario() throws NoSuchAlgorithmException {
-        DAOUsuario user = new DAOUsuario();
-        return user.get(this.usuario);
+    public Usuario getUsuario() {
+        return this.usuario;
     }
 
     public Date getData_login() {
