@@ -1,9 +1,3 @@
-<<<<<<< HEAD<<<<<<< HEAD
-package br.ufscar.dc.dsw.dao;
-
-import br.ufscar.dc.dsw.pojo.Promocao;
-import br.ufscar.dc.dsw.pojo.SalaDeTeatro;
-=======
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,8 +5,7 @@ import br.ufscar.dc.dsw.pojo.SalaDeTeatro;
  */
 package br.ufscar.dc.dsw.dao;
 
->>>>>>> Muita coisa
-import br.ufscar.dc.dsw.pojo.Usuario;
+import br.ufscar.dc.dsw.pojo.TokenLogin;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -22,36 +15,36 @@ import javax.persistence.TypedQuery;
  *
  * @author igor
  */
-public class DAOUsuario extends GenericDAO<Usuario> {
+public class DAOTokenLogin extends GenericDAO<TokenLogin> {
 
     @Override
-    public Usuario get(long id) {
+    public TokenLogin get(Long id) {
         EntityManager em = this.getEntityManager();
-        Usuario usuario = em.find(Usuario.class, id);
+        TokenLogin token = em.find(TokenLogin.class, id);
         em.close();
-        return usuario;
+        return token;
     }
 
     @Override
-    public List<Usuario> getAll() {
+    public List<TokenLogin> getAll() {
         EntityManager em = this.getEntityManager();
-        TypedQuery<Usuario> query = em.createNamedQuery("Usuario.findAll", Usuario.class);
-        List<Usuario> result = query.getResultList();
+        TypedQuery<TokenLogin> query = em.createNamedQuery("TokenLogin.findAll", TokenLogin.class);
+        List<TokenLogin> result = query.getResultList();
         em.close();
         return result;
     }
     
-    public Usuario get(String email) {
+    public TokenLogin get(String token) {
         EntityManager em = this.getEntityManager();
-        TypedQuery<Usuario> query = em.createNamedQuery("Usuario.username", Usuario.class);
-        query.setParameter("email", email);
-        Usuario user = query.getSingleResult();
+        TypedQuery<TokenLogin> query = em.createNamedQuery("TokenLogin.token", TokenLogin.class);
+        query.setParameter("token", token);
+        TokenLogin t = query.getSingleResult();
         em.close();
-        return user;
+        return t;
     }
 
     @Override
-    public void save(Usuario t) {
+    public void save(TokenLogin t) {
         EntityManager em = this.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
@@ -61,7 +54,7 @@ public class DAOUsuario extends GenericDAO<Usuario> {
     }
 
     @Override
-    public void update(Usuario t) {
+    public void update(TokenLogin t) {
         EntityManager em = this.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
@@ -71,12 +64,13 @@ public class DAOUsuario extends GenericDAO<Usuario> {
     }
 
     @Override
-    public void delete(Usuario t) {
+    public void delete(TokenLogin t) {
         EntityManager em = this.getEntityManager();
         EntityTransaction tx = em.getTransaction();
-        t = em.getReference(Usuario.class, t.getId());
+        t = em.getReference(TokenLogin.class, t.getId());
         tx.begin();
         em.remove(t);
         tx.commit();
     }
+    
 }

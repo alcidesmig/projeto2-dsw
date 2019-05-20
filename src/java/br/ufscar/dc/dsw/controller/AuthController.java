@@ -11,10 +11,7 @@ import br.ufscar.dc.dsw.pojo.Papel;
 import br.ufscar.dc.dsw.pojo.TokenLogin;
 import br.ufscar.dc.dsw.pojo.Usuario;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Set;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,17 +30,12 @@ public class AuthController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
-        //response.setContentType("application/json");
         String username = request.getParameter("username");
         String senha = request.getParameter("password");
         DAOUsuario daoUser = new DAOUsuario();
-        Usuario user = null;
+        Usuario user;
         String json;
-        try {
-            user = daoUser.get(username);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(AuthController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        user = daoUser.get(username);
         if ( user == null ) {
             response.setStatus(422);
             json = "{\"error\": \"username or password incorrect\"}";
@@ -56,17 +48,9 @@ public class AuthController extends HttpServlet {
             System.out.println(json);
             return;
         }
-        TokenLogin token = new TokenLogin(user.getEmail()); 
+        TokenLogin token = new TokenLogin(user); 
         DAOTokenLogin daoToken = new DAOTokenLogin();
-        try {
-            daoToken.insert(token);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(AuthController.class.getName()).log(Level.SEVERE, null, ex);
-            response.setStatus(500);
-            json = "{\"error\": \"an error occurred\"}";
-            System.out.println(json);
-            return;
-        }
+        daoToken.save(token);
         Cookie loginToken = new Cookie("token", token.getToken());
         loginToken.setPath("/");
         loginToken.setMaxAge(86400);
@@ -95,40 +79,31 @@ public class AuthController extends HttpServlet {
         dispatcher.forward(request, response);
     }
     
-    public static boolean hasRole(HttpServletRequest request, String role) throws NoSuchAlgorithmException {
+    public static boolean hasRole(HttpServletRequest request, String role) {
         Usuario user = AuthController.getUser(request);
         if ( user == null ) {
             return false;
         }
-        List<Papel> papeis = user.getPapeis();
-        for (Papel a : papeis) {
-            if (a.getNome().equalsIgnoreCase(role))
-                return true;
+        Set<Papel> papeis = user.getPapeis();
+        if (papeis.stream().anyMatch((a) -> (a.getNome().equalsIgnoreCase(role)))) {
+            return true;
         }
         return false;
     }
     
-    public static Usuario getUser(HttpServletRequest request) throws NoSuchAlgorithmException {
+    public static Usuario getUser(HttpServletRequest request) {
         DAOTokenLogin daoToken = new DAOTokenLogin();
-        Cookie[] cookies =  request.getCookies();
+        Cookie cookies[] =  request.getCookies();
         int i = 0;
         while (i < cookies.length - 1 && !cookies[i].getName().equalsIgnoreCase("token")) i++;
         if ( !cookies[i].getName().equalsIgnoreCase("token") ) {
             return null;
         }
-        TokenLogin token = daoToken.getToken(cookies[i].getValue());
+        TokenLogin token = daoToken.get(cookies[i].getValue());
         if ( token == null ) {
             return null;
         }
         Usuario user = token.getUsuario();
         return user;
-    }
-    
-    public static boolean canAccess(HttpServletRequest request, HttpServletResponse response, String role) throws NoSuchAlgorithmException, IOException {
-        if ( !AuthController.hasRole(request, role) ) {
-            response.sendRedirect("/projeto1_dsw/403.jsp");
-            return false;
-        }
-        return true;
     }
 }
