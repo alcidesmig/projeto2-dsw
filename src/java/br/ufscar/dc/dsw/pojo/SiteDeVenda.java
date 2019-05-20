@@ -1,6 +1,21 @@
 package br.ufscar.dc.dsw.pojo;
 
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Id;
+@Entity
+@Table(name = "SITEDEVENDA")
+@NamedQueries({
+    @NamedQuery(name = "SiteDeVenda.findAll", query = "SELECT s FROM SiteDeVenda s")
+//,
+//@NamedQuery(name = "Automovel.findByMontadora", query = "SELECT a FROM Automovel a WHERE a.montadora = :montadora")
+//,
+// @NamedQuery(name = "Automovel.findByDono", query = "SELECT a FROM Automovel a WHERE a.dono = :dono")
+})
 public class SiteDeVenda {
+    @Id
     private String email;
     private String senha;
     private String url;

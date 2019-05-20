@@ -2,15 +2,28 @@ package br.ufscar.dc.dsw.pojo;
 
 import br.ufscar.dc.dsw.dao.DAOPapel;
 import br.ufscar.dc.dsw.dao.DAOPapelUsuario;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "USUARIO")
+@NamedQueries({
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
+//,
+//@NamedQuery(name = "Automovel.findByMontadora", query = "SELECT a FROM Automovel a WHERE a.montadora = :montadora")
+//,
+// @NamedQuery(name = "Automovel.findByDono", query = "SELECT a FROM Automovel a WHERE a.dono = :dono")
+})
 public class Usuario {
 
+    @Id
     private String email;
     private String nome;
     private String senha;
@@ -53,9 +66,8 @@ public class Usuario {
         DAOPapel daoPapel = new DAOPapel();
         List<Papel> list = daoPapel.getAll();
         boolean exist = false;
-        for(Papel a : list) {
-            if (a.getNome().equalsIgnoreCase(papel.getNome()))
-            {
+        for (Papel a : list) {
+            if (a.getNome().equalsIgnoreCase(papel.getNome())) {
                 exist = true;
                 papel.setId(a.getId());
             }
@@ -63,15 +75,16 @@ public class Usuario {
         if (!exist) {
             daoPapel.insert(papel);
             list = daoPapel.getAll();
-            for(Papel a : list) {
-                if (a.getNome().equalsIgnoreCase(papel.getNome()))
+            for (Papel a : list) {
+                if (a.getNome().equalsIgnoreCase(papel.getNome())) {
                     papel.setId(a.getId());
+                }
             }
         }
         DAOPapelUsuario papel_usuario = new DAOPapelUsuario();
         papel_usuario.insert(new PapelUsuario(this.getEmail(), papel.getId()));
     }
-    
+
     public void removePapel(Papel papel) {
         DAOPapelUsuario papel_usuario = new DAOPapelUsuario();
         papel_usuario.deletePapel(new PapelUsuario(this.getEmail(), papel.getId()));

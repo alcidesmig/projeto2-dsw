@@ -1,7 +1,24 @@
 package br.ufscar.dc.dsw.pojo;
 
-public class SalaDeTeatro {
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "SALADETEATRO")
+@NamedQueries({
+    @NamedQuery(name = "SalaDeTeatro.findAll", query = "SELECT s FROM SalaDeTeatro s")
+//,
+//@NamedQuery(name = "Automovel.findByMontadora", query = "SELECT a FROM Automovel a WHERE a.montadora = :montadora")
+//,
+// @NamedQuery(name = "Automovel.findByDono", query = "SELECT a FROM Automovel a WHERE a.dono = :dono")
+})
+public class SalaDeTeatro implements Serializable {
+
+    @Id
     private String email;
     private String senha;
     private String cnpj;
@@ -15,7 +32,6 @@ public class SalaDeTeatro {
         this.nome = nome;
         this.cidade = cidade;
     }
-
 
     public String getEmail() {
         return email;
