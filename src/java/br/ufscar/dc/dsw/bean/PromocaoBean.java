@@ -14,7 +14,8 @@ import javax.faces.bean.SessionScoped;
 public class PromocaoBean implements Serializable {
 
     private Promocao promocao;
-
+    private String operacao;
+    
     public String lista() {
         return "views/template_promocao/lista.xhtml";
     }

@@ -23,42 +23,42 @@
             <form class="ui form" method="post">
                 <input value="#{promocaoBean.promocao.id_promocao}" id="id_promocao" name="id_promocao" type="hidden" disabled/>
                 <div class="field">
-                    <label for="nome_peca"><fmt:message key="promocao.list.peca_nome"/></label>  
-                    <input value="#{promocaoBean.promocao.nome_peca}" id="nome_peca" name="nome_peca" type="text">
+                    <h:outputLabel for="nome_peca">#{msg['promocao.list.peca_nome']}</h:outputLabel>  
+                    <h:inputText value="#{promocaoBean.promocao.nome_peca}" id="nome_peca" a:name="nome_peca" a:type="text">
+                        <f:validateRequired/>
+                    </h:inputText>
                 </div>
                 <div class="field">
-                    <label for="preco"><fmt:message key="promocao.list.preco"/></label>  
-                    <input value="<c:out value='${prom.preco}'/>" id="preco" name="preco" type="text">
+                    <h:outputLabel for="preco">#{msg['promocao.list.preco']}</h:outputLabel>  
+                    <h:inputText value="#{promocaoBean.promocao.preco}" id="preco" a:name="preco" a:type="text">
+                        <f:validateRequired/>
+                    </h:inputText>
                 </div>
                 <div class="field">
-                    <label for="datetime"><fmt:message key="promocao.list.data_hora"/></label>  
-                    <input value="<c:out value='${prom.datetime}'/>" id="datetime" name="datetime" type="text" placeholder="DD/MM/YY HH:MM:SS">
+                    <h:outputLabel for="datetime">#{msg['promocao.list.data_hora']}</h:outputLabel>   
+                    <h:inputText value="#{promocaoBean.promocao.datetime}" id="datetime" a:name="datetime" a:type="text" placeholder="DD/MM/YY HH:MM:SS">
+                        <f:validateRequired/>
+                    </h:inputText>
                 </div>
                 <div class="field">
-                    <label for="endereco_url"><fmt:message key="promocao.list.endereco"/></label>  
-                    <select id="endereco_url" name="endereco_url" value="<c:out value='${prom.endereco_url}'/>">
-                        <c:forEach var="end" items="${listaUrl}">    
-                            <option value="<c:out value="${end.email}" />"><c:out value="${end.email}"/></option> 
-                        </c:forEach>
-                    </select>              
+                    <h:outputLabel for="endereco_url">#{msg['promocao.list.endereco']}</h:outputLabel>   
+                    <div class="col-sm-4">
+                    <h:selectOneMenu id="endereco_url" value="#{promocaoBean.promocao.siteDeVenda.id}">
+                        <f:selectItems value="#{promocaoBean.sitesDeVenda}"/>
+                        <f:converter converterId="SiteDeVendaConverter" />
+                    </h:selectOneMenu>
+                </div>      
                 </div>
                 <div class="field">
-                    <label for="cnpj_teatro"><fmt:message key="promocao.cadastro.sala_teatro"/></label>  
-                    <select id="cnpj_teatro" name="cnpj_teatro">
-                        <c:forEach var="sala" items="${listaSalas}">    
-                            <c:choose>
-                                <c:when test="${sala.cnpj == prom.cnpj_teatro}">
-                                    <option selected value="<c:out value="${sala.cnpj}" />"><c:out value="${sala.nome}"/> - <c:out value="${sala.cnpj}"/></option> 
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="<c:out value="${sala.cnpj}" />"><c:out value="${sala.nome}"/> - <c:out value="${sala.cnpj}"/></option> 
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-                    </select>
+                    <h:outputLabel for="cnpj_teatro">#{msg['promocao.list.sala_teatro']}</h:outputLabel>   
+                    <div class="col-sm-4">
+                    <h:selectOneMenu id="cnpj_teatro" value="#{promocaoBean.promocao.teatro.id}">
+                        <f:selectItems value="#{promocaoBean.teatro}"/>
+                        <f:converter converterId="SalaDeTeatroConverter" />
+                    </h:selectOneMenu>
                 </div>
                 <div class="ui negative message hidden">
-                    <p><fmt:message key="allform.error"/></p>
+                    <p>#{msg['allform.error']}</p>
                 </div>
                 <input class="ui positive button" type="submit"/>
             </form>
@@ -136,8 +136,8 @@
                     form.addClass('loading');
                     $.post(action, {
 <c:if test="${prom != null}">
-                        id_promocao: id_promocao.val(),
-                </c:if>
+                                id_promocao: id_promocao.val(),
+                                    </c:if>
                             nome_peca: nome_peca.val(),
                             preco: preco.val(),
                             datetime: datetime.val(),
