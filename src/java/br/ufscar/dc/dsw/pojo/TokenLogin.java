@@ -6,6 +6,7 @@
 package br.ufscar.dc.dsw.pojo;
 
 import br.ufscar.dc.dsw.dao.DAOUsuario;
+import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Date;
@@ -14,7 +15,7 @@ import java.util.Date;
  *
  * @author igor
  */
-public class TokenLogin {
+public class TokenLogin implements Serializable  {
     private int id;
     private String token;
     private String usuario;

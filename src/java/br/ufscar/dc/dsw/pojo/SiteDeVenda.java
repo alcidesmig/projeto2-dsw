@@ -14,7 +14,7 @@ import javax.persistence.Id;
 //,
 // @NamedQuery(name = "Automovel.findByDono", query = "SELECT a FROM Automovel a WHERE a.dono = :dono")
 })
-public class SiteDeVenda {
+public class SiteDeVenda implements Serializable {
     @Id
     private String email;
     private String senha;

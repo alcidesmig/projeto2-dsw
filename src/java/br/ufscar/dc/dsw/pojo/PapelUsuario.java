@@ -5,11 +5,13 @@
  */
 package br.ufscar.dc.dsw.pojo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author igor
  */
-public class PapelUsuario {
+public class PapelUsuario  implements Serializable {
     private int id;
     private String usuario;
     private int papel;
