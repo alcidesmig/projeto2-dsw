@@ -1,9 +1,3 @@
-<<<<<<< HEAD<<<<<<< HEAD
-package br.ufscar.dc.dsw.dao;
-
-import br.ufscar.dc.dsw.pojo.Promocao;
-import br.ufscar.dc.dsw.pojo.SalaDeTeatro;
-=======
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,7 +5,6 @@ import br.ufscar.dc.dsw.pojo.SalaDeTeatro;
  */
 package br.ufscar.dc.dsw.dao;
 
->>>>>>> Muita coisa
 import br.ufscar.dc.dsw.pojo.Usuario;
 import java.util.List;
 import javax.persistence.EntityManager;
