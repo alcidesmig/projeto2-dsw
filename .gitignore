@@ -34,6 +34,11 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+
+# End of https://www.gitignore.io/api/netbeans
 
 # End of https://www.gitignore.io/api/java,netbeans
 

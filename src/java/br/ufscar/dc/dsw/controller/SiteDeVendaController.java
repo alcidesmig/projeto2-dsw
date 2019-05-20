@@ -151,7 +151,7 @@ public class SiteDeVendaController extends HttpServlet {
                     break;
                 }
             }
-            dao.insert(site);
+            dao.save(site);
             response.sendRedirect("lista");
         } catch (Exception e) {
             request.setAttribute("site", site);
@@ -167,8 +167,8 @@ public class SiteDeVendaController extends HttpServlet {
             throws ServletException, IOException {
         SiteDeVenda site = null;
         try {
-            String email = request.getParameter("id");
-            site = dao.get(email);
+            Long id =  Long.parseLong(request.getParameter("id"));
+            site = dao.get(id);
             request.setAttribute("site", site);
             request.setAttribute("listaSites", new DAOSiteDeVenda().getAll());
             RequestDispatcher dispatcher = request.getRequestDispatcher("/views/templates_site_de_venda/cadastro.jsp");
@@ -207,8 +207,8 @@ public class SiteDeVendaController extends HttpServlet {
 
     private void remove(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-        String email = request.getParameter("id");
-        SiteDeVenda site = dao.get(email);
+        Long id =  Long.parseLong(request.getParameter("id"));
+        SiteDeVenda site = dao.get(id);
         dao.delete(site);
         response.sendRedirect("gerenciar");
     }
