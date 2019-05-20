@@ -5,11 +5,13 @@
  */
 package br.ufscar.dc.dsw.pojo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author igor
  */
-public class Papel implements Comparable<Papel> {
+public class Papel implements Comparable<Papel>, Serializable  {
     private int id;
     private String nome;
 
