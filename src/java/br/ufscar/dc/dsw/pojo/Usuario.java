@@ -2,6 +2,7 @@ package br.ufscar.dc.dsw.pojo;
 
 import br.ufscar.dc.dsw.dao.DAOPapel;
 import br.ufscar.dc.dsw.dao.DAOPapelUsuario;
+import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Date;

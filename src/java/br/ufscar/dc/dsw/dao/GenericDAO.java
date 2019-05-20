@@ -10,14 +10,14 @@ public abstract class GenericDAO<T> {
     private final EntityManagerFactory emf;
 
     public GenericDAO() {
-        emf = Persistence.createEntityManagerFactory("JPAPU");
+        emf = Persistence.createEntityManagerFactory("UP");
     }
 
     protected EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
          
-    abstract T get(Long id);
+    abstract T get(long id);
      
     abstract List<T> getAll();
      

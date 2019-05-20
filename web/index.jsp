@@ -14,9 +14,6 @@
 
 <div class="ui text container ">
     <marquee><h1><fmt:message key="index.h1"/></h1></marquee>
-
-
-
 </div>
 
 <jsp:include page="views/helpers/footer.jsp"/>
