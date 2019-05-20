@@ -12,12 +12,13 @@
         <div class="ui text container">
             <center>
                 <h1>
-                    <c:if test="${teatro == null}">
+                   <!-- <c:if test="${teatro == null}">
                         #{msg['promocao.cadastro.h1']}
                     </c:if>
                     <c:if test="${teatro != null}">
                         #{msg['promocao.editar.h1']}
-                    </c:if>
+                    </c:if>-->
+                    #{msg[ '#{teatro eq null? "cadastro" : "edicao"}' ]};
                 </h1>
             </center>
             <form class="ui form" method="post">
@@ -36,120 +37,119 @@
                 </div>
                 <div class="field">
                     <h:outputLabel for="datetime">#{msg['promocao.list.data_hora']}</h:outputLabel>   
-                    <h:inputText value="#{promocaoBean.promocao.datetime}" id="datetime" a:name="datetime" a:type="text" placeholder="DD/MM/YY HH:MM:SS">
+                    <h:inputText value="#{promocaoBean.promocao.datetime}" id="datetime" a:name="datetime" a:type="text" a:placeholder="DD/MM/YY HH:MM:SS">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
                     <h:outputLabel for="endereco_url">#{msg['promocao.list.endereco']}</h:outputLabel>   
                     <div class="col-sm-4">
-                    <h:selectOneMenu id="endereco_url" value="#{promocaoBean.promocao.siteDeVenda.id}">
-                        <f:selectItems value="#{promocaoBean.sitesDeVenda}"/>
-                        <f:converter converterId="SiteDeVendaConverter" />
-                    </h:selectOneMenu>
-                </div>      
+                        <h:selectOneMenu id="endereco_url" value="#{promocaoBean.promocao.siteDeVenda.id}">
+                            <f:selectItems value="#{promocaoBean.sitesDeVenda}"/>
+                            <f:converter converterId="SiteDeVendaConverter" />
+                        </h:selectOneMenu>
+                    </div>      
                 </div>
                 <div class="field">
                     <h:outputLabel for="cnpj_teatro">#{msg['promocao.list.sala_teatro']}</h:outputLabel>   
                     <div class="col-sm-4">
-                    <h:selectOneMenu id="cnpj_teatro" value="#{promocaoBean.promocao.teatro.id}">
-                        <f:selectItems value="#{promocaoBean.teatro}"/>
-                        <f:converter converterId="SalaDeTeatroConverter" />
-                    </h:selectOneMenu>
-                </div>
-                <div class="ui negative message hidden">
-                    <p>#{msg['allform.error']}</p>
-                </div>
-                <input class="ui positive button" type="submit"/>
+                        <h:selectOneMenu id="cnpj_teatro" value="#{promocaoBean.promocao.teatro.id}">
+                            <f:selectItems value="#{promocaoBean.teatros}"/>
+                            <f:converter converterId="SalaDeTeatroConverter" />
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="ui negative message hidden">
+                        <p>#{msg['allform.error']}</p>
+                    </div>
+                    <input class="ui positive button" type="submit"/>
             </form>
         </div>
         <script>
             $(document).ready(function () {
-            form = $('.ui.form');
-                    id_promocao = $('#id_promocao');
-                    nome_peca = $('#nome_peca');
-                    preco = $('#preco');
-                    datetime = $('#datetime');
-                    endereco_url = $('#endereco_url');
-                    cnpj_teatro = $('#cnpj_teatro');
-                    action = <c:if test="${teatro == null}">'cadastro'</c:if> < c:if test = "${teatro != null}" > 'edicao' < /c:if>;
-                    form.form({
+                form = $('.ui.form');
+                id_promocao = $('#id_promocao');
+                nome_peca = $('#nome_peca');
+                preco = $('#preco');
+                datetime = $('#datetime');
+                endereco_url = $('#endereco_url');
+                cnpj_teatro = $('#cnpj_teatro');
+                action = #{teatro eq null? 'cadastro' : 'edicao'};
+                form.form({
                     fields: {
-                    nome_peca: {
-                    identifier: 'nome_peca',
+                        nome_peca: {
+                            identifier: 'nome_peca',
                             rules: [
-                            {
-                            type: 'empty',
+                                {
+                                    type: 'empty',
                                     prompt: '<fmt:message key="allform.required"/>'
-                            }
+                                }
                             ]
-                    },
-                            preco: {
+                        },
+                        preco: {
                             identifier: 'preco',
-                                    rules: [
-                                    {
+                            rules: [
+                                {
                                     type: 'empty',
-                                            prompt: '<fmt:message key="allform.required"/>'
-                                    }
-                                    ]
-                            },
-                            datetime: {
+                                    prompt: '<fmt:message key="allform.required"/>'
+                                }
+                            ]
+                        },
+                        datetime: {
                             identifier: 'datetime',
-                                    rules: [
-                                    {
+                            rules: [
+                                {
                                     type: 'empty',
-                                            prompt: '<fmt:message key="allform.required"/>'
-                                    }
-                                    ]
-                            },
-                            endereco_url: {
+                                    prompt: '<fmt:message key="allform.required"/>'
+                                }
+                            ]
+                        },
+                        endereco_url: {
                             identifier: 'endereco_url',
-                                    rules: [
-                                    {
+                            rules: [
+                                {
                                     type: 'empty',
-                                            prompt: '<fmt:message key="allform.required"/>'
-                                    }
-                                    ]
-                            },
-                            cnpj_teatro: {
+                                    prompt: '<fmt:message key="allform.required"/>'
+                                }
+                            ]
+                        },
+                        cnpj_teatro: {
                             identifier: 'cnpj_teatro',
-                                    rules: [
-                                    {
+                            rules: [
+                                {
                                     type: 'empty',
-                                            prompt: '<fmt:message key="allform.required"/>'
-                                    }
-                                    ]
-                            }
+                                    prompt: '<fmt:message key="allform.required"/>'
+                                }
+                            ]
+                        }
                     },
-                            on: 'blur',
-                            inline: true,
-                            onSuccess: function () {
-                            form.removeClass('success').removeClass('error');
-                            },
-                            onFailure: function () {
-                            window.scrollTo(0, 0);
-                                    form.removeClass('success').removeClass('error');
-                            }
-                    }).on('submit', function (e) {
-            e.preventDefault();
-                    if (!form.form('is valid')) return;
+                    on: 'blur',
+                    inline: true,
+                    onSuccess: function () {
+                        form.removeClass('success').removeClass('error');
+                    },
+                    onFailure: function () {
+                        window.scrollTo(0, 0);
+                        form.removeClass('success').removeClass('error');
+                    }
+                }).on('submit', function (e) {
+                    e.preventDefault();
+                    if (!form.form('is valid'))
+                        return;
                     form.addClass('loading');
                     $.post(action, {
-<c:if test="${prom != null}">
-                                id_promocao: id_promocao.val(),
-                                    </c:if>
-                            nome_peca: nome_peca.val(),
-                            preco: preco.val(),
-                            datetime: datetime.val(),
-                            endereco_url: endereco_url.val(),
-                            cnpj_teatro: cnpj_teatro.val()
+                        id_promocao: id_promocao.val(),
+                        nome_peca: nome_peca.val(),
+                        preco: preco.val(),
+                        datetime: datetime.val(),
+                        endereco_url: endereco_url.val(),
+                        cnpj_teatro: cnpj_teatro.val()
                     }).done(function () {
-            window.location.href = 'gerenciar';
-            }).fail(function () {
-            form.removeClass('loading');
-                    $('.ui.message').show();
-            });
-            });
+                        window.location.href = 'gerenciar';
+                    }).fail(function () {
+                        form.removeClass('loading');
+                        $('.ui.message').show();
+                    });
+                });
             }
             );
         </script>

@@ -18,7 +18,7 @@ import javax.persistence.TypedQuery;
 public class DAOUsuario extends GenericDAO<Usuario> {
 
     @Override
-    public Usuario get(long id) {
+    public Usuario get(Long id) {
         EntityManager em = this.getEntityManager();
         Usuario usuario = em.find(Usuario.class, id);
         em.close();

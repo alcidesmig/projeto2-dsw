@@ -86,19 +86,19 @@ public class Promocao implements Serializable {
         this.datetime = datetime;
     }
 
-    public SiteDeVenda getEndereco_url() {
+    public SiteDeVenda getSiteDeVenda() {
         return siteDeVenda;
     }
 
-    public void setEndereco_url(SiteDeVenda siteDeVenda) {
+    public void setSiteDeVenda(SiteDeVenda siteDeVenda) {
         this.siteDeVenda = siteDeVenda;
     }
 
-    public SalaDeTeatro getCnpj_teatro() {
+    public SalaDeTeatro getTeatro() {
         return teatro;
     }
 
-    public void setCnpj_teatro(SalaDeTeatro teatro) {
+    public void setTeatro(SalaDeTeatro teatro) {
         this.teatro = teatro;
     }
 
@@ -109,4 +109,5 @@ public class Promocao implements Serializable {
     public void setNome_peca(String nome_peca) {
         this.nome_peca = nome_peca;
     }
+
 }

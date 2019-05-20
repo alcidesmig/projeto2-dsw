@@ -18,7 +18,7 @@ import javax.persistence.TypedQuery;
 public class DAOTokenLogin extends GenericDAO<TokenLogin> {
 
     @Override
-    public TokenLogin get(long id) {
+    public TokenLogin get(Long id) {
         EntityManager em = this.getEntityManager();
         TokenLogin token = em.find(TokenLogin.class, id);
         em.close();

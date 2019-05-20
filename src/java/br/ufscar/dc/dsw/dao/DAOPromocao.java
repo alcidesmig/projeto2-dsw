@@ -12,7 +12,7 @@ import javax.persistence.TypedQuery;
 public class DAOPromocao extends GenericDAO<Promocao> {
 
     @Override
-    public Promocao get(long id) {
+    public Promocao get(Long id) {
         EntityManager em = this.getEntityManager();
         Promocao palpite = em.find(Promocao.class, id);
         em.close();
