@@ -58,12 +58,5 @@ public class DAOUsuario extends GenericDAO<Usuario> {
         tx.commit();
     }
 
-    public List<Promocao> getByTeatro(SalaDeTeatro salaDeTeatro) {
-        EntityManager em = this.getEntityManager();
-        String s = "select p from Promocao p where p.saladeteatro_id = :idteatro";
-        TypedQuery<Promocao> q = em.createQuery(s, Promocao.class);
-        q.setParameter("idteatro", salaDeTeatro.getId());
-        return q.getResultList();
-    }
 
 }
