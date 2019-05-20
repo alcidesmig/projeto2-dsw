@@ -127,7 +127,7 @@ public class UsuarioController extends HttpServlet {
             return;
         }
         Usuario user = new Usuario(nickname, nome, senha, new Date(System.currentTimeMillis()));
-        dao.insert(user);
+        dao.save(user);
         for (String a : papeis) {
             user.addPapel(new Papel(a));
         }

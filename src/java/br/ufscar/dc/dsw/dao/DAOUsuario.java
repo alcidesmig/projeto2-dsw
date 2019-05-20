@@ -2,59 +2,59 @@ package br.ufscar.dc.dsw.dao;
 
 import br.ufscar.dc.dsw.pojo.Promocao;
 import br.ufscar.dc.dsw.pojo.SalaDeTeatro;
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time;
+import br.ufscar.dc.dsw.pojo.Usuario;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-public class DAOPromocao extends GenericDAO<Promocao> {
+public class DAOUsuario extends GenericDAO<Usuario> {
 
     @Override
-    public Promocao get(long id) {
+    public Usuario get(long id) {
         EntityManager em = this.getEntityManager();
-        Promocao palpite = em.find(Promocao.class, id);
+        Usuario user = em.find(Usuario.class, id);
         em.close();
-        return palpite;
+        return user;
     }
 
     @Override
-    public List<Promocao> getAll() {
+    public List<Usuario> getAll() {
         EntityManager em = this.getEntityManager();
-        Query q = em.createQuery("select p from Promocao p", Promocao.class);
-        List<Promocao> promocoes = q.getResultList();
+        Query q = em.createQuery("select u from Usuario u", Usuario.class);
+        List<Usuario> user = q.getResultList();
         em.close();
-        return promocoes;
+        return user;
     }
 
     @Override
-    public void save(Promocao prom) {
+    public void save(Usuario user) {
         EntityManager em = this.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
-        em.persist(prom);
+        em.persist(user);
         tx.commit();
         em.close();
     }
 
     @Override
-    public void update(Promocao prom) {
+    public void update(Usuario user) {
         EntityManager em = this.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
-        em.merge(prom);
+        em.merge(user);
         tx.commit();
         em.close();
     }
 
     @Override
-    public void delete(Promocao prom) {
+    public void delete(Usuario user) {
         EntityManager em = this.getEntityManager();
         EntityTransaction tx = em.getTransaction();
-        prom = em.getReference(Promocao.class, prom.getId_promocao());
+        user = em.getReference(Usuario.class, user.getId());
         tx.begin();
-        em.remove(prom);
+        em.remove(user);
         tx.commit();
     }
 
