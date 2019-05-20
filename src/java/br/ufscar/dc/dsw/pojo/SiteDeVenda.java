@@ -26,7 +26,7 @@ public class SiteDeVenda implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
-    private Long id;
+    private long id;
     private String email;
     private String senha;
     private String url;
@@ -45,11 +45,11 @@ public class SiteDeVenda implements Serializable {
         this.email = email;
     }
     
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
     
