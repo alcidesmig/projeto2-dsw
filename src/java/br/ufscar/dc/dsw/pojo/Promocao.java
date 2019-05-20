@@ -28,7 +28,7 @@ public class Promocao implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
-    private int id_promocao;
+    private Integer id_promocao;
     private double preco;
     private String datetime;
     @ManyToOne
@@ -54,16 +54,19 @@ public class Promocao implements Serializable {
         this.teatro = teatro;
         this.nome_peca = nome_peca;
     }
+    
+    public Promocao(){
+    }
 
     public Promocao(int id) {
         this.id_promocao = id;
     }
 
-    public int getId_promocao() {
+    public Integer getId_promocao() {
         return id_promocao;
     }
 
-    public void setId_promocao(int id_promocao) {
+    public void setId_promocao(Integer id_promocao) {
         this.id_promocao = id_promocao;
     }
 
