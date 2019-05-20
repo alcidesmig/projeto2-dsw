@@ -12,6 +12,11 @@
             <div class="ui text container ">
                 <marquee><h1>#{msg['index.h1']}</h1></marquee>
             </div>       
+            <div> 
+                <h:form> 
+                    <h:commandLink action="#{promocaoBean.cadastra()}">CRUD Promocao</h:commandLink>
+                </h:form>
+            </div>
         </div> 
         <ui:include src="views/helpers/footer.xhtml"/>
     </h:body>

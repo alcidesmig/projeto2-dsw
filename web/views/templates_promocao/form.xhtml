@@ -12,17 +12,11 @@
         <div class="ui text container">
             <center>
                 <h1>
-                   <!-- <c:if test="${teatro == null}">
-                        #{msg['promocao.cadastro.h1']}
-                    </c:if>
-                    <c:if test="${teatro != null}">
-                        #{msg['promocao.editar.h1']}
-                    </c:if>-->
-                    #{msg[ '#{teatro eq null? "cadastro" : "edicao"}' ]};
+                    Colocar título baseado na operação
                 </h1>
             </center>
-            <form class="ui form" method="post">
-                <input value="#{promocaoBean.promocao.id_promocao}" id="id_promocao" name="id_promocao" type="hidden" disabled/>
+            <h:form class="ui form" id="form">
+                <h:inputHidden value="#{promocaoBean.promocao.id_promocao}" id="id_promocao" a:name="id_promocao"/>
                 <div class="field">
                     <h:outputLabel for="nome_peca">#{msg['promocao.list.peca_nome']}</h:outputLabel>  
                     <h:inputText value="#{promocaoBean.promocao.nome_peca}" id="nome_peca" a:name="nome_peca" a:type="text">
@@ -61,8 +55,9 @@
                     <div class="ui negative message hidden">
                         <p>#{msg['allform.error']}</p>
                     </div>
-                    <input class="ui positive button" type="submit"/>
-            </form>
+                    <h:commandButton value="Submit" action="#{promocaoBean.salva()}" class="ui positive button"/>
+                </div>
+            </h:form>
         </div>
         <script>
             $(document).ready(function () {
@@ -81,7 +76,7 @@
                             rules: [
                                 {
                                     type: 'empty',
-                                    prompt: '<fmt:message key="allform.required"/>'
+                                    prompt: '#{msg['allform.required']}'
                                 }
                             ]
                         },
@@ -90,7 +85,7 @@
                             rules: [
                                 {
                                     type: 'empty',
-                                    prompt: '<fmt:message key="allform.required"/>'
+                                    prompt: '#{msg['allform.required']}'
                                 }
                             ]
                         },
@@ -99,7 +94,7 @@
                             rules: [
                                 {
                                     type: 'empty',
-                                    prompt: '<fmt:message key="allform.required"/>'
+                                    prompt: '#{msg['allform.required']}'
                                 }
                             ]
                         },
@@ -108,7 +103,7 @@
                             rules: [
                                 {
                                     type: 'empty',
-                                    prompt: '<fmt:message key="allform.required"/>'
+                                    prompt: '#{msg['allform.required']}'
                                 }
                             ]
                         },
@@ -117,7 +112,7 @@
                             rules: [
                                 {
                                     type: 'empty',
-                                    prompt: '<fmt:message key="allform.required"/>'
+                                    prompt: '#{msg['allform.required']}'
                                 }
                             ]
                         }
