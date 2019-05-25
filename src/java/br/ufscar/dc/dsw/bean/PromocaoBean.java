@@ -18,11 +18,19 @@ import javax.faces.context.FacesContext;
 public class PromocaoBean implements Serializable {
 
     private Promocao promocao;
-    private String operacao;
+    private int op;
     private List<Promocao> promocoes;
     DAOPromocao dao = new DAOPromocao();
 
+    public String gerenciar() {
+        promocoes = dao.getAll();
+        op = 1;
+        return "views/templates_promocao/gerenciar.xhtml";
+    }
+
     public String lista() {
+        promocoes = dao.getAll();
+        op = 0;
         return "views/templates_promocao/lista.xhtml";
     }
 
@@ -37,20 +45,23 @@ public class PromocaoBean implements Serializable {
     }
 
     public String salva() {
-        if (promocao.getId_promocao() == 0) {
+        if (dao.get(promocao.getId_promocao()) != null) {
             dao.save(promocao);
         } else {
             dao.update(promocao);
         }
         promocoes = dao.getAll();
-        System.out.println(promocao.getSiteDeVenda().getNome());
+        if (op == 1) {
+            return "gerenciar.xhtml";
+        }
         return "lista.xhtml";
+
     }
 
-    public String delete(Promocao promocao) {
-        dao.delete(promocao);
+    public String delete(Long id) {
+        dao.delete(dao.get(id));
         promocoes = dao.getAll();
-        return "views/templates_promocao/lista.xhtml";
+        return "gerenciar.xhtml";
     }
 
     public String volta() {
@@ -60,17 +71,6 @@ public class PromocaoBean implements Serializable {
 
     public List<Promocao> getPromocoes() throws SQLException {
         return promocoes;
-    }
-
-    public String getPromocoesByName() throws SQLException {
-        String nome = FacesContext.getCurrentInstance().
-                getExternalContext().getRequestParameterMap().get("nome");
-        promocoes = dao.getByName(nome);
-        return "lista.xhtml";
-    }
-
-    public String busca() throws SQLException {
-        return getPromocoesByName();
     }
 
     public List<SiteDeVenda> getSitesDeVenda() throws SQLException {
@@ -89,6 +89,14 @@ public class PromocaoBean implements Serializable {
 
     public void setPromocao(Promocao promocao) {
         this.promocao = promocao;
+    }
+
+    public int getOp() {
+        return op;
+    }
+
+    public void setOp(int op) {
+        this.op = op;
     }
 
 }

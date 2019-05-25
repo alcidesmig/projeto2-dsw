@@ -2,7 +2,7 @@ package br.ufscar.dc.dsw.dao;
 
 import br.ufscar.dc.dsw.pojo.Promocao;
 import br.ufscar.dc.dsw.pojo.SalaDeTeatro;
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -65,14 +65,17 @@ public class DAOPromocao extends GenericDAO<Promocao> {
         q.setParameter("idteatro", salaDeTeatro.getId());
         return q.getResultList();
     }
+
     public List<Promocao> getByName(String nome) {
         EntityManager em = this.getEntityManager();
         String s = "select p from Promocao p";
         TypedQuery<Promocao> q = em.createQuery(s, Promocao.class);
-        List<Promocao> result = q.getResultList();
+        List<Promocao> query = q.getResultList();
+        List<Promocao> result = new ArrayList<Promocao>();
         for (Promocao promocao : result) {
-            if(!promocao.getTeatro().getNome().contains("nome")){
-                result.remove(promocao);
+            System.out.println(">>>>>>" + promocao.getNome_peca());
+            if (promocao.getNome_peca().contains(nome)) {
+                result.add(promocao);
             }
         }
         return result;
