@@ -28,7 +28,7 @@ public class Promocao implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
-    private Integer id_promocao;
+    private long id_promocao;
     private double preco;
     private String datetime;
     @ManyToOne
@@ -38,7 +38,7 @@ public class Promocao implements Serializable {
     private SalaDeTeatro teatro;
     private String nome_peca;
 
-    public Promocao(int id_promocao, double preco, String datetime, SiteDeVenda siteDeVenda, SalaDeTeatro teatro, String nome_peca) {
+    public Promocao(long id_promocao, double preco, String datetime, SiteDeVenda siteDeVenda, SalaDeTeatro teatro, String nome_peca) {
         this.id_promocao = id_promocao;
         this.preco = preco;
         this.datetime = datetime;
@@ -62,7 +62,7 @@ public class Promocao implements Serializable {
         this.id_promocao = id;
     }
 
-    public Integer getId_promocao() {
+    public long getId_promocao() {
         return id_promocao;
     }
 

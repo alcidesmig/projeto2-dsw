@@ -15,7 +15,6 @@ import javax.faces.context.FacesContext;
 
 @ManagedBean
 @SessionScoped
-
 public class PromocaoBean implements Serializable {
 
     private Promocao promocao;
@@ -34,17 +33,18 @@ public class PromocaoBean implements Serializable {
 
     public String edita(Long id) {
         promocao = dao.get(id);
-        return "views/templates_promocao/form.xhtml";
+        return "form.xhtml";
     }
 
     public String salva() {
-        if (promocao.getId_promocao() == null) {
+        if (promocao.getId_promocao() == 0) {
             dao.save(promocao);
         } else {
             dao.update(promocao);
         }
+        System.out.println(promocao.getNome_peca());
         promocoes = dao.getAll();
-        return "views/templates_promocao/lista.xhtml";
+        return "lista.xhtml";
     }
 
     public String delete(Promocao promocao) {
@@ -66,7 +66,7 @@ public class PromocaoBean implements Serializable {
         String nome = FacesContext.getCurrentInstance().
                 getExternalContext().getRequestParameterMap().get("nome");
         promocoes = dao.getByName(nome);
-        return "views/templates_promocao/lista.xhtml";
+        return "lista.xhtml";
     }
 
     public String busca() throws SQLException {

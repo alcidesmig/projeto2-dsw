@@ -18,39 +18,44 @@
             </center>
             <h:form class="ui form" id="form">
                 <h:inputHidden value="#{promocaoBean.promocao.id_promocao}" id="id_promocao" a:name="id_promocao"/>
-                <div class="field">
+                <div class="form-group field">
                     <h:outputLabel for="nome_peca">#{msg['promocao.list.peca_nome']}</h:outputLabel>  
                     <h:inputText value="#{promocaoBean.promocao.nome_peca}" id="nome_peca" a:name="nome_peca" a:type="text">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
-                <div class="field">
+                <div class="form-group field">
                     <h:outputLabel for="preco">#{msg['promocao.list.preco']}</h:outputLabel>  
                     <h:inputText value="#{promocaoBean.promocao.preco}" id="preco" a:name="preco" a:type="text">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
-                <div class="field">
+                <div class="form-group field">
                     <h:outputLabel for="datetime">#{msg['promocao.list.data_hora']}</h:outputLabel>   
                     <h:inputText value="#{promocaoBean.promocao.datetime}" id="datetime" a:name="datetime" a:type="text" a:placeholder="DD/MM/YY HH:MM:SS">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
-                <div class="field">
+                <div class="form-group field">
                     <h:outputLabel for="endereco_url">#{msg['promocao.list.endereco']}</h:outputLabel>   
                     <div class="col-sm-4">
-                        <h:selectOneMenu id="endereco_url" value="#{promocaoBean.promocao.siteDeVenda.id}">
-                            <f:selectItems value="#{promocaoBean.sitesDeVenda}"/>
-                            <f:converter converterId="SiteDeVendaConverter" />
+                        <h:selectOneMenu id="endereco_url" value="1">
+                            <f:selectItems value="#{promocaoBean.sitesDeVenda}" var ="site" 
+                                           itemLabel="#{site.nome}"
+                                           itemValue="#{site.id}"
+                                           />
+                            
                         </h:selectOneMenu>
                     </div>      
                 </div>
-                <div class="field">
+                <div class="form-group field">
                     <h:outputLabel for="cnpj_teatro">#{msg['promocao.cadastro.sala_teatro']}</h:outputLabel>   
                     <div class="col-sm-4">
-                        <h:selectOneMenu id="cnpj_teatro" value="#{promocaoBean.promocao.teatro.id}">
-                            <f:selectItems value="#{promocaoBean.teatros}"/>
-                            <f:converter converterId="SalaDeTeatroConverter" />
+                        <h:selectOneMenu id="cnpj_teatro" value="1">
+                            <f:selectItems value="#{promocaoBean.teatros}" var ="teatro" 
+                                           itemLabel="#{teatro.nome}"
+                                           itemValue="#{teatro.id}"
+                                           />
                         </h:selectOneMenu>
                     </div>
                     <div class="ui negative message hidden">

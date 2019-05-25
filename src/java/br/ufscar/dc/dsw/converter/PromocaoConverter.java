@@ -12,7 +12,7 @@ public class PromocaoConverter implements Converter{
 
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String string) {
-        Long id = Long.parseLong(string);
+        long id = Long.parseLong(string);
         DAOPromocao dao = new DAOPromocao();
         return dao.get(id);
     }
@@ -20,7 +20,7 @@ public class PromocaoConverter implements Converter{
     @Override
     public String getAsString(FacesContext fc, UIComponent uic, Object o) {
         Promocao prom = (Promocao) o;
-        return prom.getId_promocao().toString();
+        return String.valueOf(prom.getId_promocao());
     }
     
 }

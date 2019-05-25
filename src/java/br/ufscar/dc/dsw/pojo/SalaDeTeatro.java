@@ -26,7 +26,7 @@ public class SalaDeTeatro implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
-    private int id;
+    private long id;
     private String email;
     private String senha;
     @Column(unique = true)
@@ -85,7 +85,7 @@ public class SalaDeTeatro implements Serializable {
         this.cidade = cidade;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
