@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 @ManagedBean
 @SessionScoped
@@ -19,6 +20,8 @@ public class PromocaoBean implements Serializable {
 
     private Promocao promocao;
     private String operacao;
+    private List<Promocao> promocoes;
+    DAOPromocao dao = new DAOPromocao();
 
     public String lista() {
         return "views/templates_promocao/lista.xhtml";
@@ -30,34 +33,44 @@ public class PromocaoBean implements Serializable {
     }
 
     public String edita(Long id) {
-        DAOPromocao dao = new DAOPromocao();
         promocao = dao.get(id);
         return "views/templates_promocao/form.xhtml";
     }
 
     public String salva() {
-        DAOPromocao dao = new DAOPromocao();
         if (promocao.getId_promocao() == null) {
             dao.save(promocao);
         } else {
             dao.update(promocao);
         }
+        promocoes = dao.getAll();
         return "views/templates_promocao/lista.xhtml";
     }
 
     public String delete(Promocao promocao) {
-        DAOPromocao dao = new DAOPromocao();
         dao.delete(promocao);
+        promocoes = dao.getAll();
         return "views/templates_promocao/lista.xhtml";
     }
 
     public String volta() {
+        promocoes = dao.getAll();
         return "views/templates_promocao/lista.xhtml?faces-redirect=true";
     }
 
     public List<Promocao> getPromocoes() throws SQLException {
-        DAOPromocao dao = new DAOPromocao();
-        return dao.getAll();
+        return promocoes;
+    }
+
+    public String getPromocoesByName() throws SQLException {
+        String nome = FacesContext.getCurrentInstance().
+                getExternalContext().getRequestParameterMap().get("nome");
+        promocoes = dao.getByName(nome);
+        return "views/templates_promocao/lista.xhtml";
+    }
+
+    public String busca() throws SQLException {
+        return getPromocoesByName();
     }
 
     public List<SiteDeVenda> getSitesDeVenda() throws SQLException {

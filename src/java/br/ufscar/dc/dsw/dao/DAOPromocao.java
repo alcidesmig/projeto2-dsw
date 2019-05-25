@@ -65,5 +65,17 @@ public class DAOPromocao extends GenericDAO<Promocao> {
         q.setParameter("idteatro", salaDeTeatro.getId());
         return q.getResultList();
     }
+    public List<Promocao> getByName(String nome) {
+        EntityManager em = this.getEntityManager();
+        String s = "select p from Promocao p";
+        TypedQuery<Promocao> q = em.createQuery(s, Promocao.class);
+        List<Promocao> result = q.getResultList();
+        for (Promocao promocao : result) {
+            if(!promocao.getTeatro().getNome().contains("nome")){
+                result.remove(promocao);
+            }
+        }
+        return result;
+    }
 
 }
