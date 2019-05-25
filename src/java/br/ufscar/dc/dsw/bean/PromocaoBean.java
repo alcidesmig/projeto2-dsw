@@ -42,8 +42,8 @@ public class PromocaoBean implements Serializable {
         } else {
             dao.update(promocao);
         }
-        System.out.println(promocao.getNome_peca());
         promocoes = dao.getAll();
+        System.out.println(promocao.getSiteDeVenda().getNome());
         return "lista.xhtml";
     }
 
@@ -86,4 +86,9 @@ public class PromocaoBean implements Serializable {
     public Promocao getPromocao() {
         return promocao;
     }
+
+    public void setPromocao(Promocao promocao) {
+        this.promocao = promocao;
+    }
+
 }

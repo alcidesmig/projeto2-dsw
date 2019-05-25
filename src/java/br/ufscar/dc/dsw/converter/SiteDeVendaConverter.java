@@ -8,7 +8,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 @FacesConverter("SiteDeVendaConverter")
-public class SiteDeVendaConverter implements Converter{
+public class SiteDeVendaConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String string) {
@@ -22,5 +22,5 @@ public class SiteDeVendaConverter implements Converter{
         SiteDeVenda siteDeVenda = (SiteDeVenda) o;
         return String.valueOf(siteDeVenda.getId());
     }
-    
+
 }
