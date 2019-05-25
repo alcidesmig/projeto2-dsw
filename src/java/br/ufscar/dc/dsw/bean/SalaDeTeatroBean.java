@@ -11,13 +11,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-@ManagedBean
+@ManagedBean(name = "saladeteatroBean")
 @SessionScoped
 
 public class SalaDeTeatroBean implements Serializable {
 
     private SalaDeTeatro saladeteatro;
-    private String operacao;
     private List<SalaDeTeatro> salasdeteatros;
     DAOSalaDeTeatro dao = new DAOSalaDeTeatro();
 
