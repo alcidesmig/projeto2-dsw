@@ -29,10 +29,13 @@ public class SalaDeTeatro implements Serializable {
     private int id;
     private String email;
     private String senha;
-    @Column(unique=true) 
+    @Column(unique = true)
     private String cnpj;
     private String nome;
     private String cidade;
+
+    public SalaDeTeatro() {
+    }
 
     public SalaDeTeatro(String email, String senha, String cnpj, String nome, String cidade) {
         this.email = email;

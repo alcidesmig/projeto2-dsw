@@ -6,13 +6,15 @@
     <class>br.ufscar.dc.dsw.pojo.SalaDeTeatro</class>
     <class>br.ufscar.dc.dsw.pojo.SiteDeVenda</class>
     <class>br.ufscar.dc.dsw.pojo.Usuario</class>
+    <class>br.ufscar.dc.dsw.pojo.Papel</class>
+    <class>br.ufscar.dc.dsw.pojo.TokenLogin</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/dsw_2"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
       <property name="javax.persistence.jdbc.password" value="root"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>

@@ -25,21 +25,25 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PAPEL")
 @NamedQueries({
-    @NamedQuery(name = "Papel.findAll", query = "SELECT u FROM PAPEL u")
+  //  @NamedQuery(name = "Papel.findAll", query = "SELECT u FROM PAPEL u")
 //,
 //@NamedQuery(name = "Automovel.findByMontadora", query = "SELECT a FROM Automovel a WHERE a.montadora = :montadora")
 //,
 // @NamedQuery(name = "Automovel.findByDono", query = "SELECT a FROM Automovel a WHERE a.dono = :dono")
 })
-public class Papel implements Comparable<Papel>, Serializable  {
+public class Papel implements Comparable<Papel>, Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     private long id;
     private String nome;
-    
+
     @ManyToMany(mappedBy = "papeis")
     private Set<Usuario> usuarios = new HashSet<>();
+
+    public Papel() {
+    }
 
     public Papel(String nome) {
         this.nome = nome;
@@ -60,7 +64,7 @@ public class Papel implements Comparable<Papel>, Serializable  {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
+
     public Set<Usuario> getUsuarios() {
         return this.usuarios;
     }

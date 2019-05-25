@@ -10,10 +10,12 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Id;
+
 @Entity
 @Table(name = "SITEDEVENDA")
 @NamedQueries({
-@NamedQuery(name = "SiteDeVenda.findAll", query = "SELECT s FROM SiteDeVenda s"),
+    @NamedQuery(name = "SiteDeVenda.findAll", query = "SELECT s FROM SiteDeVenda s")
+    ,
 @NamedQuery(name = "SiteDeVenda.getByNome", query = "SELECT s FROM SiteDeVenda s WHERE s.nome like :nome")
 //,
 //@NamedQuery(name = "Automovel.findByMontadora", query = "SELECT a FROM Automovel a WHERE a.montadora = :montadora")
@@ -33,6 +35,9 @@ public class SiteDeVenda implements Serializable {
     private String nome;
     private String telefone;
 
+    public SiteDeVenda() {
+    }
+
     public SiteDeVenda(String email, String senha, String url, String nome, String telefone) {
         this.email = email;
         this.senha = senha;
@@ -44,7 +49,7 @@ public class SiteDeVenda implements Serializable {
     public SiteDeVenda(String email) {
         this.email = email;
     }
-    
+
     public long getId() {
         return id;
     }
@@ -52,7 +57,7 @@ public class SiteDeVenda implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
-    
+
     public String getEmail() {
         return email;
     }
@@ -92,6 +97,5 @@ public class SiteDeVenda implements Serializable {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-    
-    
+
 }

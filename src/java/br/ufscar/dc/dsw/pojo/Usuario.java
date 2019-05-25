@@ -21,12 +21,14 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "USUARIO")
 @NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
-    @NamedQuery(name = "Usuario.username", query = "SELECT u FROM Usuario u WHERE c.email = :email")
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
+    ,
+    @NamedQuery(name = "Usuario.username", query = "SELECT u FROM Usuario u WHERE u.email = :email")
 })
 public class Usuario implements Serializable {
 
@@ -37,6 +39,7 @@ public class Usuario implements Serializable {
     private String email;
     private String nome;
     private String senha;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date data_criacao;
 
     @ManyToMany(cascade = {
@@ -49,11 +52,14 @@ public class Usuario implements Serializable {
     )
     private Set<Papel> papeis = new HashSet<>();
 
-    @OneToMany(
+    /*@OneToMany(
         mappedBy = "post",
         cascade = CascadeType.ALL
     )
     private List<TokenLogin> tokens = new ArrayList<>();
+     */
+    public Usuario() {
+    }
 
     public Usuario(String email, String nome, String senha, Date data_criacao) throws NoSuchAlgorithmException {
         this.email = email;
@@ -75,18 +81,17 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public List<TokenLogin> getTokens() {
-        return tokens;
-    }
-
-    public void addTokens(TokenLogin tokens) {
-        this.tokens.add(tokens);
-    }
-    
-    public void removeTokens(TokenLogin tokens) {
-        this.tokens.remove(tokens);
-    }
-
+//    public List<TokenLogin> getTokens() {
+//        return tokens;
+//    }
+//
+//    public void addTokens(TokenLogin tokens) {
+//        this.tokens.add(tokens);
+//    }
+//    
+//    public void removeTokens(TokenLogin tokens) {
+//        this.tokens.remove(tokens);
+//    }
     public String getEmail() {
         return email;
     }
