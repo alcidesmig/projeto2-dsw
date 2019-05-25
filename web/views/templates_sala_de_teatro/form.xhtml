@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://xmlns.jcp.org/jsf/html"  
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:include src="../helpers/header.xhtml">
+        <ui:param name="title" value="Sala De Teatro"/>
+    </ui:include>
+    
+    <h:body>
+        <div class="ui text container">
+            <center>
+                <h1>
+                    Formulário
+                </h1>
+            </center>
+            <h:form class="ui form" id="form">
+                <h:inputHidden value="#{saladeteatroBean.saladeteatro.id}" id="id_saladeteatro" a:name="id"/>
+                <div class="field">
+                    <h:outputLabel for="nome">#{msg['saladeteatro.list.nome']}</h:outputLabel>  
+                    <h:inputText value="#{saladeteatroBean.saladeteatro.nome}" id="nome_peca" a:name="nome_peca" a:type="text">
+                        <f:validateRequired/>
+                    </h:inputText>
+                </div>
+                <div class="field">
+                    <h:outputLabel for="email">#{msg['saladeteatro.list.email']}</h:outputLabel>  
+                    <h:inputText value="#{saladeteatroBean.saladeteatro.email}" id="email" a:name="email" a:type="text">
+                        <f:validateRequired/>
+                    </h:inputText>
+                </div>
+                <div class="field">
+                    <h:outputLabel for="senha">#{msg['saladeteatro.list.senha']}</h:outputLabel>   
+                    <h:inputText value="" id="senha" a:name="senha" a:type="text" a:placeholder="******">
+                        <f:validateRequired/>
+                    </h:inputText>
+                </div>
+                <div class="field">
+                    <h:outputLabel for="cnpj">#{msg['saladeteatro.list.cnpj']}</h:outputLabel>   
+                    <h:inputText value="#{saladeteatroBean.saladeteatro.cnpj}" id="cnpj" a:name="cnpj" a:type="text" a:placeholder="******">
+                        <f:validateRequired/>
+                    </h:inputText>
+                    </div>      
+                </div>
+                <div class="field">
+                    <h:outputLabel for="cidade">#{msg['saladeteatro.list.cidade']}</h:outputLabel>   
+                    <h:inputText value="#{saladeteatroBean.saladeteatro.cidade}" id="cnpj" a:name="cidade" a:type="text" a:placeholder="******">
+                        <f:validateRequired/>
+                    </h:inputText>
+                    </div>      
+                    <div class="ui negative message hidden">
+                        <p>#{msg['allform.error']}</p>
+                    </div>
+                    <h:commandButton value="Submit" action="#{saladeteatroBean.salva()}" class="ui positive button"/>
+                </div>
+            </h:form>
+        </div>
+        <script>
+            $(document).ready(function () {
+                form = $('.ui.form');
+                id_saladeteatro = $('#id_saladeteatro');
+                nome_peca = $('#nome_peca');
+                email = $('#email');
+                senha = $('#senha');
+                cnpj = $('#cnpj');
+                cidade = $('#cidade');
+                action = #{teatro eq null? 'cadastro' : 'edicao'};
+                form.form({
+                    fields: {
+                        nome_peca: {
+                            identifier: 'nome_peca',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: '#{msg['allform.required']}'
+                                }
+                            ]
+                        },
+                        email: {
+                            identifier: 'email',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: '#{msg['allform.required']}'
+                                }
+                            ]
+                        },
+                        senha: {
+                            identifier: 'senha',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: '#{msg['allform.required']}'
+                                }
+                            ]
+                        },
+                        cnpj: {
+                            identifier: 'cnpj',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: '#{msg['allform.required']}'
+                                }
+                            ]
+                        },
+                        cidade: {
+                            identifier: 'cidade',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: '#{msg['allform.required']}'
+                                }
+                            ]
+                        }
+                    },
+                    on: 'blur',
+                    inline: true,
+                    onSuccess: function () {
+                        form.removeClass('success').removeClass('error');
+                    },
+                    onFailure: function () {
+                        window.scrollTo(0, 0);
+                        form.removeClass('success').removeClass('error');
+                    }
+                }).on('submit', function (e) {
+                    e.preventDefault();
+                    if (!form.form('is valid'))
+                        return;
+                    form.addClass('loading');
+                    $.post(action, {
+                        id_saladeteatro: id_saladeteatro.val(),
+                        nome_peca: nome_peca.val(),
+                        email: email.val(),
+                        senha: senha.val(),
+                        cnpj: cnpj.val(),
+                        cidade: cidade.val()
+                    }).done(function () {
+                        window.location.href = 'gerenciar';
+                    }).fail(function () {
+                        form.removeClass('loading');
+                        $('.ui.message').show();
+                    });
+                });
+            }
+            );
+        </script>
+        <ui:include src="../helpers/footer.xhtml"/>
+    </h:body>
+</html>
+

@@ -2,7 +2,6 @@ package br.ufscar.dc.dsw.dao;
 
 import br.ufscar.dc.dsw.pojo.Promocao;
 import br.ufscar.dc.dsw.pojo.SalaDeTeatro;
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;

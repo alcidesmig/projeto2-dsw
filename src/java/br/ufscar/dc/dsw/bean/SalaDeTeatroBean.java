@@ -17,7 +17,6 @@ import javax.faces.context.FacesContext;
 public class SalaDeTeatroBean implements Serializable {
 
     private SalaDeTeatro saladeteatro;
-    private String operacao;
     private List<SalaDeTeatro> salasdeteatros;
     DAOSalaDeTeatro dao = new DAOSalaDeTeatro();
 
