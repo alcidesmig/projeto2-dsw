@@ -7,16 +7,17 @@
     <ui:include src="views/helpers/header.xhtml">
         <ui:param name="title" value="home"/>
     </ui:include>
+    <ui:include src="views/helpers/navbar.xhtml">
+    </ui:include>
     <h:body>
-        <div style="min-height: 100vh">
+        <div style="display: block; top:10%; left: 5%;">
             <div class="ui text container ">
                 <marquee><h1>#{msg['index.h1']}</h1></marquee>
             </div>       
-            <div> 
-                <h:form> 
-                    <h:commandLink action="#{promocaoBean.cadastra()}">Cadastra Promocao</h:commandLink>
-                    <h:commandLink action="#{promocaoBean.lista()}">Lista Promocao</h:commandLink>
-                </h:form>
+            <div class="ui raised very padded text container segment">
+                <h2 class="ui header">#{msg['index.h1']}</h2>
+                <p>#{msg['index.p1']}</p>
+                <p>#{msg['index.p2']}</p>
             </div>
         </div> 
         <ui:include src="views/helpers/footer.xhtml"/>

@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://xmlns.jcp.org/jsf/html"  
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:include src="../helpers/header.xhtml">
+        <ui:param name="title" value="home"/>
+    </ui:include>
+
+    <h:body>
+        <div class="ui container">
+            <center>
+                <h1>#{msg['promocao.list.h1']}</h1>
+                <br/>
+            </center>
+            <div class="ui centered grid">
+                <div class="six wide column">
+                    <h:form class="ui form" id="form">
+                        <div class="fields">
+                            <div class="twelve wide field">
+                                <label>#{msg['promocao.list.busca']}</label>
+                                <h:inputText a:type="text" id="busca" a:name="nome"/>
+                            </div>
+                            <div class="four wide field">
+                                <h:commandButton value="Submit" action="#{promocaoBean.busca}" class="ui positive button"/>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+            <h:dataTable value="#{promocaoBean.promocoes}" var="prom"
+                         styleClass="order-table"
+                         headerClass="order-table-header"
+                         rowClasses="order-table-odd-row,order-table-even-row"
+                         class="ui sortable celled table"
+                         a:name="table"
+                         id="table">
+                <h:column>
+                    <f:facet name="header">#{msg['promocao.list.peca_nome']}</f:facet>
+                        #{prom.nome_peca}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">#{msg['promocao.list.preco']}</f:facet>
+                        #{prom.preco}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">#{msg['promocao.list.endereco']}</f:facet>
+                    #{prom.siteDeVenda.nome} - #{prom.siteDeVenda.url}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">#{msg['promocao.list.cnpj']}</f:facet>
+                    #{prom.teatro.nome} - #{prom.teatro.cnpj}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">#{msg['promocao.list.data_hora']}</f:facet>
+                        #{prom.datetime}
+                </h:column>
+
+            </h:dataTable>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $('table').tablesort();
+            });
+        </script>
+
+        <ui:include src="../helpers/footer.xhtml"/>
+    </h:body>
+</html>
