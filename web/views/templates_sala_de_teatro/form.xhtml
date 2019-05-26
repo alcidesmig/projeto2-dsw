@@ -37,7 +37,7 @@
                 </div>
                 <div class="field">
                     <h:outputLabel for="cnpj">#{msg['saladeteatro.list.cnpj']}</h:outputLabel>   
-                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.cnpj}" id="cnpj" a:placeholder="******">
+                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.cnpj}" id="cnpj" >
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
@@ -53,16 +53,17 @@
                 </div>
             </h:form>
         </div>
+        <h:outputScript library="js" name="jquery.mask.min.js" />
+
         <script>
             $(document).ready(function () {
                 form = $('.ui.form');
-                id_saladeteatro = $('#id_saladeteatro');
                 nome_peca = $('#nome_peca');
                 email = $('#email');
                 senha = $('#senha');
                 cnpj = $('#cnpj');
                 cidade = $('#cidade');
-                action = #{teatro eq null? 'cadastro' : 'edicao'};
+                action = 'cadastro';
                 form.form({
                     fields: {
                         nome_peca: {
@@ -126,7 +127,6 @@
                         return;
                     form.addClass('loading');
                     $.post(action, {
-                        id_saladeteatro: id_saladeteatro.val(),
                         nome_peca: nome_peca.val(),
                         email: email.val(),
                         senha: senha.val(),

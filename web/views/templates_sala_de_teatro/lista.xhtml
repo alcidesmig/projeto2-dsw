@@ -21,7 +21,7 @@
                         <div class="fields">
                             <div class="twelve wide field">
                                 <label>#{msg['saladeteatro.list.busca']}</label>
-                                <h:inputText a:type="text" id="busca" a:name="nome"/>
+                                <h:inputText a:type="text" a:id="busca" a:name="nome"/>
                             </div>
                         </div>
                     </h:form>
@@ -36,30 +36,26 @@
                          id="table">
                 <h:column>
                     <f:facet name="header">#{msg['teatro.list.nome']}</f:facet>
-                    #{sala.nome}
+                        #{sala.nome}
                 </h:column>
 
                 <h:column>
                     <f:facet name="header">#{msg['teatro.list.cidade']}</f:facet>
-                    #{sala.cidade}
+                        #{sala.cidade}
                 </h:column>
 
                 <h:column>
                     <f:facet name="header">#{msg['teatro.list.cnpj']}</f:facet>
-                    #{sala.cnpj}
+                        #{sala.cnpj}
                 </h:column>
 
                 <h:column>
                     <f:facet name="header">#{msg['teatro.list.email']}</f:facet>
-                    #{sala.email}
+                        #{sala.email}
                 </h:column>
             </h:dataTable>
         </div>
-        <script>
-            $(document).ready(function () {
-                $('table').tablesort();
-            });
-        </script>
+        <h:outputScript library="js" name="busca.js" />
 
         <ui:include src="../helpers/footer.xhtml"/>
     </h:body>

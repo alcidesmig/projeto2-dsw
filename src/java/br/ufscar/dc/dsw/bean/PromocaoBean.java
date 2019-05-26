@@ -27,20 +27,20 @@ public class PromocaoBean implements Serializable {
     public String gerenciar() {
         promocoes = dao.getAll();
         op = 1;
-        return "views/templates_promocao/gerenciar.xhtml";
+        return "/views/templates_promocao/gerenciar.xhtml";
     }
 
     public String lista() {
         promocoes = dao.getAll();
         op = 0;
-        return "views/templates_promocao/lista.xhtml";
+        return "/views/templates_promocao/lista.xhtml";
     }
 
     public String cadastra() {
         promocao = new Promocao();
         erro = "";
         operacao = "Cadastro de Promoção";
-        return "views/templates_promocao/form.xhtml";
+        return "/views/templates_promocao/form.xhtml";
     }
 
     public String edita(Long id) {
@@ -81,7 +81,7 @@ public class PromocaoBean implements Serializable {
 
     public String volta() {
         promocoes = dao.getAll();
-        return "views/templates_promocao/lista.xhtml?faces-redirect=true";
+        return "/views/templates_promocao/lista.xhtml?faces-redirect=true";
     }
 
     public List<Promocao> getPromocoes() throws SQLException {
