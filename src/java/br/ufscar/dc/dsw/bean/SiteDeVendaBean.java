@@ -72,21 +72,9 @@ public class SiteDeVendaBean implements Serializable {
         return sites;
     }
 
-    public String getSalaDeTeatroByName() throws SQLException {
-        String nome = FacesContext.getCurrentInstance().
-                getExternalContext().getRequestParameterMap().get("nome");
-        // Gambeta pra pegar o primeiro
-        site = (SiteDeVenda) dao.getByName(nome).get(0);
-        return "views/templates_site_de_venda/lista.xhtml";
-    }
-
-    public String busca() throws SQLException {
-        return getSalaDeTeatroByName();
-    }
 
     public List<SiteDeVenda> getSites() throws SQLException {
-        DAOSiteDeVenda dao_s = new DAOSiteDeVenda();
-        return dao_s.getAll();
+        return dao.getAll();
     }
 
     public SiteDeVenda getSiteDeVenda() {
@@ -109,7 +97,4 @@ public class SiteDeVendaBean implements Serializable {
         this.operacao = operacao;
     }
 
-    public void setSaladeteatro(SiteDeVenda sitedevenda) {
-        this.site = sitedevenda;
-    }
 }
