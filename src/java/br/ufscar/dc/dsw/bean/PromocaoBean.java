@@ -21,6 +21,8 @@ public class PromocaoBean implements Serializable {
     private int op;
     private List<Promocao> promocoes;
     DAOPromocao dao = new DAOPromocao();
+    private String erro;
+    private String operacao;
 
     public String gerenciar() {
         promocoes = dao.getAll();
@@ -36,21 +38,34 @@ public class PromocaoBean implements Serializable {
 
     public String cadastra() {
         promocao = new Promocao();
+        erro = "";
+        operacao = "Cadastro de Promoção";
         return "views/templates_promocao/form.xhtml";
     }
 
     public String edita(Long id) {
         promocao = dao.get(id);
+        operacao = "Edição de Promoção";
         return "form.xhtml";
     }
 
     public String salva() {
+        promocoes = dao.getAll();
+        for (Promocao prom : promocoes) {
+            if (prom.getSiteDeVenda().equals(promocao.getSiteDeVenda())) {
+                if (prom.getDatetime().equals(promocao.getDatetime())) {
+                    erro = "Error!";
+                    return "form.xhtml";
+                }
+            }
+        }
         if (dao.get(promocao.getId_promocao()) != null) {
             dao.save(promocao);
         } else {
             dao.update(promocao);
         }
         promocoes = dao.getAll();
+        erro = "";
         if (op == 1) {
             return "gerenciar.xhtml";
         }
@@ -97,6 +112,22 @@ public class PromocaoBean implements Serializable {
 
     public void setOp(int op) {
         this.op = op;
+    }
+
+    public String getErro() {
+        return erro;
+    }
+
+    public void setErro(String erro) {
+        this.erro = erro;
+    }
+
+    public String getOperacao() {
+        return operacao;
+    }
+
+    public void setOperacao(String operacao) {
+        this.operacao = operacao;
     }
 
 }

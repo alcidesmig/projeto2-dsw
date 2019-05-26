@@ -13,10 +13,13 @@
         <div class="ui text container">
             <center>
                 <h1>
-                    Colocar título baseado na operação
+                    #{promocaoBean.operacao}
                 </h1>
             </center>
             <h:form class="ui form" id="form">
+                <h4>                    
+                    <h:outputLabel>#{promocaoBean.erro}</h:outputLabel>  
+                </h4>
                 <div class="form-group field">
                     <h:outputLabel for="nome_peca">#{msg['promocao.list.peca_nome']}</h:outputLabel>  
                     <h:inputText value="#{promocaoBean.promocao.nome_peca}" id="nome_peca">
