@@ -11,7 +11,7 @@
         <div class="ui container">
 
             <center>
-                <h1>#{msg['teatro.gerenciamento.h1']}</h1>
+                <h1>#{msg['site.gerenciamento.h1']}</h1>
             </center>
             <br/>
             <div class="ui centered grid">
@@ -19,7 +19,7 @@
                     <h:form class="ui form" id="form">
                         <div class="fields">
                             <div class="twelve wide field">
-                                <label>#{msg['teatro.list.busca']}</label>
+                                <label>#{msg['site.list.busca']}</label>
                                 <h:inputText a:type="text" a:id="busca"/>
                             </div>
                         </div>
@@ -31,7 +31,7 @@
             <br/>
 
 
-            <h:dataTable value="#{salaDeTeatroBean.salas}" var="sala"
+            <h:dataTable value="#{siteDeVendaBean.sites}" var="site"
                          styleClass="order-table"
                          headerClass="order-table-header"
                          rowClasses="order-table-odd-row,order-table-even-row"
@@ -39,28 +39,28 @@
                          a:name="table"
                          id="table">
                 <h:column>
-                    <f:facet name="header">#{msg['teatro.list.nome']}</f:facet>
-                        #{sala.nome}
+                    <f:facet name="header">#{msg['site.list.nome']}</f:facet>
+                    #{site.nome}
                 </h:column>
 
                 <h:column>
-                    <f:facet name="header">#{msg['teatro.list.cidade']}</f:facet>
-                        #{sala.cidade}
+                    <f:facet name="header">#{msg['site.list.url']}</f:facet>
+                        #{site.url}
                 </h:column>
 
                 <h:column>
-                    <f:facet name="header">#{msg['teatro.list.cnpj']}</f:facet>
-                        #{sala.cnpj}
+                    <f:facet name="header">#{msg['site.list.email']}</f:facet>
+                        #{site.email}
                 </h:column>
 
                 <h:column>
-                    <f:facet name="header">#{msg['teatro.list.email']}</f:facet>
-                        #{sala.email}
+                    <f:facet name="header">#{msg['site.list.telefone']}</f:facet>
+                        #{site.telefone}
                 </h:column>   
                 <h:column>
                     <f:facet name="header">#{msg['teatro.list.actions']}</f:facet>
-                    <h:link outcome="#{salaDeTeatroBean.edita(sala.id)}" value="#{msg['crud.edit']}" />
-                    <h:link outcome="#{salaDeTeatroBean.delete(sala.id)}" value="#{msg['crud.delete']}" />
+                    <h:link outcome="#{siteDeVendaBean.edita(sala.id)}" value="#{msg['crud.edit']}" />
+                    <h:link outcome="#{siteDeVendaBean.delete(sala.id)}" value="#{msg['crud.delete']}" />
                 </h:column>
             </h:dataTable>
         </div>

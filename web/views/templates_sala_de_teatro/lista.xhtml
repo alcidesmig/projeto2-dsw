@@ -10,18 +10,16 @@
     </ui:include>
     <ui:include src="../helpers/navbar.xhtml"/>
     <h:body>
-        <div class="ui container">
-            <center>
-                <h1>#{msg['teatro.list.h1']}</h1>
-                <br/>
-            </center>
+        <div class="ui container centered">
             <div class="ui centered grid">
                 <div class="six wide column">
                     <h:form class="ui form" id="form">
                         <div class="fields">
                             <div class="twelve wide field">
-                                <label>#{msg['saladeteatro.list.busca']}</label>
-                                <h:inputText a:type="text" a:id="busca" a:name="nome"/>
+                                <center>
+                                <h1>#{msg['teatro.list.h1']}</h1>
+                                <h:inputText a:type="text" a:id="busca" a:name="nome" a:placeholder="#{msg['promocao.list.busca']}"/>
+                                </center>
                             </div>
                         </div>
                     </h:form>

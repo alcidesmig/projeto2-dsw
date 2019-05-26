@@ -6,50 +6,52 @@
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:include src="../helpers/header.xhtml">
-        <ui:param name="title" value="Sala De Teatro"/>
+        <ui:param name="title" value="Site De Venda"/>
     </ui:include>
     <ui:include src="../helpers/navbar.xhtml"/>
     <h:body>
         <div class="ui text container">
             <center>
                 <h1>
-                    #{teatroBean.operacao}
+                    #{msg['site.cadastro.h1']}
                 </h1>
             </center>
             <h:form class="ui form" id="form">
                 <div class="field">
-                    <h:outputLabel for="nome">#{msg['teatro.list.nome']}</h:outputLabel>  
-                    <h:inputText value="#{teatroBean.teatro.nome}" id="nome_peca">
+                    <h:outputLabel for="nome">#{msg['site.list.nome']}</h:outputLabel>  
+                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.nome}" id="nome">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
-                    <h:outputLabel for="email">#{msg['teatro.list.email']}</h:outputLabel>  
-                    <h:inputText value="#{teatroBean.teatro.email}" id="email">
+                    <h:outputLabel for="email">#{msg['site.list.email']}</h:outputLabel>  
+                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.email}" id="email">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
-                    <h:outputLabel for="senha">#{msg['login.placeholder.password']}</h:outputLabel>   
-                    <h:inputText value="#{teatroBean.teatro.senha}" id="senha" a:placeholder="******">
+                    <h:outputLabel for="senha">#{msg['site.cadastro.password']}</h:outputLabel>   
+                    <h:inputSecret value="#{siteDeVendaBean.siteDeVenda.senha}" id="senha" a:placeholder="******">
+                        <f:validateRequired/>
+                    </h:inputSecret>
+                </div>
+                <div class="field">
+                    <h:outputLabel for="url">#{msg['site.list.url']}</h:outputLabel>  
+                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.url}" id="url" >
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
-                    <h:outputLabel for="cnpj">#{msg['teatro.list.cnpj']}</h:outputLabel>   
-                    <h:inputText value="#{teatroBean.teatro.cnpj}" id="cnpj" >
-                        <f:validateRequired/>
-                    </h:inputText>
-                </div>
-                <div class="field">
-                    <h:outputLabel for="cidade">#{msg['teatro.list.cidade']}</h:outputLabel>   
-                    <h:inputText value="#{teatroBean.teatro.cidade}" id="cidade">
+                    <h:outputLabel for="telefone">#{msg['site.list.telefone']}</h:outputLabel>   
+                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.telefone}" id="telefone" a:placeholder="(99)99999-9999">
                         <f:validateRequired/>
                     </h:inputText>
                     <div class="ui negative message hidden">
                         <p>#{msg['allform.error']}</p>
                     </div>
-                    <h:commandButton value="Submit" action="#{salaDeTeatroBean.salva()}" class="ui positive button"/>
+                    <br></br>
+                    <br></br>
+                    <h:commandButton value="Submit" action="#{siteDeVendaBean.salva()}" class="ui positive button"/>
                 </div>
             </h:form>
         </div>
@@ -57,17 +59,19 @@
 
         <script>
             $(document).ready(function () {
+                
+                
                 form = $('.ui.form');
-                nome_peca = $('#nome_peca');
+                nome = $('#nome');
                 email = $('#email');
                 senha = $('#senha');
-                cnpj = $('#cnpj');
-                cidade = $('#cidade');
+                url = $('#url');
+                telefone = $('#telefone');
                 action = 'cadastro';
                 form.form({
                     fields: {
-                        nome_peca: {
-                            identifier: 'nome_peca',
+                        nome {
+                            identifier: 'nome',
                             rules: [
                                 {
                                     type: 'empty',
@@ -93,8 +97,8 @@
                                 }
                             ]
                         },
-                        cnpj: {
-                            identifier: 'cnpj',
+                        url {
+                            identifier: 'url',
                             rules: [
                                 {
                                     type: 'empty',
@@ -102,8 +106,8 @@
                                 }
                             ]
                         },
-                        cidade: {
-                            identifier: 'cidade',
+                        telefone {
+                            identifier: 'telefone',
                             rules: [
                                 {
                                     type: 'empty',
@@ -127,11 +131,11 @@
                         return;
                     form.addClass('loading');
                     $.post(action, {
-                        nome_peca: nome_peca.val(),
+                        nome: nome.val(),
                         email: email.val(),
                         senha: senha.val(),
-                        cnpj: cnpj.val(),
-                        cidade: cidade.val()
+                        url: url.val(),
+                        telefone: telefone.val()
                     }).done(function () {
                         window.location.href = 'gerenciar';
                     }).fail(function () {
@@ -141,6 +145,7 @@
                 });
             }
             );
+            
         </script>
         <ui:include src="../helpers/footer.xhtml"/>
     </h:body>

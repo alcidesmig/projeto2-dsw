@@ -5,6 +5,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <div class="ui inverted top fixed big menu">
     <div class="ui container">
+        <a class="item" href="/projeto2_dsw/">#{msg['navbar.item.home']}</a>
             <div class="ui simple dropdown item" id="user">
                 #{msg['navbar.item.user']}
                 <i class="dropdown icon"></i>
@@ -39,8 +40,11 @@
                 #{msg['navbar.item.site']}
                 <i class="dropdown icon"></i>
                 <div class="inverted menu">
-                    <a class="item" href="/projeto1_dsw/site-de-venda/lista">#{msg['navbar.item.site.list']}</a>
-                    <a class="item" href="/projeto1_dsw/site-de-venda/gerenciar">#{msg['navbar.item.site.manage']}</a>
+                    <h:form>
+                    <h:commandLink action="#{siteDeVendaBean.lista}" class="item" style="color:black;">#{msg['navbar.item.site.list']}</h:commandLink>
+                    <h:commandLink action="#{siteDeVendaBean.cadastra}" class="item" style="color:black;">#{msg['navbar.item.user.register']}</h:commandLink>
+                    <h:commandLink action="#{siteDeVendaBean.gerenciar}" class="item" style="color:black;">#{msg['navbar.item.site.manage']}</h:commandLink>
+                    </h:form>
                 </div>
             </div>
         <div class="right menu">
@@ -54,4 +58,8 @@
         </div>
     </div>
 </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
 </ui:composition>
