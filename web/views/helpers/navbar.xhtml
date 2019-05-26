@@ -1,11 +1,11 @@
 <ui:composition 
     xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<div class="ui inverted top fixed big menu">
-    <div class="ui container">
-        <a class="item" href="/projeto2_dsw/">#{msg['navbar.item.home']}</a>
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <div class="ui inverted top fixed big menu">
+        <div class="ui container">
+            <a class="item" href="/projeto2_dsw/">#{msg['navbar.item.home']}</a>
             <div class="ui simple dropdown item" id="user">
                 #{msg['navbar.item.user']}
                 <i class="dropdown icon"></i>
@@ -25,39 +25,38 @@
                     </h:form>
                 </div>
             </div>
-        <div class="ui simple dropdown item" id="user">
-            #{msg['navbar.item.teatro']}
-            <i class="dropdown icon"></i>
-            <div class="inverted menu">
-                <h:form> 
-                    <h:commandLink action="#{salaDeTeatroBean.lista}" class="item" style="color:black;">#{msg['navbar.item.teatro.list']}</h:commandLink>
-                    <h:commandLink action="#{salaDeTeatroBean.cadastra}" class="item" style="color:black;">#{msg['navbar.item.user.register']}</h:commandLink>
-                    <h:commandLink action="#{salaDeTeatroBean.gerenciar}" class="item" style="color:black;">#{msg['navbar.item.teatro.manage']}</h:commandLink>
-                </h:form>
+            <div class="ui simple dropdown item" id="user">
+                #{msg['navbar.item.teatro']}
+                <i class="dropdown icon"></i>
+                <div class="inverted menu">
+                    <h:form> 
+                        <h:commandLink action="#{salaDeTeatroBean.lista}" class="item" style="color:black;">#{msg['navbar.item.teatro.list']}</h:commandLink>
+                        <h:commandLink action="#{salaDeTeatroBean.cadastra}" class="item" style="color:black;">#{msg['navbar.item.user.register']}</h:commandLink>
+                        <h:commandLink action="#{salaDeTeatroBean.gerenciar}" class="item" style="color:black;">#{msg['navbar.item.teatro.manage']}</h:commandLink>
+                    </h:form>
+                </div>
             </div>
-        </div>
             <div class="ui simple dropdown item" id="user">
                 #{msg['navbar.item.site']}
                 <i class="dropdown icon"></i>
                 <div class="inverted menu">
                     <h:form>
-                    <h:commandLink action="#{siteDeVendaBean.lista}" class="item" style="color:black;">#{msg['navbar.item.site.list']}</h:commandLink>
-                    <h:commandLink action="#{siteDeVendaBean.cadastra}" class="item" style="color:black;">#{msg['navbar.item.user.register']}</h:commandLink>
-                    <h:commandLink action="#{siteDeVendaBean.gerenciar}" class="item" style="color:black;">#{msg['navbar.item.site.manage']}</h:commandLink>
+                        <h:commandLink action="#{siteDeVendaBean.lista}" class="item" style="color:black;">#{msg['navbar.item.site.list']}</h:commandLink>
+                        <h:commandLink action="#{siteDeVendaBean.cadastra}" class="item" style="color:black;">#{msg['navbar.item.user.register']}</h:commandLink>
+                        <h:commandLink action="#{siteDeVendaBean.gerenciar}" class="item" style="color:black;">#{msg['navbar.item.site.manage']}</h:commandLink>
                     </h:form>
                 </div>
             </div>
-        <div class="right menu">
-            <a class="item" href="/projeto1_dsw/login.jsp">
-                #{msg['navbar.item.login']}
-            </a>
-            <a class="item">{Usuário Atual}</a>
-            <a class="item" href="/projeto1_dsw/auth/">
-               #{msg['navbar.item.logout']}
-            </a>
+            <div class="right menu">
+                <h:form><h:commandLink action="#{beanUsuario.urlLogin}" class="item" style="color:white;">#{msg['navbar.item.login']}</h:commandLink>
+                </h:form>
+                <a class="item">#{beanUsuario.user.nome}</a>
+                <a class="item" href="/projeto1_dsw/auth/">
+                    #{msg['navbar.item.logout']}
+                </a>
+            </div>
         </div>
     </div>
-</div>
     <br/>
     <br/>
     <br/>
