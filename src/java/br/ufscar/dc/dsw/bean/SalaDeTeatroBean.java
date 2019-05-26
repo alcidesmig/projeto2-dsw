@@ -64,7 +64,7 @@ public class SalaDeTeatroBean implements Serializable {
     public String delete(Long id) {
         dao.delete(dao.get(id)); //problema
         salas = dao.getAll();
-        return "gerenciar.xhtml";
+        return "/views/templates_sala_de_teatro/gerenciar.xhtml";
     }
 
     public String volta() {
