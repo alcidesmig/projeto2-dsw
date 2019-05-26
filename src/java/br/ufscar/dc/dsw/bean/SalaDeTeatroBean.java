@@ -11,7 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-@ManagedBean(name = "saladeteatroBean")
+@ManagedBean(name = "salaDeTeatroBean")
 @SessionScoped
 
 public class SalaDeTeatroBean implements Serializable {
@@ -19,19 +19,31 @@ public class SalaDeTeatroBean implements Serializable {
     private SalaDeTeatro saladeteatro;
     private List<SalaDeTeatro> salasdeteatros;
     DAOSalaDeTeatro dao = new DAOSalaDeTeatro();
+    int op;
+    private String erro;
+    private String operacao;
+
+    public String gerenciar() {
+        op = 1;
+        return "views/templates_sala_de_teatro/lista.xhtml";
+    }
 
     public String lista() {
+        op = 0;
         return "views/templates_sala_de_teatro/lista.xhtml";
     }
 
     public String cadastra() {
         saladeteatro = new SalaDeTeatro();
+        erro = "";
+        operacao = "Cadastro de Sala de Teatro";
         return "views/templates_sala_de_teatro/form.xhtml";
     }
 
     public String edita(Long id) {
         saladeteatro = dao.get(id);
-        return "views/templates_sala_de_teatro/form.xhtml";
+        operacao = "Edição de Sala de Teatro";
+        return "form.xhtml";
     }
 
     public String salva() {
@@ -41,13 +53,16 @@ public class SalaDeTeatroBean implements Serializable {
             dao.update(saladeteatro);
         }
         salasdeteatros = dao.getAll();
-        return "views/templates_sala_de_teatro/lista.xhtml";
+        if (op == 1) {
+            return "gerenciar.xhtml";
+        }
+        return "lista.xhtml";
     }
 
     public String delete(SalaDeTeatro saladeteatro) {
         dao.delete(saladeteatro);
         salasdeteatros = dao.getAll();
-        return "views/templates_sala_de_teatro/lista.xhtml";
+        return "gerenciar.xhtml";
     }
 
     public String volta() {
@@ -69,7 +84,7 @@ public class SalaDeTeatroBean implements Serializable {
     public String busca() throws SQLException {
         return getSalaDeTeatroByName();
     }
-    
+
     // Não sei se tem utilidade, mas vou manter
     public List<SiteDeVenda> getSitesDeVenda() throws SQLException {
         DAOSiteDeVenda dao_s = new DAOSiteDeVenda();
@@ -83,5 +98,29 @@ public class SalaDeTeatroBean implements Serializable {
 
     public SalaDeTeatro getSalaDeTeatro() {
         return saladeteatro;
+    }
+
+    public String getErro() {
+        return erro;
+    }
+
+    public void setErro(String erro) {
+        this.erro = erro;
+    }
+
+    public String getOperacao() {
+        return operacao;
+    }
+
+    public void setOperacao(String operacao) {
+        this.operacao = operacao;
+    }
+
+    public SalaDeTeatro getSaladeteatro() {
+        return saladeteatro;
+    }
+
+    public void setSaladeteatro(SalaDeTeatro saladeteatro) {
+        this.saladeteatro = saladeteatro;
     }
 }
