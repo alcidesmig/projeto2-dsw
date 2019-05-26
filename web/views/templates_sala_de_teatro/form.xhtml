@@ -13,37 +13,37 @@
         <div class="ui text container">
             <center>
                 <h1>
-                    #{teatroBean.operacao}
+                    #{salaDeTeatroBean.operacao}
                 </h1>
             </center>
             <h:form class="ui form" id="form">
                 <div class="field">
                     <h:outputLabel for="nome">#{msg['teatro.list.nome']}</h:outputLabel>  
-                    <h:inputText value="#{teatroBean.teatro.nome}" id="nome_peca">
+                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.nome}" id="nome_peca">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
                     <h:outputLabel for="email">#{msg['teatro.list.email']}</h:outputLabel>  
-                    <h:inputText value="#{teatroBean.teatro.email}" id="email">
+                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.email}" id="email">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
                     <h:outputLabel for="senha">#{msg['login.placeholder.password']}</h:outputLabel>   
-                    <h:inputText value="#{teatroBean.teatro.senha}" id="senha" a:placeholder="******">
+                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.senha}" id="senha" a:placeholder="******">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
                     <h:outputLabel for="cnpj">#{msg['teatro.list.cnpj']}</h:outputLabel>   
-                    <h:inputText value="#{teatroBean.teatro.cnpj}" id="cnpj" >
+                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.cnpj}" id="cnpj" >
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
                     <h:outputLabel for="cidade">#{msg['teatro.list.cidade']}</h:outputLabel>   
-                    <h:inputText value="#{teatroBean.teatro.cidade}" id="cidade">
+                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.cidade}" id="cidade">
                         <f:validateRequired/>
                     </h:inputText>
                     <div class="ui negative message hidden">
@@ -57,11 +57,13 @@
 
         <script>
             $(document).ready(function () {
+                
                 form = $('.ui.form');
                 nome_peca = $('#nome_peca');
                 email = $('#email');
                 senha = $('#senha');
                 cnpj = $('#cnpj');
+                $('#cnpj').mask("99.999.999/9999-99");
                 cidade = $('#cidade');
                 action = 'cadastro';
                 form.form({
