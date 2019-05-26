@@ -18,6 +18,20 @@
                 <h2 class="ui header">#{msg['index.h1']}</h2>
                 <p>#{msg['index.p1']}</p>
                 <p>#{msg['index.p2']}</p>
+            <div> 
+                <h:form> 
+                    <h:commandLink action="#{promocaoBean.cadastra()}">Cadastra Promocao</h:commandLink>
+                    <br/>
+                    <h:commandLink action="#{promocaoBean.lista()}">Lista Promocao</h:commandLink>
+                    <br/>
+                    <h:commandLink action="#{promocaoBean.gerenciar()}">Gerencia Promocao</h:commandLink>
+                    <br/>
+                    <h:commandLink action="#{salaDeTeatroBean.cadastra()}">Cadastra Teatro</h:commandLink>
+                    <br/>
+                    <h:commandLink action="#{salaDeTeatroBean.lista()}">Lista Teatro</h:commandLink>
+                    <br/>
+                    <h:commandLink action="#{salaDeTeatroBean.gerenciar()}">Gerencia Teatro</h:commandLink>
+                </h:form>
             </div>
         </div> 
         <ui:include src="views/helpers/footer.xhtml"/>

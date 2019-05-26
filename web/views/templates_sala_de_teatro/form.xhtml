@@ -17,42 +17,39 @@
                 </h1>
             </center>
             <h:form class="ui form" id="form">
-                <h:inputHidden value="#{saladeteatroBean.saladeteatro.id}" id="id_saladeteatro"/>
                 <div class="field">
                     <h:outputLabel for="nome">#{msg['saladeteatro.list.nome']}</h:outputLabel>  
-                    <h:inputText value="#{saladeteatroBean.saladeteatro.nome}" id="nome_peca">
+                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.nome}" id="nome_peca">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
                     <h:outputLabel for="email">#{msg['saladeteatro.list.email']}</h:outputLabel>  
-                    <h:inputText value="#{saladeteatroBean.saladeteatro.email}" id="email">
+                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.email}" id="email">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
                     <h:outputLabel for="senha">#{msg['saladeteatro.list.senha']}</h:outputLabel>   
-                    <h:inputText value="" id="senha" a:placeholder="******">
+                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.senha}" id="senha" a:placeholder="******">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
                     <h:outputLabel for="cnpj">#{msg['saladeteatro.list.cnpj']}</h:outputLabel>   
-                    <h:inputText value="#{saladeteatroBean.saladeteatro.cnpj}" id="cnpj" a:placeholder="******">
+                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.cnpj}" id="cnpj" a:placeholder="******">
                         <f:validateRequired/>
                     </h:inputText>
-                    </div>      
                 </div>
                 <div class="field">
                     <h:outputLabel for="cidade">#{msg['saladeteatro.list.cidade']}</h:outputLabel>   
-                    <h:inputText value="#{saladeteatroBean.saladeteatro.cidade}" id="cnpj" a:placeholder="******">
+                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.cidade}" id="cidade" a:placeholder="******">
                         <f:validateRequired/>
                     </h:inputText>
-                    </div>      
                     <div class="ui negative message hidden">
                         <p>#{msg['allform.error']}</p>
                     </div>
-                    <h:commandButton value="Submit" action="#{saladeteatroBean.salva()}" class="ui positive button"/>
+                    <h:commandButton value="Submit" action="#{salaDeTeatroBean.salva()}" class="ui positive button"/>
                 </div>
             </h:form>
         </div>

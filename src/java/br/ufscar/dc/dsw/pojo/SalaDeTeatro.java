@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw.pojo;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +22,45 @@ import javax.persistence.Table;
 // @NamedQuery(name = "Automovel.findByDono", query = "SELECT a FROM Automovel a WHERE a.dono = :dono")
 })
 public class SalaDeTeatro implements Serializable {
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SalaDeTeatro other = (SalaDeTeatro) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.senha, other.senha)) {
+            return false;
+        }
+        if (!Objects.equals(this.cnpj, other.cnpj)) {
+            return false;
+        }
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        if (!Objects.equals(this.cidade, other.cidade)) {
+            return false;
+        }
+        return true;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

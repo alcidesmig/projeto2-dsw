@@ -1,5 +1,3 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"  
       xmlns:h="http://xmlns.jcp.org/jsf/html"  
       xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -8,13 +6,13 @@
     <ui:include src="../helpers/header.xhtml">
         <ui:param name="title" value="home"/>
     </ui:include>
-
     <h:body>
         <div class="ui container">
+
             <center>
-                <h1>#{msg['promocao.list.h1']}</h1>
-                <br/>
+                <h1>#{msg['promocao.gerenciamento.h1']}</h1>
             </center>
+            <br/>
             <div class="ui centered grid">
                 <div class="six wide column">
                     <h:form class="ui form" id="form">
@@ -23,10 +21,18 @@
                                 <label>#{msg['promocao.list.busca']}</label>
                                 <h:inputText a:type="text" a:id="busca"/>
                             </div>
+                            <div class="four wide field">
+                                <h:commandButton action = "#{promocaoBean.busca(1)}" value="Submit" class="ui positive button"/>  
+                            </div>
                         </div>
                     </h:form>
                 </div>
             </div>
+
+            <br/>
+            <br/>
+
+
             <h:dataTable value="#{promocaoBean.promocoes}" var="prom"
                          styleClass="order-table"
                          headerClass="order-table-header"
@@ -57,11 +63,14 @@
                     <f:facet name="header">#{msg['promocao.list.data_hora']}</f:facet>
                         #{prom.datetime}
                 </h:column>
-
+                <h:column>    
+                    <f:facet name="header">#{msg['teatro.list.actions']}</f:facet>
+                    <h:link outcome="#{promocaoBean.edita(prom.id_promocao)}" value="#{msg['crud.edit']}" />
+                    <h:link outcome="#{promocaoBean.delete(prom.id_promocao)}" value="#{msg['crud.delete']}" />
+                </h:column>
             </h:dataTable>
         </div>
         <h:outputScript library="js" name="busca.js" />
-
 
         <ui:include src="../helpers/footer.xhtml"/>
     </h:body>

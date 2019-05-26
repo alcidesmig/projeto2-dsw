@@ -18,39 +18,65 @@ import javax.faces.context.FacesContext;
 public class PromocaoBean implements Serializable {
 
     private Promocao promocao;
-    private String operacao;
+    private int op;
     private List<Promocao> promocoes;
     DAOPromocao dao = new DAOPromocao();
+    private String erro;
+    private String operacao;
+
+    public String gerenciar() {
+        promocoes = dao.getAll();
+        op = 1;
+        return "views/templates_promocao/gerenciar.xhtml";
+    }
 
     public String lista() {
+        promocoes = dao.getAll();
+        op = 0;
         return "views/templates_promocao/lista.xhtml";
     }
 
     public String cadastra() {
         promocao = new Promocao();
+        erro = "";
+        operacao = "Cadastro de Promoção";
         return "views/templates_promocao/form.xhtml";
     }
 
     public String edita(Long id) {
         promocao = dao.get(id);
+        operacao = "Edição de Promoção";
         return "form.xhtml";
     }
 
     public String salva() {
-        if (promocao.getId_promocao() == 0) {
+        promocoes = dao.getAll();
+        for (Promocao prom : promocoes) {
+            if (prom.getSiteDeVenda().equals(promocao.getSiteDeVenda())) {
+                if (prom.getDatetime().equals(promocao.getDatetime())) {
+                    erro = "Error!";
+                    return "form.xhtml";
+                }
+            }
+        }
+        if (dao.get(promocao.getId_promocao()) != null) {
             dao.save(promocao);
         } else {
             dao.update(promocao);
         }
-        System.out.println(promocao.getNome_peca());
         promocoes = dao.getAll();
+        erro = "";
+        if (op == 1) {
+            return "gerenciar.xhtml";
+        }
         return "lista.xhtml";
+
     }
 
-    public String delete(Promocao promocao) {
-        dao.delete(promocao);
+    public String delete(Long id) {
+        dao.delete(dao.get(id));
         promocoes = dao.getAll();
-        return "views/templates_promocao/lista.xhtml";
+        return "gerenciar.xhtml";
     }
 
     public String volta() {
@@ -60,17 +86,6 @@ public class PromocaoBean implements Serializable {
 
     public List<Promocao> getPromocoes() throws SQLException {
         return promocoes;
-    }
-
-    public String getPromocoesByName() throws SQLException {
-        String nome = FacesContext.getCurrentInstance().
-                getExternalContext().getRequestParameterMap().get("nome");
-        promocoes = dao.getByName(nome);
-        return "lista.xhtml";
-    }
-
-    public String busca() throws SQLException {
-        return getPromocoesByName();
     }
 
     public List<SiteDeVenda> getSitesDeVenda() throws SQLException {
@@ -86,4 +101,33 @@ public class PromocaoBean implements Serializable {
     public Promocao getPromocao() {
         return promocao;
     }
+
+    public void setPromocao(Promocao promocao) {
+        this.promocao = promocao;
+    }
+
+    public int getOp() {
+        return op;
+    }
+
+    public void setOp(int op) {
+        this.op = op;
+    }
+
+    public String getErro() {
+        return erro;
+    }
+
+    public void setErro(String erro) {
+        this.erro = erro;
+    }
+
+    public String getOperacao() {
+        return operacao;
+    }
+
+    public void setOperacao(String operacao) {
+        this.operacao = operacao;
+    }
+
 }
