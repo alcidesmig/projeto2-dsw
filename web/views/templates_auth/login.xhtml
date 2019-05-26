@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://xmlns.jcp.org/jsf/html"  
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:include src="../helpers/header.xhtml">
+        <ui:param name="title" value="home"/>
+    </ui:include>
+    <ui:include src="../helpers/navbar.xhtml"/>
+    <h:body>
+        <div class="ui text container">
+            <center>
+                <h1>
+                    Login
+                </h1>
+            </center>
+            <h:form class="ui form" id="form">
+                <div class="form-group field">
+                    <h:outputLabel for="login">Login</h:outputLabel>  
+                    <h:inputText value="#{beanUsuario.email}" id="login">
+                        <f:validateRequired/>
+                    </h:inputText>
+                </div>
+                <div class="form-group field">
+                    <h:outputLabel for="password">Senha</h:outputLabel>  
+                    <h:inputText value="#{beanUsuario.senha}" id="password">
+                        <f:validateRequired/>
+                    </h:inputText>
+                </div>
+                <h:commandButton value="Submit" action="#{beanUsuario.doLogin}" class="ui positive button"/>
+            </h:form>
+        </div>
+
+        <ui:include src="../helpers/footer.xhtml"/>
+    </h:body>
+</html>
+

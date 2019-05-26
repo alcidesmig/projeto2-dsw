@@ -5,6 +5,7 @@
  */
 package br.ufscar.dc.dsw.dao;
 
+import br.ufscar.dc.dsw.pojo.SiteDeVenda;
 import br.ufscar.dc.dsw.pojo.Usuario;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -33,14 +34,13 @@ public class DAOUsuario extends GenericDAO<Usuario> {
         em.close();
         return result;
     }
-    
+
     public Usuario get(String email) {
         EntityManager em = this.getEntityManager();
-        TypedQuery<Usuario> query = em.createNamedQuery("Usuario.username", Usuario.class);
+        TypedQuery<Usuario> query = em.createNamedQuery("Usuario.findByEmail", Usuario.class);
         query.setParameter("email", email);
-        Usuario user = query.getSingleResult();
         em.close();
-        return user;
+        return query.getResultList().get(0);
     }
 
     @Override
