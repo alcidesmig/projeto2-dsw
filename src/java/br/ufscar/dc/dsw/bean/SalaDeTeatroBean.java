@@ -17,7 +17,7 @@ import javax.faces.context.FacesContext;
 public class SalaDeTeatroBean implements Serializable {
 
     private SalaDeTeatro saladeteatro;
-    private List<SalaDeTeatro> salasdeteatros;
+    private List<SalaDeTeatro> salas;
     DAOSalaDeTeatro dao = new DAOSalaDeTeatro();
     int op;
     private String erro;
@@ -25,19 +25,21 @@ public class SalaDeTeatroBean implements Serializable {
 
     public String gerenciar() {
         op = 1;
-        return "views/templates_sala_de_teatro/lista.xhtml";
+        salas = dao.getAll();
+        return "/views/templates_sala_de_teatro/gerenciar.xhtml";
     }
 
     public String lista() {
         op = 0;
-        return "views/templates_sala_de_teatro/lista.xhtml";
+        salas = dao.getAll();
+        return "/views/templates_sala_de_teatro/lista.xhtml";
     }
 
     public String cadastra() {
         saladeteatro = new SalaDeTeatro();
         erro = "";
         operacao = "Cadastro de Sala de Teatro";
-        return "views/templates_sala_de_teatro/form.xhtml";
+        return "/views/templates_sala_de_teatro/form.xhtml";
     }
 
     public String edita(Long id) {
@@ -52,33 +54,33 @@ public class SalaDeTeatroBean implements Serializable {
         } else {
             dao.update(saladeteatro);
         }
-        salasdeteatros = dao.getAll();
+        salas = dao.getAll();
         if (op == 1) {
             return "gerenciar.xhtml";
         }
         return "lista.xhtml";
     }
 
-    public String delete(SalaDeTeatro saladeteatro) {
-        dao.delete(saladeteatro);
-        salasdeteatros = dao.getAll();
+    public String delete(Long id) {
+        dao.delete(dao.get(id)); //problema
+        salas = dao.getAll();
         return "gerenciar.xhtml";
     }
 
     public String volta() {
-        salasdeteatros = dao.getAll();
-        return "views/templates_sala_de_teatro/lista.xhtml?faces-redirect=true";
+        salas = dao.getAll();
+        return "/views/templates_sala_de_teatro/lista.xhtml?faces-redirect=true";
     }
 
     public List<SalaDeTeatro> getSalasDeTeatro() throws SQLException {
-        return salasdeteatros;
+        return salas;
     }
 
     public String getSalaDeTeatroByName() throws SQLException {
         String nome = FacesContext.getCurrentInstance().
                 getExternalContext().getRequestParameterMap().get("nome");
         saladeteatro = dao.getByNome(nome);
-        return "views/templates_sala_de_teatro/lista.xhtml";
+        return "/views/templates_sala_de_teatro/lista.xhtml";
     }
 
     public String busca() throws SQLException {
@@ -96,7 +98,7 @@ public class SalaDeTeatroBean implements Serializable {
         return dao_s.getAll();
     }
 
-    public SalaDeTeatro getSalaDeTeatro() {
+    public SalaDeTeatro getSaladeteatro() {
         return saladeteatro;
     }
 
@@ -116,11 +118,13 @@ public class SalaDeTeatroBean implements Serializable {
         this.operacao = operacao;
     }
 
-    public SalaDeTeatro getSaladeteatro() {
-        return saladeteatro;
-    }
 
     public void setSaladeteatro(SalaDeTeatro saladeteatro) {
         this.saladeteatro = saladeteatro;
     }
+
+    public List<SalaDeTeatro> getSalas() {
+        return salas;
+    }
+
 }

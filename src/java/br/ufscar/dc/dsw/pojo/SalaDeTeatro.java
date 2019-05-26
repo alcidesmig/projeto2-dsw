@@ -64,7 +64,6 @@ public class SalaDeTeatro implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "ID")
     private long id;
     private String email;
