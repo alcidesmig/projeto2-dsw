@@ -1,0 +1,75 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://xmlns.jcp.org/jsf/html"  
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:include src="../helpers/header.xhtml">
+        <ui:param name="title" value="home"/>
+    </ui:include>
+    <ui:include src="views/helpers/navbar.xhtml">
+    </ui:include>
+    <h:body>
+        <div class="ui container">
+
+            <center>
+                <h1>#{msg['teatro.gerenciamento.h1']}</h1>
+            </center>
+            <br/>
+            <div class="ui centered grid">
+                <div class="six wide column">
+                    <h:form class="ui form" id="form">
+                        <div class="fields">
+                            <div class="twelve wide field">
+                                <label>#{msg['teatro.list.busca']}</label>
+                                <h:inputText a:type="text" a:id="busca"/>
+                            </div>
+                            <div class="four wide field">
+                                <h:commandButton action = "#{salaDeTeatroBean.busca(1)}" value="Submit" class="ui positive button"/>  
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+
+            <br/>
+            <br/>
+
+
+            <h:dataTable value="#{salaDeTeatroBean.salasDeTeatro}" var="teatro"
+                         styleClass="order-table"
+                         headerClass="order-table-header"
+                         rowClasses="order-table-odd-row,order-table-even-row"
+                         class="ui sortable celled table"
+                         a:name="table"
+                         id="table">
+                <h:column>
+                    <f:facet name="header">#{msg['teatro.list.nome']}</f:facet>
+                    #{teatro.nome}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">#{msg['teatro.list.email']}</f:facet>
+                    #{teatro.email}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">#{msg['teatro.list.cidade']}</f:facet>
+                    #{teatro.cidade}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">#{msg['teatro.list.cnpj']}</f:facet>
+                    #{teatro.cnpj}
+                </h:column>
+                <h:column>    
+                    <f:facet name="header">#{msg['teatro.list.actions']}</f:facet>
+                    <h:link outcome="#{salaDeTeatroBean.edita(teatro.id)}" value="#{msg['crud.edit']}" />
+                    <h:link outcome="#{salaDeTeatroBean.delete(teatro.id)}" value="#{msg['crud.delete']}" />
+                </h:column>
+            </h:dataTable>
+        </div>
+        <h:outputScript library="js" name="busca.js" />
+
+        <ui:include src="../helpers/footer.xhtml"/>
+    </h:body>
+</html>
