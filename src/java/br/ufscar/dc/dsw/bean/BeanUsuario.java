@@ -44,15 +44,19 @@ public class BeanUsuario {
   
     public String doLogin() {
        try {
-           Usuario user = new Usuario().isUsuarioReadyToLogin(login, senha);
-  
+           Usuario user = new Usuario().isUsuarioReadyToLogin(email, senha);
+                      System.out.println("ate aqui1");;
+
            if (user == null) {
              FacesContext.getCurrentInstance().validationFailed();
              return "";
            }
+           System.out.println("ate aqui2");;
   
            Usuario usuario = new DAOUsuario().get(user.getEmail());
            SessionContext.getInstance().setAttribute("usuarioLogado", usuario);
+                      System.out.println("ate aqui3");;
+
            return "/index.xhtml?faces-redirect=true";
        } catch (Exception e) {
            FacesContext.getCurrentInstance().validationFailed();

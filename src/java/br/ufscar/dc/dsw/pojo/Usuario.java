@@ -18,7 +18,7 @@ import javax.persistence.Transient;
 @NamedQueries(value = {
     @NamedQuery(name = "Usuario.findByEmail",
             query = "SELECT c FROM Usuario c "
-            + "WHERE c.email = :emai")})
+            + "WHERE c.email = :email")})
 @Table(name = "usuario")
 public class Usuario implements Serializable {
 
