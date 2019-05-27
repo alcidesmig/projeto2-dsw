@@ -3,8 +3,8 @@
 ## Instruções
 
 - Clonar o projeto
-- Rodar utilizando o apache tomcat
 - Rodar o script para criação do usuário root em /br/ufscar/dc/dsw/sql/criarUsuario.sql
+- Rodar utilizando o apache tomcat
 
 ## Especificações do sistema
 
@@ -44,4 +44,6 @@ o erro no console.
 CNPJ, e-mail, data, etc) para entrada dos dados.
 
 ## Desenvolvedores
-Alcides Mignoso e Silva; Gabriel Olivato; Igor Magollo.
+- Alcides Mignoso e Silva
+- Gabriel Olivato
+- Igor Magollo
