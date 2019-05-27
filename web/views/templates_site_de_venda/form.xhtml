@@ -19,31 +19,31 @@
             <h:form class="ui form" id="form">
                 <div class="field">
                     <h:outputLabel for="nome">#{msg['site.list.nome']}</h:outputLabel>  
-                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.nome}" id="nome">
+                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.nome}" id="nome" maxlength="30">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
                     <h:outputLabel for="email">#{msg['site.list.email']}</h:outputLabel>  
-                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.email}" id="email">
+                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.email}" id="email" maxlength="50">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
                     <h:outputLabel for="senha">#{msg['site.cadastro.password']}</h:outputLabel>   
-                    <h:inputSecret value="#{siteDeVendaBean.siteDeVenda.senha}" id="senha" a:placeholder="******">
+                    <h:inputSecret value="#{siteDeVendaBean.siteDeVenda.senha}" id="senha" a:placeholder="******" maxlength="18">
                         <f:validateRequired/>
                     </h:inputSecret>
                 </div>
                 <div class="field">
                     <h:outputLabel for="url">#{msg['site.list.url']}</h:outputLabel>  
-                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.url}" id="url" >
+                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.url}" id="url" maxlength="100">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
                     <h:outputLabel for="telefone">#{msg['site.list.telefone']}</h:outputLabel>   
-                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.telefone}" id="telefone" a:placeholder="(99)99999-9999">
+                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.telefone}" id="telefone" a:placeholder="(99)9999-99999" styleClass="telefone" maxlength="20">
                         <f:validateRequired/>
                     </h:inputText>
                     <div class="ui negative message hidden">
@@ -56,97 +56,27 @@
             </h:form>
         </div>
         <h:outputScript library="js" name="jquery.mask.min.js" />
-
-        <script>
-            $(document).ready(function () {
-
-                form = $('.ui.form');
-                nome = $('#nome');
-                email = $('#email');
-                senha = $('#senha');
-                url = $('#url');
-                telefone = $('#telefone');
-                action = 'cadastro';
-                form.form({
-                    fields: {
-                        nome {
-                            identifier: 'nome',
-                            rules: [
-                                {
-                                    type: 'empty',
-                                    prompt: '#{msg['allform.required']}'
-                                }
-                            ]
-                        },
-                        email: {
-                            identifier: 'email',
-                            rules: [
-                                {
-                                    type: 'empty',
-                                    prompt: '#{msg['allform.required']}'
-                                }
-                            ]
-                        },
-                        senha: {
-                            identifier: 'senha',
-                            rules: [
-                                {
-                                    type: 'empty',
-                                    prompt: '#{msg['allform.required']}'
-                                }
-                            ]
-                        },
-                        url {
-                            identifier: 'url',
-                            rules: [
-                                {
-                                    type: 'empty',
-                                    prompt: '#{msg['allform.required']}'
-                                }
-                            ]
-                        },
-                        telefone {
-                            identifier: 'telefone',
-                            rules: [
-                                {
-                                    type: 'empty',
-                                    prompt: '#{msg['allform.required']}'
-                                }
-                            ]
-                        }
-                    },
-                    on: 'blur',
-                    inline: true,
-                    onSuccess: function () {
-                        form.removeClass('success').removeClass('error');
-                    },
-                    onFailure: function () {
-                        window.scrollTo(0, 0);
-                        form.removeClass('success').removeClass('error');
-                    }
-                }).on('submit', function (e) {
-                    //e.preventDefault();
-                    if (!form.form('is valid'))
-                        return;
-                    form.addClass('loading');
-                    $.post(action, {
-                        nome: nome.val(),
-                        email: email.val(),
-                        senha: senha.val(),
-                        url: url.val(),
-                        telefone: telefone.val()
-                    }).done(function () {
-                        window.location.href = 'gerenciar';
-                    }).fail(function () {
-                        form.removeClass('loading');
-                        $('.ui.message').show();
-                    });
-                });
-            }
-            );
-            
-        </script>
         <ui:include src="../helpers/footer.xhtml"/>
+        <script>
+         jQuery("input.telefone")
+        .mask("(99) 99999-9999")
+        .focusout(function (event) {  
+            var target, phone, element;  
+            target = (event.currentTarget) ? event.currentTarget : event.srcElement;  
+            phone = target.value.replace(/\D/g, '');
+            element = $(target);  
+            element.unmask();  
+            if(phone.length > 10) {  
+                element.mask("(99) 99999-9999");  
+            } else {  
+                element.mask("(99) 9999-9999");  
+            }  
+        });
+        function isEmail(email) {
+            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            return regex.test(email);
+          }
+        </script>
     </h:body>
 </html>
 
