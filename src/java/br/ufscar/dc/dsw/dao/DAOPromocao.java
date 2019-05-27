@@ -2,6 +2,8 @@ package br.ufscar.dc.dsw.dao;
 
 import br.ufscar.dc.dsw.pojo.Promocao;
 import br.ufscar.dc.dsw.pojo.SalaDeTeatro;
+import br.ufscar.dc.dsw.pojo.SiteDeVenda;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -9,7 +11,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-public class DAOPromocao extends GenericDAO<Promocao> {
+public class DAOPromocao extends GenericDAO<Promocao>  implements Serializable{
 
     @Override
     public Promocao get(Long id) {
@@ -56,6 +58,7 @@ public class DAOPromocao extends GenericDAO<Promocao> {
         tx.begin();
         em.remove(prom);
         tx.commit();
+        em.close();
     }
 
     public List<Promocao> getByTeatro(SalaDeTeatro salaDeTeatro) {
@@ -68,6 +71,21 @@ public class DAOPromocao extends GenericDAO<Promocao> {
                 result.add(promocao);
             }
         }
+        em.close();
+        return result;
+    }
+
+    public List<Promocao> getBySite(SiteDeVenda site) {
+        EntityManager em = this.getEntityManager();
+        String s = "select p from Promocao p";
+        TypedQuery<Promocao> q = em.createQuery(s, Promocao.class);
+        List<Promocao> result = new ArrayList<Promocao>();
+        for (Promocao promocao : q.getResultList()) {
+            if (promocao.getSiteDeVenda().getId() == site.getId()) {
+                result.add(promocao);
+            }
+        }
+        em.close();
         return result;
     }
 
@@ -82,6 +100,7 @@ public class DAOPromocao extends GenericDAO<Promocao> {
                 result.add(promocao);
             }
         }
+        em.close();
         return result;
     }
 

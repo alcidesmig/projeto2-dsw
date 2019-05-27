@@ -31,10 +31,10 @@ public class SiteDeVendaBean implements Serializable {
                 sites = daoSite.getAll();
                 return "/views/templates_site_de_venda/gerenciar.xhtml";
             } else {
-                return "403.xhtml";
+            return "/403.xhtml";
             }
         } catch (Exception e) {
-            return "403.xhtml";
+            return "/403.xhtml";
 
         }
     }
@@ -53,10 +53,10 @@ public class SiteDeVendaBean implements Serializable {
                 operacao = "Cadastro de Site de Venda";
                 return "/views/templates_site_de_venda/form.xhtml";
             } else {
-                return "403.xhtml";
+            return "/403.xhtml";
             }
         } catch (Exception e) {
-            return "403.xhtml";
+            return "/403.xhtml";
         }
     }
 
@@ -89,7 +89,7 @@ public class SiteDeVendaBean implements Serializable {
             }
             return "lista.xhtml";
         } catch (Exception e) {
-            return "500.xhtml";
+            return "/500.xhtml";
         }
     }
 

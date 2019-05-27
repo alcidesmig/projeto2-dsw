@@ -1,13 +1,14 @@
 package br.ufscar.dc.dsw.dao;
 
 import br.ufscar.dc.dsw.pojo.SiteDeVenda;
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-public class DAOSiteDeVenda extends GenericDAO<SiteDeVenda>{
+public class DAOSiteDeVenda extends GenericDAO<SiteDeVenda> implements Serializable{
 
     @Override
     public SiteDeVenda get(Long id) {
@@ -21,6 +22,14 @@ public class DAOSiteDeVenda extends GenericDAO<SiteDeVenda>{
         EntityManager em = this.getEntityManager();
         TypedQuery<SiteDeVenda> query=  em.createNamedQuery("SiteDeVenda.getByNome", SiteDeVenda.class);
         query.setParameter("nome", "%" + name + "%");
+        em.close();
+        return query.getResultList();
+    }
+    
+    public List<SiteDeVenda> getByEmail(String name) {
+        EntityManager em = this.getEntityManager();
+        TypedQuery<SiteDeVenda> query = em.createNamedQuery("SiteDeVenda.getByEmail", SiteDeVenda.class);
+        query.setParameter("email", name);
         em.close();
         return query.getResultList();
     }

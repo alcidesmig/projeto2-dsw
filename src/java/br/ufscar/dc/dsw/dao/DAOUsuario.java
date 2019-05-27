@@ -7,6 +7,7 @@ package br.ufscar.dc.dsw.dao;
 
 import br.ufscar.dc.dsw.pojo.SiteDeVenda;
 import br.ufscar.dc.dsw.pojo.Usuario;
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -16,7 +17,7 @@ import javax.persistence.TypedQuery;
  *
  * @author igor
  */
-public class DAOUsuario extends GenericDAO<Usuario> {
+public class DAOUsuario extends GenericDAO<Usuario> implements Serializable {
 
     @Override
     public Usuario get(Long id) {

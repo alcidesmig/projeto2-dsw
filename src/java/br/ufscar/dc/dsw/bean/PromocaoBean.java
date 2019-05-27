@@ -36,10 +36,10 @@ public class PromocaoBean implements Serializable {
                 op = 1;
                 return "/views/templates_promocao/gerenciar.xhtml";
             } else {
-                return "403.xhtml";
+                return "/403.xhtml";
             }
         } catch (Exception e) {
-            return "403.xhtml";
+            return "/403.xhtml";
 
         }
     }
@@ -48,17 +48,20 @@ public class PromocaoBean implements Serializable {
         try {
             if (BeanUsuario.getUserLogado().getIsAdmin()) {
                 promocoes = daoProm.getAll();
-                op = 1;
+                op = 0;
                 return "/views/templates_promocao/lista.xhtml";
             } else if (BeanUsuario.getUserLogado().getIsSalaDeTeatro()) {
                 promocoes = daoProm.getByTeatro(daoTeatro.getByEmail(BeanUsuario.getUserLogado().getEmail()));
-                op = 1;
+                op = 0;
                 return "/views/templates_promocao/lista.xhtml";
             } else {
-                return "403.xhtml";
+                promocoes = daoProm.getBySite(new DAOSiteDeVenda().getByEmail(BeanUsuario.getUserLogado().getEmail()).get(0));
+                op = 0;
+                return "/views/templates_promocao/lista.xhtml";
+
             }
         } catch (Exception e) {
-            return "403.xhtml";
+            return "/403.xhtml";
         }
     }
 
@@ -70,10 +73,10 @@ public class PromocaoBean implements Serializable {
                 operacao = "Cadastro de Promoção";
                 return "/views/templates_promocao/form.xhtml";
             } else {
-                return "403.xhtml";
+                return "/403.xhtml";
             }
         } catch (Exception e) {
-            return "500.xhtml";
+            return "/500.xhtml";
         }
     }
 
@@ -88,14 +91,16 @@ public class PromocaoBean implements Serializable {
         for (Promocao prom : promocoes) {
             if (prom.getTeatro().equals(promocao.getTeatro())) {
                 if (prom.getDatetime().equals(promocao.getDatetime())) {
-                    erro = "Erro: data conflitante / Error: data conflict!";
+                    erro = "Erro: data conflitante! / Error: data conflict!";
                     return "form.xhtml";
                 }
             }
         }
-        if (promocao.getId_promocao() != 0) {
+        if (promocao.getId_promocao() == 0) {
+            System.out.println("salvou");
             daoProm.save(promocao);
         } else {
+            System.out.println("editou");
             daoProm.update(promocao);
         }
         promocoes = daoProm.getAll();

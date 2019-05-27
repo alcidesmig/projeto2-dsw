@@ -37,7 +37,7 @@ public class SalaDeTeatro implements Serializable {
     private String cidade;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "teatro")
     private List<Promocao> prom;
-
+    
     public SalaDeTeatro() {
     }
 

@@ -20,7 +20,8 @@ import javax.persistence.OneToMany;
 @NamedQueries({
     @NamedQuery(name = "SiteDeVenda.findAll", query = "SELECT s FROM SiteDeVenda s")
     ,
-@NamedQuery(name = "SiteDeVenda.getByNome", query = "SELECT s FROM SiteDeVenda s WHERE s.nome like :nome")
+@NamedQuery(name = "SiteDeVenda.getByNome", query = "SELECT s FROM SiteDeVenda s WHERE s.nome like :nome"),
+@NamedQuery(name = "SiteDeVenda.getByEmail", query = "SELECT s FROM SiteDeVenda s WHERE s.email like :email")
 //,
 //@NamedQuery(name = "Automovel.findByMontadora", query = "SELECT a FROM Automovel a WHERE a.montadora = :montadora")
 //,

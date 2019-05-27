@@ -1,12 +1,13 @@
 package br.ufscar.dc.dsw.dao;
 import br.ufscar.dc.dsw.pojo.SalaDeTeatro;
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-public class DAOSalaDeTeatro extends GenericDAO<SalaDeTeatro> {
+public class DAOSalaDeTeatro extends GenericDAO<SalaDeTeatro> implements Serializable{
 
     @Override
     public SalaDeTeatro get(Long id) {

@@ -33,10 +33,10 @@ public class SalaDeTeatroBean implements Serializable {
                 salas = daoTeatro.getAll();
                 return "/views/templates_sala_de_teatro/gerenciar.xhtml";
             } else {
-                return "403.xhtml";
+                return "/403.xhtml";
             }
         } catch (Exception e) {
-            return "403.xhtml";
+            return "/403.xhtml";
         }
     }
 
@@ -54,10 +54,10 @@ public class SalaDeTeatroBean implements Serializable {
                 operacao = "Cadastro de Sala de Teatro";
                 return "/views/templates_sala_de_teatro/form.xhtml";
             } else {
-                return "403.xhtml";
+                return "/403.xhtml";
             }
         } catch (Exception e) {
-            return "403.xhtml";
+            return "/403.xhtml";
         }
     }
 
@@ -90,12 +90,13 @@ public class SalaDeTeatroBean implements Serializable {
             }
             return "lista.xhtml";
         } catch (Exception e) {
-            return "500.xhtml";
+            return "/500.xhtml";
         }
     }
 
     public String delete(Long id) {
-        daoTeatro.delete(daoTeatro.get(id)); //problema
+        daoTeatro.delete(daoTeatro.get(id));
+        daoUser.delete(daoUser.get(daoTeatro.get(id).getEmail()));
         salas = daoTeatro.getAll();
         return "gerenciar.xhtml";
     }
