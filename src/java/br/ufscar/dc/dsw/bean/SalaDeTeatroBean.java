@@ -27,11 +27,18 @@ public class SalaDeTeatroBean implements Serializable {
     private String operacao;
 
     public String gerenciar() {
-        if (BeanUsuario.getUserLogado().getIsAdmin()) {
-            op = 1;
-            salas = daoTeatro.getAll();
-            return "/views/templates_sala_de_teatro/gerenciar.xhtml";
-        } else {
+        try
+            {
+            if (BeanUsuario.getUserLogado().getIsAdmin()) {
+                op = 1;
+                salas = daoTeatro.getAll();
+                return "/views/templates_sala_de_teatro/gerenciar.xhtml";
+            } else {
+                return "403.xhtml";
+            }
+        }
+        catch(Exception e)
+        {
             return "403.xhtml";
         }
     }
@@ -149,6 +156,8 @@ public class SalaDeTeatroBean implements Serializable {
     }
 
     public List<SalaDeTeatro> getSalas() {
+        if (salas == null)
+           salas.add(new SalaDeTeatro("", "", "", "", ""));
         return salas;
     }
 

@@ -5,10 +5,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <ui:include src="../helpers/header.xhtml">
+    <ui:include src="views/helpers/header.xhtml">
         <ui:param name="title" value="Site De Venda"/>
     </ui:include>
-    <ui:include src="../helpers/navbar.xhtml"/>
+    <ui:include src="views/helpers/navbar.xhtml"/>
     <h:body>
         <div class="ui text container">
             <center>
@@ -19,7 +19,8 @@
                     #{msg['403.message']}
                 </div>
             </center>
-        <ui:include src="../helpers/footer.xhtml"/>
+        </div>
+        <ui:include src="views/helpers/footer.xhtml"/>
     </h:body>
 </html>
 
