@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"  
-      xmlns:h="http://xmlns.jcp.org/jsf/html"  
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
@@ -19,31 +19,31 @@
             <h:form class="ui form" id="form">
 
                 <div class="field">
-                    <h:outputLabel for="nome">#{msg['teatro.list.nome']}</h:outputLabel>  
+                    <h:outputLabel for="nome">#{msg['teatro.list.nome']}</h:outputLabel>
                     <h:inputText value="#{salaDeTeatroBean.saladeteatro.nome}" id="nome_peca" maxlength="30" a:placeholder="Aladdin" >
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
-                    <h:outputLabel for="email">#{msg['teatro.list.email']}</h:outputLabel>  
-                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.email}" id="email" maxlength="30" a:placeholder="email@email.com" >
+                    <h:outputLabel for="email">#{msg['teatro.list.email']}</h:outputLabel>
+                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.email}" id="email" maxlength="30" a:placeholder="email@email.com" onblur="isEmail(this.value)" styleClass="email">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
-                    <h:outputLabel for="senha">#{msg['login.placeholder.password']}</h:outputLabel>   
+                    <h:outputLabel for="senha">#{msg['login.placeholder.password']}</h:outputLabel>
                     <h:inputSecret value="#{salaDeTeatroBean.saladeteatro.senha}" id="senha" a:placeholder="******" maxlength="20">
                         <f:validateRequired/>
                     </h:inputSecret>
                 </div>
                 <div class="field">
-                    <h:outputLabel for="cnpj">#{msg['teatro.list.cnpj']}</h:outputLabel>   
+                    <h:outputLabel for="cnpj">#{msg['teatro.list.cnpj']}</h:outputLabel>
                     <h:inputText value="#{salaDeTeatroBean.saladeteatro.cnpj}" id="cnpj" styleClass="cnpj" maxlength="20" a:placeholder="99.999.999/9999-99">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
-                    <h:outputLabel for="cidade">#{msg['teatro.list.cidade']}</h:outputLabel>   
+                    <h:outputLabel for="cidade">#{msg['teatro.list.cidade']}</h:outputLabel>
                     <h:inputText value="#{salaDeTeatroBean.saladeteatro.cidade}" id="cidade" maxlength="30" a:placeholder="Jundiaí">
                         <f:validateRequired/>
                     </h:inputText>
@@ -54,110 +54,129 @@
                 </div>
             </h:form>
         </div>
+        <div class="ui error message" id="error">
+            <i class="close icon"></i>
+            <div class="header">
+              There were some errors with your submission
+            </div>
+            <ul class="list">
+              <li id="error_email">Invalid email format</li>
+              <li id="error_tel">Invalid telephone format</li>
+              <li id="error_dup">Already exists!</li>
+            </ul>
+        </div>
+        <div class="ui positive message" id="success">
+            <i class="close icon"></i>
+            <div class="header">
+              Everything is ok! Registry saved.
+            </div>
+        </div>
         <h:outputScript library="js" name="jquery.mask.min.js" />
 
         <script>
-            
-            jQuery("input.cnpj").mask("99.999.999/9999-99");
-            email = false;
-            cnpj = false;
-            $("#error").hide();
-            $("#success").hide();
-            $("#error_email").hide();
-            $("#error_dup").hide();
-            $("#error_tel").hide();
-            jQuery("input.telefone")
-           .mask("(99) 99999-9999")
-           .focusout(function (event) {  
-               var target, phone, element;  
-               target = (event.currentTarget) ? event.currentTarget : event.srcElement;  
-               phone = target.value.replace(/\D/g, '');
-               element = $(target);  
-               element.unmask();
-               if(phone.length >= 9) {  
-                   console.log("Telefone válido.");
-                   element.mask("(99) 99999-9999");
-                   cnpj = true;
+        $("#error").hide();
+        $("#success").hide();
+        $("#error_email").hide();
+        $("#error_dup").hide();
+        $("#error_tel").hide();
+        jQuery("input.cnpj").mask("99.999.999/9999-99");
+        email = false;
+        cnpj = false;
+        $("#error").hide();
+        $("#success").hide();
+        $("#error_email").hide();
+        $("#error_dup").hide();
+        $("#error_tel").hide();
+          jQuery("input.cnpj").mask("99.999.999/9999-99")
+          .focusout(function (event) {
+           var target, phone, element;
+           target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+           phone = target.value.replace(/\D/g, '');
+           element = $(target);
+           element.unmask();
+           if(phone.length >= 12) {
+               console.log("CNPJ válido.");
+               element.mask("99.999.999/9999-99");
+               cnpj = true;
+               err();
+           } else{
+               cnpj = false;
+               element.mask("99.999.999/9999-99");
+               err();
+           }
+       });
+       function err()
+       {
+           $("#success").hide(100);
+           if(!email || !cnpj)
+               $("#error").show(100);
+           else
+               $("#error").hide(100);
+           if(!email)
+           {
+               $("#error_email").show(100);
+           }
+           else
+           {
+               $("#error_email").hide(100);
+           }
+           if(!cnpj)
+           {
+               $("#error_tel").show(100);
+           }
+           else
+           {
+               $("#error_tel").hide(100);
+           }
+       }
+       function isEmail(email1) {
+           var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+           if(!regex.test(email1))
+           {
+               jQuery("input.email").addClass("ui input error red");
+               email = false;
+               console.log("Email inválido.");
+               err();
+           }
+           else
+           {
+               jQuery("input.email").removeClass("error");
+               email = true;
+               console.log("Email válido.");
+               err();
+           }
+         }
+         $(".ui.form").submit(function(e) {
+               e.preventDefault();
+               if(!email || !cnpj)
+               {
                    err();
-               } else{  
-                   cnpj = false;
-                   element.mask("(99) 9999-9999");
-                   err();
+               }
+               else
+               {
+                   var form = $(this);
+                   var url = form.attr('action');
+
+                   $.ajax({
+                          type: "POST",
+                          url: url,
+                          data: form.serialize(), // serializes the form's elements.
+                          success: function(data)
+                          {
+                              console.log("Registro feito com sucesso.");
+                              $("#success").show(100);
+                              $(".ui.form").trigger("reset");
+                          },
+                          onFailure: function () {
+                            window.scrollTo(0, 0);
+                            $("#error").show(100);
+
+                           }
+                        });
+
                }
            });
-           function err()
-           {
-               $("#success").hide(100);
-               if(!email || !cnpj)
-                   $("#error").show(100);
-               else
-                   $("#error").hide(100);
-               if(!email)
-               {
-                   $("#error_email").show(100);
-               }
-               else
-               {
-                   $("#error_email").hide(100);
-               }
-               if(!cnpj)
-               {
-                   $("#error_tel").show(100);
-               }
-               else
-               {
-                   $("#error_tel").hide(100);
-               }
-           }
-           function isEmail(email1) {
-               var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-               if(!regex.test(email1))
-               {
-                   jQuery("input.email").addClass("ui input error red");
-                   email = false;
-                   console.log("Email inválido.");
-                   err();
-               }
-               else
-               {
-                   jQuery("input.email").removeClass("error");
-                   email = true;
-                   console.log("Email válido.");
-                   err();
-               }
-             }
-             $(".ui.form").submit(function(e) {
-                   e.preventDefault();
-                   if(!email || !cnpj)
-                   {   
-                       err();
-                   }
-                   else
-                   {    
-                       var form = $(this);
-                       var url = form.attr('action');
-
-                       $.ajax({
-                              type: "POST",
-                              url: url,
-                              data: form.serialize(), // serializes the form's elements.
-                              success: function(data)
-                              {
-                                  console.log("Registro feito com sucesso.");
-                                  $("#success").show(100);
-                                  $(".ui.form").trigger("reset");
-                              },
-                              onFailure: function () {
-                                window.scrollTo(0, 0);
-                                $("#error").show(100);
-
-                               }
-                            });
-
-                   }
-               });
         </script>
         <ui:include src="../helpers/footer.xhtml"/>
     </h:body>
 </html>
-
