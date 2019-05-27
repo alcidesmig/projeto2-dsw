@@ -20,31 +20,31 @@
 
                 <div class="field">
                     <h:outputLabel for="nome">#{msg['teatro.list.nome']}</h:outputLabel>
-                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.nome}" id="nome_peca" maxlength="30" a:placeholder="Aladdin" >
+                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.nome}" id="nome_peca" maxlength="30" a:placeholder="Aladdin" required="required">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
                     <h:outputLabel for="email">#{msg['teatro.list.email']}</h:outputLabel>
-                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.email}" id="email" maxlength="30" a:placeholder="email@email.com" onblur="isEmail(this.value)" styleClass="email">
+                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.email}" id="email" maxlength="30" a:placeholder="email@email.com" onblur="isEmail(this.value)" styleClass="email" required="required">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
                     <h:outputLabel for="senha">#{msg['login.placeholder.password']}</h:outputLabel>
-                    <h:inputSecret value="#{salaDeTeatroBean.saladeteatro.senha}" id="senha" a:placeholder="******" maxlength="20">
+                    <h:inputSecret value="#{salaDeTeatroBean.saladeteatro.senha}" id="senha" a:placeholder="******" maxlength="20" required="required">
                         <f:validateRequired/>
                     </h:inputSecret>
                 </div>
                 <div class="field">
                     <h:outputLabel for="cnpj">#{msg['teatro.list.cnpj']}</h:outputLabel>
-                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.cnpj}" id="cnpj" styleClass="cnpj" maxlength="20" a:placeholder="99.999.999/9999-99">
+                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.cnpj}" id="cnpj" styleClass="cnpj" maxlength="20" a:placeholder="99.999.999/9999-99" required="required">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
                     <h:outputLabel for="cidade">#{msg['teatro.list.cidade']}</h:outputLabel>
-                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.cidade}" id="cidade" maxlength="30" a:placeholder="Jundiaí">
+                    <h:inputText value="#{salaDeTeatroBean.saladeteatro.cidade}" id="cidade" maxlength="30" a:placeholder="Jundiaí" required="required">
                         <f:validateRequired/>
                     </h:inputText>
                     <div class="ui negative message hidden">
