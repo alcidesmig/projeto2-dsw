@@ -19,31 +19,31 @@
             <h:form class="ui form" id="form">
                 <div class="field">
                     <h:outputLabel for="nome">#{msg['site.list.nome']}</h:outputLabel>  
-                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.nome}" id="nome" maxlength="30">
+                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.nome}" id="nome" maxlength="30" required="required">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
                     <h:outputLabel for="email">#{msg['site.list.email']}</h:outputLabel>  
-                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.email}" id="email" maxlength="50" onblur="isEmail(this.value)" styleClass="email">
+                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.email}" id="email" maxlength="50" onblur="isEmail(this.value)" styleClass="email" required="required">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
                     <h:outputLabel for="senha">#{msg['site.cadastro.password']}</h:outputLabel>   
-                    <h:inputSecret value="#{siteDeVendaBean.siteDeVenda.senha}" id="senha" a:placeholder="******" maxlength="18">
+                    <h:inputSecret value="#{siteDeVendaBean.siteDeVenda.senha}" id="senha" a:placeholder="******" maxlength="18" required="required">
                         <f:validateRequired/>
                     </h:inputSecret>
                 </div>
                 <div class="field">
                     <h:outputLabel for="url">#{msg['site.list.url']}</h:outputLabel>  
-                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.url}" id="url" maxlength="100">
+                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.url}" id="url" maxlength="100" required="required">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="field">
                     <h:outputLabel for="telefone">#{msg['site.list.telefone']}</h:outputLabel>   
-                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.telefone}" id="telefone" a:placeholder="(99)9999-99999" styleClass="telefone" maxlength="20">
+                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.telefone}" id="telefone" a:placeholder="(99)9999-99999" styleClass="telefone" maxlength="20" required="required">
                         <f:validateRequired/>
                     </h:inputText>
                     <div class="ui negative message hidden">
