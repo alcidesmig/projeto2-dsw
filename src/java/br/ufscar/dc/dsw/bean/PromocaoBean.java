@@ -86,7 +86,7 @@ public class PromocaoBean implements Serializable {
     public String salva() {
         promocoes = daoProm.getAll();
         for (Promocao prom : promocoes) {
-            if (prom.getSiteDeVenda().equals(promocao.getSiteDeVenda())) {
+            if (prom.getTeatro().equals(promocao.getTeatro())) {
                 if (prom.getDatetime().equals(promocao.getDatetime())) {
                     erro = "Error!";
                     return "form.xhtml";
