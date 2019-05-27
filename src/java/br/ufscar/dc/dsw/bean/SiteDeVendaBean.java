@@ -28,6 +28,7 @@ public class SiteDeVendaBean implements Serializable {
         try {
             if (BeanUsuario.getUserLogado().getIsAdmin()) {
                 op = 1;
+                sites = daoSite.getAll();
                 return "/views/templates_site_de_venda/gerenciar.xhtml";
             } else {
                 return "403.xhtml";
@@ -40,6 +41,7 @@ public class SiteDeVendaBean implements Serializable {
 
     public String lista() {
         op = 0;
+        sites = daoSite.getAll();
         return "/views/templates_site_de_venda/lista.xhtml";
     }
 
@@ -85,8 +87,8 @@ public class SiteDeVendaBean implements Serializable {
         return "lista.xhtml";
     }
 
-    public String delete(SiteDeVenda sitedevenda) {
-        daoSite.delete(sitedevenda);
+    public String delete(Long id) {
+        daoSite.delete(daoSite.get(id));
         sites = daoSite.getAll();
         return "gerenciar.xhtml";
     }
