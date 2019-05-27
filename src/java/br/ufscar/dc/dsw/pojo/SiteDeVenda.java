@@ -32,6 +32,7 @@ public class SiteDeVenda implements Serializable {
     private long id;
     private String email;
     private String senha;
+    @Column(unique = true)
     private String url;
     private String nome;
     private String telefone;

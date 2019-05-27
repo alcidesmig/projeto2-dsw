@@ -59,8 +59,7 @@
 
         <script>
             $(document).ready(function () {
-                
-                
+
                 form = $('.ui.form');
                 nome = $('#nome');
                 email = $('#email');
@@ -126,7 +125,7 @@
                         form.removeClass('success').removeClass('error');
                     }
                 }).on('submit', function (e) {
-                    e.preventDefault();
+                    //e.preventDefault();
                     if (!form.form('is valid'))
                         return;
                     form.addClass('loading');

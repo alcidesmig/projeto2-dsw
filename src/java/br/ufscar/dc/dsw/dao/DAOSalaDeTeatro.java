@@ -1,6 +1,4 @@
 package br.ufscar.dc.dsw.dao;
-
-import br.ufscar.dc.dsw.pojo.Promocao;
 import br.ufscar.dc.dsw.pojo.SalaDeTeatro;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -20,8 +18,8 @@ public class DAOSalaDeTeatro extends GenericDAO<SalaDeTeatro> {
 
     @Override
     public List<SalaDeTeatro> getAll() {
-        EntityManager em = this.getEntityManager();
-        Query q = em.createQuery("select s from SalaDeTeatro s", Promocao.class);
+        EntityManager em = this.getEntityManager();  
+        Query q = em.createQuery("select s from SalaDeTeatro s", SalaDeTeatro.class);
         List<SalaDeTeatro> salas = q.getResultList();
         em.close();
         return salas;

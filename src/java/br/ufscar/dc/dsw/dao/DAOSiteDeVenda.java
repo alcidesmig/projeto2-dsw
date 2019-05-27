@@ -7,7 +7,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-public class DAOSiteDeVenda<T> extends GenericDAO<SiteDeVenda>{
+public class DAOSiteDeVenda extends GenericDAO<SiteDeVenda>{
 
     @Override
     public SiteDeVenda get(Long id) {
@@ -28,7 +28,7 @@ public class DAOSiteDeVenda<T> extends GenericDAO<SiteDeVenda>{
     @Override
     public List<SiteDeVenda> getAll() {
         EntityManager em = this.getEntityManager();
-        Query q = em.createNamedQuery("SiteDeVenda.findAll", SiteDeVenda.class);
+        Query q = em.createQuery("select s from SiteDeVenda s", SiteDeVenda.class);
         List<SiteDeVenda> site = q.getResultList();
         em.close();
         return site;
@@ -36,6 +36,7 @@ public class DAOSiteDeVenda<T> extends GenericDAO<SiteDeVenda>{
 
     @Override
     public void save(SiteDeVenda site) {
+        System.out.println("NOME:"+site.getNome());
         EntityManager em = this.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
