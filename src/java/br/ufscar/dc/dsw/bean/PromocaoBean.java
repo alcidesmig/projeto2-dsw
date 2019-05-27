@@ -88,7 +88,7 @@ public class PromocaoBean implements Serializable {
         for (Promocao prom : promocoes) {
             if (prom.getTeatro().equals(promocao.getTeatro())) {
                 if (prom.getDatetime().equals(promocao.getDatetime())) {
-                    erro = "Error!";
+                    erro = "Erro: data conflitante / Error: data conflict!";
                     return "form.xhtml";
                 }
             }
