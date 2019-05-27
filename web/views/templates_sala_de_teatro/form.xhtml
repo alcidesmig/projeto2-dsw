@@ -17,6 +17,7 @@
                 </h1>
             </center>
             <h:form class="ui form" id="form">
+
                 <div class="field">
                     <h:outputLabel for="nome">#{msg['teatro.list.nome']}</h:outputLabel>  
                     <h:inputText value="#{salaDeTeatroBean.saladeteatro.nome}" id="nome_peca">
@@ -59,13 +60,22 @@
             $(document).ready(function () {
                 
                 form = $('.ui.form');
+                id_teatro = $('#id_teatro');
                 nome_peca = $('#nome_peca');
                 email = $('#email');
                 senha = $('#senha');
                 cnpj = $('#cnpj');
-                $('#cnpj').mask("99.999.999/9999-99");
                 cidade = $('#cidade');
-                action = 'cadastro';
+                action = form.attr('action');
+                
+                cnpj.on("keyup", function(e)
+{
+                    $(this).val(
+                        $(this).val()
+                        .replace(/\D/g, '')
+                        .replace(/^(\d{2})(\d{3})?(\d{3})?(\d{4})?(\d{2})?/, "$1 $2 $3/$4-$5"));
+                });
+                
                 form.form({
                     fields: {
                         nome_peca: {
@@ -112,7 +122,7 @@
                                     prompt: '#{msg['allform.required']}'
                                 }
                             ]
-                        }
+                        },
                     },
                     on: 'blur',
                     inline: true,
@@ -124,18 +134,24 @@
                         form.removeClass('success').removeClass('error');
                     }
                 }).on('submit', function (e) {
-                    e.preventDefault();
+                    //e.preventDefault();
                     if (!form.form('is valid'))
                         return;
                     form.addClass('loading');
+                    if(id_teatro.text() == "")
+                    {
+                        novo_id = 0;
+                    }
                     $.post(action, {
                         nome_peca: nome_peca.val(),
                         email: email.val(),
                         senha: senha.val(),
                         cnpj: cnpj.val(),
-                        cidade: cidade.val()
+                        cidade: cidade.val(),
+                        id: novo_id
                     }).done(function () {
-                        window.location.href = 'gerenciar';
+                        form.removeClass('loading');
+                        form.trigger("reset");
                     }).fail(function () {
                         form.removeClass('loading');
                         $('.ui.message').show();
