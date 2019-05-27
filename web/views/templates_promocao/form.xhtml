@@ -13,7 +13,7 @@
         <div class="ui text container">
             <center>
                 <h1>
-                    #{promocaoBean.operacao}
+                    #{promocao.cadastro.h1}
                 </h1>
             </center>
             <h:form class="ui form" id="form">
@@ -22,19 +22,19 @@
                 </h4>
                 <div class="form-group field">
                     <h:outputLabel for="nome_peca">#{msg['promocao.list.peca_nome']}</h:outputLabel>  
-                    <h:inputText value="#{promocaoBean.promocao.nome_peca}" id="nome_peca">
+                    <h:inputText value="#{promocaoBean.promocao.nome_peca}" id="nome_peca" >
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="form-group field">
                     <h:outputLabel for="preco">#{msg['promocao.list.preco']}</h:outputLabel>  
-                    <h:inputText value="#{promocaoBean.promocao.preco}" id="preco">
+                    <h:inputText value="#{promocaoBean.promocao.preco}" id="preco" styleClass="money">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
                 <div class="form-group field">
                     <h:outputLabel for="datetime">#{msg['promocao.list.data_hora']}</h:outputLabel>   
-                    <h:inputText value="#{promocaoBean.promocao.datetime}" id="datetime" a:placeholder="DD/MM/YY HH:MM:SS">
+                    <h:inputText value="#{promocaoBean.promocao.datetime}" id="datetime" a:placeholder="DD/MM/YY HH:MM:SS" styleClass="data_hora">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
@@ -69,6 +69,8 @@
             </h:form>
         </div>
         <script>
+            jQuery("input.money").mask('999.00', {reverse: true})
+            jQuery("input.data_hora").mask("99/99/99 99:99:99", {reverse: true})
             $(document).ready(function () {
                 form = $('.ui.form');
                 id_promocao = $('#id_promocao');

@@ -25,7 +25,7 @@
                 </div>
                 <div class="field">
                     <h:outputLabel for="email">#{msg['site.list.email']}</h:outputLabel>  
-                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.email}" id="email" maxlength="50">
+                    <h:inputText value="#{siteDeVendaBean.siteDeVenda.email}" id="email" maxlength="50" onblur="isEmail(this.value)" styleClass="email">
                         <f:validateRequired/>
                     </h:inputText>
                 </div>
@@ -54,10 +54,34 @@
                     <h:commandButton value="Submit" action="#{siteDeVendaBean.salva()}" class="ui positive button"/>
                 </div>
             </h:form>
+            <div class="ui error message" id="error">
+                <i class="close icon"></i>
+                <div class="header">
+                  There were some errors with your submission
+                </div>
+                <ul class="list">
+                  <li id="error_email">Invalid email format</li>
+                  <li id="error_tel">Invalid telephone format</li>
+                  <li id="error_dup">Already exists!</li>
+                </ul>
+            </div>
+            <div class="ui positive message" id="success">
+                <i class="close icon"></i>
+                <div class="header">
+                  Everything is ok! Registry saved.
+                </div>
+            </div>
         </div>
         <h:outputScript library="js" name="jquery.mask.min.js" />
         <ui:include src="../helpers/footer.xhtml"/>
         <script>
+         email = false;
+         tel = false;
+         $("#error").hide();
+         $("#success").hide();
+         $("#error_email").hide();
+         $("#error_dup").hide();
+         $("#error_tel").hide();
          jQuery("input.telefone")
         .mask("(99) 99999-9999")
         .focusout(function (event) {  
@@ -65,17 +89,89 @@
             target = (event.currentTarget) ? event.currentTarget : event.srcElement;  
             phone = target.value.replace(/\D/g, '');
             element = $(target);  
-            element.unmask();  
-            if(phone.length > 10) {  
-                element.mask("(99) 99999-9999");  
-            } else {  
-                element.mask("(99) 9999-9999");  
-            }  
+            element.unmask();
+            if(phone.length >= 9) {  
+                console.log("Telefone válido.");
+                element.mask("(99) 99999-9999");
+                tel = true;
+                err();
+            } else{  
+                tel = false;
+                element.mask("(99) 9999-9999");
+                err();
+            }
         });
-        function isEmail(email) {
+        function err()
+        {
+            $("#success").hide(100);
+            if(!email || !tel)
+                $("#error").show(100);
+            else
+                $("#error").hide(100);
+            if(!email)
+            {
+                $("#error_email").show(100);
+            }
+            else
+            {
+                $("#error_email").hide(100);
+            }
+            if(!tel)
+            {
+                $("#error_tel").show(100);
+            }
+            else
+            {
+                $("#error_tel").hide(100);
+            }
+        }
+        function isEmail(email1) {
             var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-            return regex.test(email);
+            if(!regex.test(email1))
+            {
+                jQuery("input.email").addClass("ui input error red");
+                email = false;
+                console.log("Email inválido.");
+                err();
+            }
+            else
+            {
+                jQuery("input.email").removeClass("error");
+                email = true;
+                console.log("Email válido.");
+                err();
+            }
           }
+          $(".ui.form").submit(function(e) {
+                e.preventDefault();
+                if(!email || !tel)
+                {   
+                    err();
+                }
+                else
+                {    
+                    var form = $(this);
+                    var url = form.attr('action');
+
+                    $.ajax({
+                           type: "POST",
+                           url: url,
+                           data: form.serialize(), // serializes the form's elements.
+                           success: function(data)
+                           {
+                               console.log("Registro feito com sucesso.");
+                               $("#success").show(100);
+                               $(".ui.form").trigger("reset");
+                           },
+                           onFailure: function () {
+                             window.scrollTo(0, 0);
+                             $("#error").show(100);
+                             
+                            }
+                         });
+
+                }
+            });
         </script>
     </h:body>
 </html>

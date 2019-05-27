@@ -42,11 +42,11 @@
             <div class="right menu">
                 <h:form>
                     <h:commandLink action="#{beanUsuario.urlLogin}" class="item" style="color:white;">#{msg['navbar.item.login']}</h:commandLink>
-                </h:form><a class="item">User #{beanUsuario.usuario.nome}</a>
-
+                </h:form>
                 <h:form>
                     <h:commandLink action="#{beanUsuario.doLogout}" class="item" style="color:white;">#{msg['navbar.item.logout']}</h:commandLink>
                 </h:form>
+                <a class="item">#{beanUsuario.usuario.nome}</a>
             </div>
         </div>
     </div>
