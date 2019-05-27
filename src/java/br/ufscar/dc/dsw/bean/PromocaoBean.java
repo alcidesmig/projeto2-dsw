@@ -46,8 +46,6 @@ public class PromocaoBean implements Serializable {
 
     public String lista() {
         try {
-            System.out.println("abaixo");
-            System.out.println(daoProm.getByTeatro(daoTeatro.getByEmail(BeanUsuario.getUserLogado().getEmail())).get(0).getNome_peca());
             if (BeanUsuario.getUserLogado().getIsAdmin()) {
                 promocoes = daoProm.getAll();
                 op = 1;
@@ -60,9 +58,7 @@ public class PromocaoBean implements Serializable {
                 return "403.xhtml";
             }
         } catch (Exception e) {
-            System.out.println(e);
             return "403.xhtml";
-
         }
     }
 
@@ -98,8 +94,10 @@ public class PromocaoBean implements Serializable {
             }
         }
         if (promocao.getId_promocao() != 0) {
+            System.out.println("entrou");
             daoProm.save(promocao);
         } else {
+            System.out.println("asd");
             daoProm.update(promocao);
         }
         promocoes = daoProm.getAll();

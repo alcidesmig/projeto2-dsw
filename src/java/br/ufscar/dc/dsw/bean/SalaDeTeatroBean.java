@@ -27,8 +27,7 @@ public class SalaDeTeatroBean implements Serializable {
     private String operacao;
 
     public String gerenciar() {
-        try
-            {
+        try {
             if (BeanUsuario.getUserLogado().getIsAdmin()) {
                 op = 1;
                 salas = daoTeatro.getAll();
@@ -36,9 +35,7 @@ public class SalaDeTeatroBean implements Serializable {
             } else {
                 return "403.xhtml";
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             return "403.xhtml";
         }
     }
@@ -60,7 +57,7 @@ public class SalaDeTeatroBean implements Serializable {
                 return "403.xhtml";
             }
         } catch (Exception e) {
-            return "500.xhtml";
+            return "403.xhtml";
         }
     }
 
@@ -71,26 +68,30 @@ public class SalaDeTeatroBean implements Serializable {
     }
 
     public String salva() {
-        if (saladeteatro.getId() == 0) {
-            Usuario user = new Usuario(saladeteatro.getNome(), saladeteatro.getEmail(), saladeteatro.getSenha());
-            user.setIsSalaDeTeatro(true);
-            user.setIsSiteDeVenda(false);
-            user.setIsAdmin(false);
-            daoUser.save(user);
-            daoTeatro.save(saladeteatro);
-        } else {
-            Usuario user = daoUser.get(saladeteatro.getEmail());
-            user.setEmail(saladeteatro.getEmail());
-            user.setNome(saladeteatro.getNome());
-            user.setSenha(saladeteatro.getSenha());
-            daoUser.update(user);
-            daoTeatro.update(saladeteatro);
+        try {
+            if (saladeteatro.getId() == 0) {
+                Usuario user = new Usuario(saladeteatro.getNome(), saladeteatro.getEmail(), saladeteatro.getSenha());
+                user.setIsSalaDeTeatro(true);
+                user.setIsSiteDeVenda(false);
+                user.setIsAdmin(false);
+                daoUser.save(user);
+                daoTeatro.save(saladeteatro);
+            } else {
+                Usuario user = daoUser.get(saladeteatro.getEmail());
+                user.setEmail(saladeteatro.getEmail());
+                user.setNome(saladeteatro.getNome());
+                user.setSenha(saladeteatro.getSenha());
+                daoUser.update(user);
+                daoTeatro.update(saladeteatro);
+            }
+            salas = daoTeatro.getAll();
+            if (op == 1) {
+                return "gerenciar.xhtml";
+            }
+            return "lista.xhtml";
+        } catch (Exception e) {
+            return "500.xhtml";
         }
-        salas = daoTeatro.getAll();
-        if (op == 1) {
-            return "gerenciar.xhtml";
-        }
-        return "lista.xhtml";
     }
 
     public String delete(Long id) {
@@ -155,8 +156,9 @@ public class SalaDeTeatroBean implements Serializable {
     }
 
     public List<SalaDeTeatro> getSalas() {
-        if (salas == null)
-           salas.add(new SalaDeTeatro("", "", "", "", ""));
+        if (salas == null) {
+            salas.add(new SalaDeTeatro("", "", "", "", ""));
+        }
         return salas;
     }
 

@@ -56,7 +56,7 @@ public class SiteDeVendaBean implements Serializable {
                 return "403.xhtml";
             }
         } catch (Exception e) {
-            return "500.xhtml";
+            return "403.xhtml";
         }
     }
 
@@ -67,26 +67,30 @@ public class SiteDeVendaBean implements Serializable {
     }
 
     public String salva() {
-        if (site.getId() == 0) {
-            Usuario user = new Usuario(site.getNome(), site.getEmail(), site.getSenha());
-            user.setIsSalaDeTeatro(false);
-            user.setIsSiteDeVenda(true);
-            user.setIsAdmin(false);
-            daoUser.save(user);
-            daoSite.save(site);
-        } else {
-            Usuario user = daoUser.get(site.getEmail());
-            user.setEmail(site.getEmail());
-            user.setNome(site.getNome());
-            user.setSenha(site.getSenha());
-            daoUser.update(user);
-            daoSite.update(site);
+        try {
+            if (site.getId() == 0) {
+                Usuario user = new Usuario(site.getNome(), site.getEmail(), site.getSenha());
+                user.setIsSalaDeTeatro(false);
+                user.setIsSiteDeVenda(true);
+                user.setIsAdmin(false);
+                daoUser.save(user);
+                daoSite.save(site);
+            } else {
+                Usuario user = daoUser.get(site.getEmail());
+                user.setEmail(site.getEmail());
+                user.setNome(site.getNome());
+                user.setSenha(site.getSenha());
+                daoUser.update(user);
+                daoSite.update(site);
+            }
+            sites = daoSite.getAll();
+            if (op == 1) {
+                return "gerenciar.xhtml";
+            }
+            return "lista.xhtml";
+        } catch (Exception e) {
+            return "500.xhtml";
         }
-        sites = daoSite.getAll();
-        if (op == 1) {
-            return "gerenciar.xhtml";
-        }
-        return "lista.xhtml";
     }
 
     public String delete(Long id) {
