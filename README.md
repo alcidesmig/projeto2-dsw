@@ -2,13 +2,13 @@
 
 ## Instruções
 
-- Clonar o projeto
-- Rodar utilizando o apache tomcat
+- Clonar o projeto.
 - Rodar o script para criação do usuário root em /br/ufscar/dc/dsw/sql/criarUsuario.sql
+- Rodar utilizando o apache tomcat.
 
 ## Especificações do sistema
 
-- Sistema para criação de promoções em sites de venda de ingressos
+- Sistema para criação de promoções em sites de venda de ingressos.
 - O sistema deve possuir um cadastro de sites de venda de ingressos, com os
 seguintes dados: e-mail, senha, endereço/URL, nome e telefone.
 - O sistema deve possuir um cadastro de salas de teatro, com os seguintes dados:
@@ -19,10 +19,10 @@ preço e dia/horário.
 
 ## Requisitos
 1. Operações CRUD 1 de sites de venda de ingressos (requer login de
-administrador)
-2. Operações CRUD de teatros (requer login de administrador)
-3. Listagem de todos os teatros em uma única página (não requer login)
-4. Listagem de todos os teatros por cidade (não requer login)
+administrador).
+2. Operações CRUD de teatros (requer login de administrador).
+3. Listagem de todos os teatros em uma única página (não requer login).
+4. Listagem de todos os teatros por cidade (não requer login).
 5. Criação de uma promoção de um teatro (requer login do teatro: via e-
 mail + senha). Depois de fazer login, o teatro pode cadastrar uma
 promoção. Para isso, deve escolher o site de venda de ingressos
@@ -44,4 +44,6 @@ o erro no console.
 CNPJ, e-mail, data, etc) para entrada dos dados.
 
 ## Desenvolvedores
-Alcides Mignoso e Silva; Gabriel Olivato; Igor Magollo.
+- Alcides Mignoso e Silva
+- Gabriel Olivato
+- Igor Magollo
