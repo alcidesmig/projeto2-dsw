@@ -44,6 +44,6 @@ o erro no console.
 CNPJ, e-mail, data, etc) para entrada dos dados.
 
 ## Desenvolvedores
-Alcides Mignoso e Silva
-Gabriel Olivato
-Igor Magollo
+Alcides Mignoso e Silva.
+Gabriel Olivato.
+Igor Magollo.
