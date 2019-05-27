@@ -70,5 +70,12 @@ public class DAOSalaDeTeatro extends GenericDAO<SalaDeTeatro> {
         q.setParameter("nome", nome);
         return q.getResultList().get(0);
     }
+    public SalaDeTeatro getByEmail(String email) {
+        EntityManager em = this.getEntityManager();
+        String s = "select s from SalaDeTeatro s where s.email = :email";
+        TypedQuery<SalaDeTeatro> q = em.createQuery(s, SalaDeTeatro.class);
+        q.setParameter("email", email);
+        return q.getResultList().get(0);
+    }
 
 }

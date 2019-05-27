@@ -68,6 +68,8 @@ public class SalaDeTeatroBean implements Serializable {
         if (saladeteatro.getId() == 0) {
             Usuario user = new Usuario(saladeteatro.getNome(), saladeteatro.getEmail(), saladeteatro.getSenha());
             user.setIsSalaDeTeatro(true);
+            user.setIsSiteDeVenda(false);
+            user.setIsAdmin(false);
             daoUser.save(user);
             daoTeatro.save(saladeteatro);
         } else {

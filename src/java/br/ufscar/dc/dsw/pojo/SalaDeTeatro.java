@@ -1,8 +1,9 @@
 package br.ufscar.dc.dsw.pojo;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
-import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,45 +25,6 @@ import javax.persistence.Table;
 })
 public class SalaDeTeatro implements Serializable {
 
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final SalaDeTeatro other = (SalaDeTeatro) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        if (!Objects.equals(this.email, other.email)) {
-            return false;
-        }
-        if (!Objects.equals(this.senha, other.senha)) {
-            return false;
-        }
-        if (!Objects.equals(this.cnpj, other.cnpj)) {
-            return false;
-        }
-        if (!Objects.equals(this.nome, other.nome)) {
-            return false;
-        }
-        if (!Objects.equals(this.cidade, other.cidade)) {
-            return false;
-        }
-        return true;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
@@ -72,6 +35,8 @@ public class SalaDeTeatro implements Serializable {
     private String cnpj;
     private String nome;
     private String cidade;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "teatro")
+    private List<Promocao> prom;
 
     public SalaDeTeatro() {
     }
@@ -126,6 +91,45 @@ public class SalaDeTeatro implements Serializable {
 
     public long getId() {
         return id;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SalaDeTeatro other = (SalaDeTeatro) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.senha, other.senha)) {
+            return false;
+        }
+        if (!Objects.equals(this.cnpj, other.cnpj)) {
+            return false;
+        }
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        if (!Objects.equals(this.cidade, other.cidade)) {
+            return false;
+        }
+        return true;
     }
 
 }

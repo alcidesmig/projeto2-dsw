@@ -60,10 +60,15 @@ public class DAOPromocao extends GenericDAO<Promocao> {
 
     public List<Promocao> getByTeatro(SalaDeTeatro salaDeTeatro) {
         EntityManager em = this.getEntityManager();
-        String s = "select p from Promocao p where p.saladeteatro_id = :idteatro";
+        String s = "select p from Promocao p";
         TypedQuery<Promocao> q = em.createQuery(s, Promocao.class);
-        q.setParameter("idteatro", salaDeTeatro.getId());
-        return q.getResultList();
+        List<Promocao> result = new ArrayList<Promocao>();
+        for (Promocao promocao : q.getResultList()) {
+            if (promocao.getTeatro().getId() == salaDeTeatro.getId()) {
+                result.add(promocao);
+            }
+        }
+        return result;
     }
 
     public List<Promocao> getByName(String nome) {
@@ -72,8 +77,7 @@ public class DAOPromocao extends GenericDAO<Promocao> {
         TypedQuery<Promocao> q = em.createQuery(s, Promocao.class);
         List<Promocao> query = q.getResultList();
         List<Promocao> result = new ArrayList<Promocao>();
-        for (Promocao promocao : result) {
-            System.out.println(">>>>>>" + promocao.getNome_peca());
+        for (Promocao promocao : query) {
             if (promocao.getNome_peca().contains(nome)) {
                 result.add(promocao);
             }

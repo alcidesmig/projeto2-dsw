@@ -20,14 +20,19 @@ public class PromocaoBean implements Serializable {
     private Promocao promocao;
     private int op;
     private List<Promocao> promocoes;
-    DAOPromocao dao = new DAOPromocao();
+    DAOPromocao daoProm = new DAOPromocao();
+    DAOSalaDeTeatro daoTeatro = new DAOSalaDeTeatro();
     private String erro;
     private String operacao;
 
     public String gerenciar() {
         try {
-            if (BeanUsuario.getUserLogado().getIsSalaDeTeatro() || BeanUsuario.getUserLogado().getIsAdmin()) {
-                promocoes = dao.getAll();
+            if (BeanUsuario.getUserLogado().getIsAdmin()) {
+                promocoes = daoProm.getAll();
+                op = 1;
+                return "/views/templates_promocao/gerenciar.xhtml";
+            } else if (BeanUsuario.getUserLogado().getIsSalaDeTeatro()) {
+                promocoes = daoProm.getByTeatro(daoTeatro.getByEmail(BeanUsuario.getUserLogado().getEmail()));
                 op = 1;
                 return "/views/templates_promocao/gerenciar.xhtml";
             } else {
@@ -41,14 +46,21 @@ public class PromocaoBean implements Serializable {
 
     public String lista() {
         try {
-            if (BeanUsuario.getUserLogado().getIsSiteDeVenda() || BeanUsuario.getUserLogado().getIsAdmin()) {
-                promocoes = dao.getAll();
-                op = 0;
+            System.out.println("abaixo");
+            System.out.println(daoProm.getByTeatro(daoTeatro.getByEmail(BeanUsuario.getUserLogado().getEmail())).get(0).getNome_peca());
+            if (BeanUsuario.getUserLogado().getIsAdmin()) {
+                promocoes = daoProm.getAll();
+                op = 1;
+                return "/views/templates_promocao/lista.xhtml";
+            } else if (BeanUsuario.getUserLogado().getIsSalaDeTeatro()) {
+                promocoes = daoProm.getByTeatro(daoTeatro.getByEmail(BeanUsuario.getUserLogado().getEmail()));
+                op = 1;
                 return "/views/templates_promocao/lista.xhtml";
             } else {
                 return "403.xhtml";
             }
         } catch (Exception e) {
+            System.out.println(e);
             return "403.xhtml";
 
         }
@@ -71,13 +83,13 @@ public class PromocaoBean implements Serializable {
     }
 
     public String edita(Long id) {
-        promocao = dao.get(id);
+        promocao = daoProm.get(id);
         operacao = "Edição de Promoção";
         return "form.xhtml";
     }
 
     public String salva() {
-        promocoes = dao.getAll();
+        promocoes = daoProm.getAll();
         for (Promocao prom : promocoes) {
             if (prom.getSiteDeVenda().equals(promocao.getSiteDeVenda())) {
                 if (prom.getDatetime().equals(promocao.getDatetime())) {
@@ -86,12 +98,12 @@ public class PromocaoBean implements Serializable {
                 }
             }
         }
-        if (dao.get(promocao.getId_promocao()) != null) {
-            dao.save(promocao);
+        if (promocao.getId_promocao() != 0) {
+            daoProm.save(promocao);
         } else {
-            dao.update(promocao);
+            daoProm.update(promocao);
         }
-        promocoes = dao.getAll();
+        promocoes = daoProm.getAll();
         erro = "";
         if (op == 1) {
             return "gerenciar.xhtml";
@@ -101,13 +113,13 @@ public class PromocaoBean implements Serializable {
     }
 
     public String delete(Long id) {
-        dao.delete(dao.get(id));
-        promocoes = dao.getAll();
+        daoProm.delete(daoProm.get(id));
+        promocoes = daoProm.getAll();
         return "gerenciar.xhtml";
     }
 
     public String volta() {
-        promocoes = dao.getAll();
+        promocoes = daoProm.getAll();
         return "/views/templates_promocao/lista.xhtml?faces-redirect=true";
     }
 
