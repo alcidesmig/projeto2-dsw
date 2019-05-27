@@ -19,7 +19,7 @@ import javax.persistence.Transient;
     @NamedQuery(name = "Usuario.findByEmail",
             query = "SELECT c FROM Usuario c "
             + "WHERE c.email = :email")})
-@Table(name = "usuario")
+@Table(name = "Usuario")
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,12 +39,25 @@ public class Usuario implements Serializable {
     @Column
     private String senha;
 
-    @Column(name = "data_cadastro")
-    @Temporal(TemporalType.DATE)
-    private Date dataCadastro;
+    @Column
+    private Boolean isSalaDeTeatro;
+    @Column
+    private Boolean isSiteDeVenda;
+    @Column
+    private Boolean isAdmin;
+
+    public Usuario() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     public Integer getId() {
         return id;
+    }
+
+    public Usuario(String nome, String email, String senha) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
     }
 
     public void setId(Integer id) {
@@ -75,22 +88,6 @@ public class Usuario implements Serializable {
         this.senha = senha.trim();
     }
 
-    public Date getDataCadastro() {
-        return dataCadastro;
-    }
-
-    public void setDataCadastro(Date dataCadastro) {
-        this.dataCadastro = dataCadastro;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -111,5 +108,29 @@ public class Usuario implements Serializable {
         email = email.toLowerCase().trim();
         Usuario retorno = dao.get(email);
         return retorno;
+    }
+
+    public Boolean getIsSalaDeTeatro() {
+        return isSalaDeTeatro;
+    }
+
+    public void setIsSalaDeTeatro(Boolean isSalaDeTeatro) {
+        this.isSalaDeTeatro = isSalaDeTeatro;
+    }
+
+    public Boolean getIsSiteDeVenda() {
+        return isSiteDeVenda;
+    }
+
+    public void setIsSiteDeVenda(Boolean isSiteDeVenda) {
+        this.isSiteDeVenda = isSiteDeVenda;
+    }
+
+    public Boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }

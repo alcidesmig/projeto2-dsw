@@ -39,7 +39,7 @@ public class DAOUsuario extends GenericDAO<Usuario> {
         EntityManager em = this.getEntityManager();
         TypedQuery<Usuario> query = em.createNamedQuery("Usuario.findByEmail", Usuario.class);
         query.setParameter("email", email);
-        em.close();
+        System.out.println(query.getResultList().get(0));
         return query.getResultList().get(0);
     }
 
