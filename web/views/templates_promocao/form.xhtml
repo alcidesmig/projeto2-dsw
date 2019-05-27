@@ -13,7 +13,7 @@
         <div class="ui text container">
             <center>
                 <h1>
-                    #{promocao.cadastro.h1}
+                    #{msg['promocao.cadastro.h1']}
                 </h1>
             </center>
             <h:form class="ui form" id="form">
@@ -64,7 +64,11 @@
                     <div class="ui negative message hidden">
                         <p>#{msg['allform.error']}</p>
                     </div>
-                    <h:commandButton value="Submit" action="#{promocaoBean.salva()}" class="ui positive button"/>
+                    <br/>
+                    <br/> 
+                    <center>
+                        <h:commandButton value="#{msg['enviar']}" action="#{promocaoBean.salva()}" class="ui positive button centered"/>
+                    </center>
                 </div>
             </h:form>
         </div>

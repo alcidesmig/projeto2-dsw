@@ -60,8 +60,7 @@ public class SalaDeTeatroBean implements Serializable {
                 return "403.xhtml";
             }
         } catch (Exception e) {
-            return "403.xhtml";
-
+            return "500.xhtml";
         }
     }
 
