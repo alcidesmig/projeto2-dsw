@@ -1,4 +1,4 @@
-##Repositório do projeto 2 da disciplina DSW1 - 2019.1
+## Repositório do projeto 2 da disciplina DSW1 - 2019.1
 
 ## Instruções
 
@@ -43,7 +43,7 @@ o erro no console.
 11. O sistema deve proporcionar máscaras (telefone,
 CNPJ, e-mail, data, etc) para entrada dos dados.
 
-##Desenvolvedores
+## Desenvolvedores
 Alcides Mignoso e Silva
 Gabriel Olivato
 Igor Magollo
