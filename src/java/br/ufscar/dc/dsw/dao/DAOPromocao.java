@@ -11,7 +11,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-public class DAOPromocao extends GenericDAO<Promocao>  implements Serializable{
+public class DAOPromocao extends GenericDAO<Promocao> implements Serializable {
 
     @Override
     public Promocao get(Long id) {
@@ -35,9 +35,13 @@ public class DAOPromocao extends GenericDAO<Promocao>  implements Serializable{
         EntityManager em = this.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
+        System.out.println("Inicio");
         em.persist(prom);
         tx.commit();
+        System.out.println("Fim");
         em.close();
+        System.out.println("Fecha conn" + prom.getNome_peca());
+
     }
 
     @Override

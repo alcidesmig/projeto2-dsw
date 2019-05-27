@@ -63,8 +63,10 @@
                 </h:column>
                 <h:column>    
                     <f:facet name="header">#{msg['teatro.list.actions']}</f:facet>
-                    <h:link outcome="#{promocaoBean.edita(prom.id_promocao)}" value="#{msg['crud.edit']}" />
-                    <h:link outcome="#{promocaoBean.delete(prom.id_promocao)}" value="#{msg['crud.delete']}" />
+                    <h:form>
+                        <h:commandButton action="#{promocaoBean.edita(prom.id_promocao)}" value="#{msg['crud.edit']}" />
+                        <h:commandButton action="#{promocaoBean.delete(prom.id_promocao)}" value="#{msg['crud.delete']}" />
+                    </h:form>
                 </h:column>
             </h:dataTable>
         </div>

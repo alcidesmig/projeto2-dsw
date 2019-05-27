@@ -40,7 +40,7 @@ public class SiteDeVenda implements Serializable {
     private String url;
     private String nome;
     private String telefone;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "siteDeVenda")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "siteDeVenda")
 
     private List<Promocao> prom;
 

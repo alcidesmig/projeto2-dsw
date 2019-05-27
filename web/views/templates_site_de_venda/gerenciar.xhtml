@@ -36,7 +36,7 @@
                          id="table">
                 <h:column>
                     <f:facet name="header">#{msg['site.list.nome']}</f:facet>
-                    #{site.nome}
+                        #{site.nome}
                 </h:column>
 
                 <h:column>
@@ -55,8 +55,11 @@
                 </h:column>   
                 <h:column>
                     <f:facet name="header">#{msg['teatro.list.actions']}</f:facet>
-                    <h:link outcome="#{siteDeVendaBean.edita(site.id)}" value="#{msg['crud.edit']}" />
-                    <h:link outcome="#{siteDeVendaBean.delete(site.id)}" value="#{msg['crud.delete']}" />
+                    <h:form> 
+                        <h:commandButton action="#{siteDeVendaBean.edita(site.id)}" value="#{msg['crud.edit']}" />
+                   
+                        <h:commandButton action="#{siteDeVendaBean.delete(site.id)}" value="#{msg['crud.delete']}" />
+                    </h:form>
                 </h:column>
             </h:dataTable>
         </div>
