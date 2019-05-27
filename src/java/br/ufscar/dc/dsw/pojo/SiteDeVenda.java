@@ -1,8 +1,10 @@
 package br.ufscar.dc.dsw.pojo;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 @Table(name = "SITEDEVENDA")
@@ -36,6 +39,9 @@ public class SiteDeVenda implements Serializable {
     private String url;
     private String nome;
     private String telefone;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "siteDeVenda")
+
+    private List<Promocao> prom;
 
     public SiteDeVenda() {
     }

@@ -69,7 +69,9 @@ public class SiteDeVendaBean implements Serializable {
     public String salva() {
         if (site.getId() == 0) {
             Usuario user = new Usuario(site.getNome(), site.getEmail(), site.getSenha());
+            user.setIsSalaDeTeatro(false);
             user.setIsSiteDeVenda(true);
+            user.setIsAdmin(false);
             daoUser.save(user);
             daoSite.save(site);
         } else {

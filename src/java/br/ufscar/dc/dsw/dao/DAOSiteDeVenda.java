@@ -36,7 +36,6 @@ public class DAOSiteDeVenda extends GenericDAO<SiteDeVenda>{
 
     @Override
     public void save(SiteDeVenda site) {
-        System.out.println("NOME:"+site.getNome());
         EntityManager em = this.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
