@@ -43,13 +43,18 @@ public class SalaDeTeatroBean implements Serializable {
     }
 
     public String cadastra() {
-        if (BeanUsuario.getUserLogado().getIsAdmin()) {
-            saladeteatro = new SalaDeTeatro();
-            erro = "";
-            operacao = "Cadastro de Sala de Teatro";
-            return "/views/templates_sala_de_teatro/form.xhtml";
-        } else {
+        try {
+            if (BeanUsuario.getUserLogado().getIsAdmin()) {
+                saladeteatro = new SalaDeTeatro();
+                erro = "";
+                operacao = "Cadastro de Sala de Teatro";
+                return "/views/templates_sala_de_teatro/form.xhtml";
+            } else {
+                return "403.xhtml";
+            }
+        } catch (Exception e) {
             return "403.xhtml";
+
         }
     }
 

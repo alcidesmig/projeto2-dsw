@@ -25,11 +25,16 @@ public class SiteDeVendaBean implements Serializable {
     private String operacao;
 
     public String gerenciar() {
-        if (BeanUsuario.getUserLogado().getIsAdmin()) {
-            op = 1;
-            return "/views/templates_site_de_venda/gerenciar.xhtml";
-        } else {
+        try {
+            if (BeanUsuario.getUserLogado().getIsAdmin()) {
+                op = 1;
+                return "/views/templates_site_de_venda/gerenciar.xhtml";
+            } else {
+                return "403.xhtml";
+            }
+        } catch (Exception e) {
             return "403.xhtml";
+
         }
     }
 
@@ -39,12 +44,16 @@ public class SiteDeVendaBean implements Serializable {
     }
 
     public String cadastra() {
-        if (BeanUsuario.getUserLogado().getIsAdmin()) {
-            site = new SiteDeVenda();
-            erro = "";
-            operacao = "Cadastro de Site de Venda";
-            return "/views/templates_site_de_venda/form.xhtml";
-        } else {
+        try {
+            if (BeanUsuario.getUserLogado().getIsAdmin()) {
+                site = new SiteDeVenda();
+                erro = "";
+                operacao = "Cadastro de Site de Venda";
+                return "/views/templates_site_de_venda/form.xhtml";
+            } else {
+                return "403.xhtml";
+            }
+        } catch (Exception e) {
             return "403.xhtml";
         }
     }

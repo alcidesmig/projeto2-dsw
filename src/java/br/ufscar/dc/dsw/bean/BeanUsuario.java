@@ -25,6 +25,8 @@ public class BeanUsuario {
     @ManagedProperty(value = "#{userBO}")
     private Usuario userBO;
 
+    private Usuario usuario;
+
     private String email;
     private String login;
     private String senha;
@@ -37,7 +39,7 @@ public class BeanUsuario {
     /**
      * Retorna usuario logado
      *
-     * @return 
+     * @return
      */
     public static Usuario getUserLogado() {
         return (Usuario) SessionContext.getInstance().getUsuarioLogado();
@@ -52,7 +54,7 @@ public class BeanUsuario {
                 return "";
             }
 
-            Usuario usuario = new DAOUsuario().get(user.getEmail());
+            usuario = new DAOUsuario().get(user.getEmail());
             SessionContext.getInstance().setAttribute("usuarioLogado", usuario);
 
             return "/index.xhtml?faces-redirect=true";
@@ -66,11 +68,19 @@ public class BeanUsuario {
 
     public String doLogout() {
         SessionContext.getInstance().encerrarSessao();
-        return "/security/form_login.xhtml?faces-redirect=true";
+        return "/index.xhtml?faces-redirect=true";
     }
 
     public Usuario getUserBO() {
         return userBO;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public void setUserBO(Usuario userBO) {

@@ -25,33 +25,48 @@ public class PromocaoBean implements Serializable {
     private String operacao;
 
     public String gerenciar() {
-        if (BeanUsuario.getUserLogado().getIsSalaDeTeatro() || BeanUsuario.getUserLogado().getIsAdmin()) {
-            promocoes = dao.getAll();
-            op = 1;
-            return "/views/templates_promocao/gerenciar.xhtml";
-        } else {
+        try {
+            if (BeanUsuario.getUserLogado().getIsSalaDeTeatro() || BeanUsuario.getUserLogado().getIsAdmin()) {
+                promocoes = dao.getAll();
+                op = 1;
+                return "/views/templates_promocao/gerenciar.xhtml";
+            } else {
+                return "403.xhtml";
+            }
+        } catch (Exception e) {
             return "403.xhtml";
+
         }
     }
 
     public String lista() {
-        if (BeanUsuario.getUserLogado().getIsSiteDeVenda() || BeanUsuario.getUserLogado().getIsAdmin()) {
-            promocoes = dao.getAll();
-            op = 0;
-            return "/views/templates_promocao/lista.xhtml";
-        } else {
+        try {
+            if (BeanUsuario.getUserLogado().getIsSiteDeVenda() || BeanUsuario.getUserLogado().getIsAdmin()) {
+                promocoes = dao.getAll();
+                op = 0;
+                return "/views/templates_promocao/lista.xhtml";
+            } else {
+                return "403.xhtml";
+            }
+        } catch (Exception e) {
             return "403.xhtml";
+
         }
     }
 
     public String cadastra() {
-        if (BeanUsuario.getUserLogado().getIsSalaDeTeatro() || BeanUsuario.getUserLogado().getIsAdmin()) {
-            promocao = new Promocao();
-            erro = "";
-            operacao = "Cadastro de Promoção";
-            return "/views/templates_promocao/form.xhtml";
-        } else {
+        try {
+            if (BeanUsuario.getUserLogado().getIsSalaDeTeatro() || BeanUsuario.getUserLogado().getIsAdmin()) {
+                promocao = new Promocao();
+                erro = "";
+                operacao = "Cadastro de Promoção";
+                return "/views/templates_promocao/form.xhtml";
+            } else {
+                return "403.xhtml";
+            }
+        } catch (Exception e) {
             return "403.xhtml";
+
         }
     }
 

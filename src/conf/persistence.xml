@@ -6,8 +6,6 @@
     <class>br.ufscar.dc.dsw.pojo.SalaDeTeatro</class>
     <class>br.ufscar.dc.dsw.pojo.SiteDeVenda</class>
     <class>br.ufscar.dc.dsw.pojo.Usuario</class>
-    <class>br.ufscar.dc.dsw.pojo.Papel</class>
-    <class>br.ufscar.dc.dsw.pojo.TokenLogin</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/dsw_2"/>
