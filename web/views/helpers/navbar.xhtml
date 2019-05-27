@@ -7,14 +7,6 @@
         <div class="ui container">
             <a class="item" href="/projeto2_dsw/">#{msg['navbar.item.home']}</a>
             <div class="ui simple dropdown item" id="user">
-                #{msg['navbar.item.user']}
-                <i class="dropdown icon"></i>
-                <div class="inverted menu">
-                    <a class="item" href="/projeto1_dsw/usuario/lista">#{msg['navbar.item.user.list']}</a>
-                    <a class="item" href="/projeto1_dsw/usuario/cadastro">#{msg['navbar.item.user.register']}</a>
-                </div>
-            </div>
-            <div class="ui simple dropdown item" id="user">
                 #{msg['navbar.item.promocoes']}
                 <i class="dropdown icon"></i>
                 <div class="inverted menu">
@@ -48,12 +40,13 @@
                 </div>
             </div>
             <div class="right menu">
-                <h:form><h:commandLink action="#{beanUsuario.urlLogin}" class="item" style="color:white;">#{msg['navbar.item.login']}</h:commandLink>
+                <h:form>
+                    <h:commandLink action="#{beanUsuario.urlLogin}" class="item" style="color:white;">#{msg['navbar.item.login']}</h:commandLink>
+                </h:form><a class="item">User #{beanUsuario.usuario.nome}</a>
+
+                <h:form>
+                    <h:commandLink action="#{beanUsuario.doLogout}" class="item" style="color:white;">#{msg['navbar.item.logout']}</h:commandLink>
                 </h:form>
-                <a class="item">#{beanUsuario.user.nome}</a>
-                <a class="item" href="/projeto1_dsw/auth/">
-                    #{msg['navbar.item.logout']}
-                </a>
             </div>
         </div>
     </div>

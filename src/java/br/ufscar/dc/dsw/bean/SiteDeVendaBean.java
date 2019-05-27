@@ -1,7 +1,9 @@
 package br.ufscar.dc.dsw.bean;
 
 import br.ufscar.dc.dsw.dao.DAOSiteDeVenda;
+import br.ufscar.dc.dsw.dao.DAOUsuario;
 import br.ufscar.dc.dsw.pojo.SiteDeVenda;
+import br.ufscar.dc.dsw.pojo.Usuario;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
@@ -16,55 +18,83 @@ public class SiteDeVendaBean implements Serializable {
 
     private SiteDeVenda site;
     private List<SiteDeVenda> sites;
-    DAOSiteDeVenda dao = new DAOSiteDeVenda();
+    DAOSiteDeVenda daoSite = new DAOSiteDeVenda();
+    DAOUsuario daoUser = new DAOUsuario();
     int op;
     private String erro;
     private String operacao;
 
     public String gerenciar() {
-        op = 1;
-        return "/views/templates_site_de_venda/gerenciar.xhtml";
+        try {
+            if (BeanUsuario.getUserLogado().getIsAdmin()) {
+                op = 1;
+                sites = daoSite.getAll();
+                return "/views/templates_site_de_venda/gerenciar.xhtml";
+            } else {
+                return "403.xhtml";
+            }
+        } catch (Exception e) {
+            return "403.xhtml";
+
+        }
     }
 
     public String lista() {
         op = 0;
+        sites = daoSite.getAll();
         return "/views/templates_site_de_venda/lista.xhtml";
     }
 
     public String cadastra() {
-        site = new SiteDeVenda();
-        erro = "";
-        operacao = "Cadastro de Site de Venda";
-        return "/views/templates_site_de_venda/form.xhtml";
+        try {
+            if (BeanUsuario.getUserLogado().getIsAdmin()) {
+                site = new SiteDeVenda();
+                erro = "";
+                operacao = "Cadastro de Site de Venda";
+                return "/views/templates_site_de_venda/form.xhtml";
+            } else {
+                return "403.xhtml";
+            }
+        } catch (Exception e) {
+            return "403.xhtml";
+        }
     }
 
     public String edita(Long id) {
-        site = dao.get(id);
+        site = daoSite.get(id);
         operacao = "Edição de Site de Venda";
         return "form.xhtml";
     }
 
     public String salva() {
         if (site.getId() == 0) {
-            dao.save(site);
+            Usuario user = new Usuario(site.getNome(), site.getEmail(), site.getSenha());
+            user.setIsSiteDeVenda(true);
+            daoUser.save(user);
+            daoSite.save(site);
         } else {
-            dao.update(site);
+            Usuario user = daoUser.get(site.getEmail());
+            user.setEmail(site.getEmail());
+            user.setNome(site.getNome());
+            user.setSenha(site.getSenha());
+            daoUser.update(user);
+            daoSite.update(site);
         }
-        sites = dao.getAll();
+        sites = daoSite.getAll();
         if (op == 1) {
             return "gerenciar.xhtml";
         }
         return "lista.xhtml";
     }
 
-    public String delete(SiteDeVenda sitedevenda) {
-        dao.delete(sitedevenda);
-        sites = dao.getAll();
+    public String delete(Long id) {
+        daoSite.delete(daoSite.get(id));
+        sites = daoSite.getAll();
         return "gerenciar.xhtml";
     }
 
     public String volta() {
-        sites = dao.getAll();
+        sites = daoSite.getAll();
         return "views/templates_site_de_venda/lista.xhtml?faces-redirect=true";
     }
 
@@ -72,9 +102,8 @@ public class SiteDeVendaBean implements Serializable {
         return sites;
     }
 
-
     public List<SiteDeVenda> getSites() throws SQLException {
-        return dao.getAll();
+        return daoSite.getAll();
     }
 
     public SiteDeVenda getSiteDeVenda() {

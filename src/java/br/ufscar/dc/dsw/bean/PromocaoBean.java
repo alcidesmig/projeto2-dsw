@@ -25,22 +25,49 @@ public class PromocaoBean implements Serializable {
     private String operacao;
 
     public String gerenciar() {
-        promocoes = dao.getAll();
-        op = 1;
-        return "/views/templates_promocao/gerenciar.xhtml";
+        try {
+            if (BeanUsuario.getUserLogado().getIsSalaDeTeatro() || BeanUsuario.getUserLogado().getIsAdmin()) {
+                promocoes = dao.getAll();
+                op = 1;
+                return "/views/templates_promocao/gerenciar.xhtml";
+            } else {
+                return "403.xhtml";
+            }
+        } catch (Exception e) {
+            return "403.xhtml";
+
+        }
     }
 
     public String lista() {
-        promocoes = dao.getAll();
-        op = 0;
-        return "/views/templates_promocao/lista.xhtml";
+        try {
+            if (BeanUsuario.getUserLogado().getIsSiteDeVenda() || BeanUsuario.getUserLogado().getIsAdmin()) {
+                promocoes = dao.getAll();
+                op = 0;
+                return "/views/templates_promocao/lista.xhtml";
+            } else {
+                return "403.xhtml";
+            }
+        } catch (Exception e) {
+            return "403.xhtml";
+
+        }
     }
 
     public String cadastra() {
-        promocao = new Promocao();
-        erro = "";
-        operacao = "Cadastro de Promoção";
-        return "/views/templates_promocao/form.xhtml";
+        try {
+            if (BeanUsuario.getUserLogado().getIsSalaDeTeatro() || BeanUsuario.getUserLogado().getIsAdmin()) {
+                promocao = new Promocao();
+                erro = "";
+                operacao = "Cadastro de Promoção";
+                return "/views/templates_promocao/form.xhtml";
+            } else {
+                return "403.xhtml";
+            }
+        } catch (Exception e) {
+            return "403.xhtml";
+
+        }
     }
 
     public String edita(Long id) {
