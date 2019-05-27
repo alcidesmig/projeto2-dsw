@@ -90,6 +90,8 @@ public class SiteDeVendaBean implements Serializable {
     }
 
     public String delete(Long id) {
+        // Gambeta da madrugada kkk eu vo mata o web face
+        daoUser.delete(daoUser.get(daoSite.get(id).getEmail()));
         daoSite.delete(daoSite.get(id));
         sites = daoSite.getAll();
         return "gerenciar.xhtml";
