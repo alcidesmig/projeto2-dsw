@@ -8,10 +8,10 @@ import br.ufscar.dc.dsw.pojo.SalaDeTeatro;
 import br.ufscar.dc.dsw.pojo.SiteDeVenda;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 @ManagedBean
 @SessionScoped
@@ -94,10 +94,8 @@ public class PromocaoBean implements Serializable {
             }
         }
         if (promocao.getId_promocao() != 0) {
-            System.out.println("entrou");
             daoProm.save(promocao);
         } else {
-            System.out.println("asd");
             daoProm.update(promocao);
         }
         promocoes = daoProm.getAll();
@@ -130,8 +128,15 @@ public class PromocaoBean implements Serializable {
     }
 
     public List<SalaDeTeatro> getTeatros() throws SQLException {
-        DAOSalaDeTeatro dao = new DAOSalaDeTeatro();
-        return dao.getAll();
+        if (BeanUsuario.getUserLogado().getIsAdmin()) {
+            DAOSalaDeTeatro dao = new DAOSalaDeTeatro();
+            return dao.getAll();
+        } else {
+            DAOSalaDeTeatro dao = new DAOSalaDeTeatro();
+            List<SalaDeTeatro> lista = new ArrayList<>();
+            lista.add(dao.getByEmail(BeanUsuario.getUserLogado().getEmail()));
+            return lista;
+        }
     }
 
     public Promocao getPromocao() {
